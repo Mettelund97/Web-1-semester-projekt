@@ -4,3 +4,9 @@ document.getElementById("burger-menu").addEventListener("click", function() {
   const burger = document.getElementById("burger-menu");
   burger.classList.toggle("active");
 });
+
+
+
+document.getElementById('myButton').addEventListener('click', function() {
+  
+});
