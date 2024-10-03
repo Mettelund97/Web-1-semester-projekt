@@ -55,3 +55,44 @@ img {
     display: block;
     max-width: 100%;
 }
+
+.grid-container-flex {
+    display: flex;
+    flex-direction: column;
+    background-color: purple;
+    font-size: 0.9rem;
+    color: white;
+    margin-top: 1rem;
+    height: 9em;
+}
+
+.grid-container-grid {
+    display: grid;
+    grid-template-columns: 20em;
+    height: 8em;
+    font-size: 1.1rem;
+}
+
+/* Media query for tablets */
+@media (min-width: 768px) {
+    .grid-container-flex {
+        font-size: 1.3rem;
+    }
+
+    .grid-container-grid {
+        grid-template-columns: none;
+        height: 10em;
+    }
+}
+
+/* Media query for desktops */
+@media (min-width: 1024px) {
+    .grid-container-flex {
+        font-size: 2rem;
+    }
+
+    .grid-container-grid {
+        grid-template-columns: none;
+        height: 12em;
+    }
+}
