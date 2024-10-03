@@ -12,18 +12,36 @@
 </head>
 <body>
     <header>
-            <nav>
-                <a href="">Dashboard</a>
-                <a href="">Projects</a>
-                <a href="">Group Management</a>
-                <a href="">Setting</a>
-                <a href="">Log out</a>
+        <div class="mobile">
+            <nav class="navbar">
+                <!-- Hamburger Icon -->
+                <div class="burger" id="burger-menu">
+                    <span class="bar-1"></span>
+                    <span class="bar-2"></span>
+                    <span class="bar-3"></span>
+                </div>
+            
+                <!-- Navigation Links -->
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#home">Dashboard</a></li>
+                    <li><a href="#about">Projects</a></li>
+                    <li><a href="#services">Group Management</a></li>
+                    <li><a href="#contact">Settings</a></li>
+                    <li><a href="#contact">Log out</a></li>
+                </ul>
             </nav>
-            <aside>
-                
-            </aside>
+        </div>
     </header>
-    <main>
+        <div class="sidebar">
+            <ul>
+                <li><a href="#home">Dashboard</a></li>
+                <li><a href="#analytics">Projects</a></li>
+                <li><a href="#settings">Group Management</a></li>
+                <li><a href="#profile">Settings</a></li>
+                <li><a href="#logout">Log out</a></li>
+            </ul>
+        </div>
+        <section class="content">
         <section class="grid-container-flex">
             <h2>Breadcrumbs</h2>
             <p>We work with skilled artisans and select premium materials to craft footwear that stands the test of time</p>
@@ -36,7 +54,7 @@
             <h2>Recent Projects</h2>
             <p>We work with skilled artisans and select premium materials to craft footwear that stands the test of time</p>
         </section>
-    </main>
-
+        </section>
+    <script src="javascript.js"></script>
 </body>
 </html>

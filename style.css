@@ -73,6 +73,81 @@ img {
     font-size: 1.1rem;
 }
 
+/* Mobile menu */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 20px;
+}
+
+/* Hamburger icon styles */
+.burger {
+    flex-direction: column;
+    cursor: pointer;
+    display: flex;
+}
+
+.burger .bar-1, .bar-2, .bar-3 {
+    height: 3px;
+    width: 25px;
+    background-color: #111;
+    margin: 4px;
+    transition: all 0.3s ease;
+}
+
+.active .bar-1 {
+    -webkit-transform: rotate(-45deg) translate(-10px, 10px);
+    transform: rotate(-45deg) translate(-10px, 13px);
+}
+
+.active .bar-2 {
+    opacity: 0;
+}
+
+.active .bar-3 {
+    -webkit-transform: rotate(45deg) translate(-10px, 10px);
+    transform: rotate(45deg) translate(-3px,-5px);
+}
+
+/* Navigation links styles */
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 15px 10px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #111;
+    padding: 8px 15px;
+    transition: background 0.3s;
+}
+
+.nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    background-color: #fff;
+    width: 100%;
+    text-align: center;
+}
+
+
+.nav-links.active {
+    display: flex;
+}
+
+.sidebar{
+    display: none;
+}
+
 /* Media query for tablets */
 @media (min-width: 768px) {
     .grid-container-flex {
@@ -82,6 +157,9 @@ img {
     .grid-container-grid {
         grid-template-columns: none;
         height: 10em;
+    }
+    .sidebar {
+        display: none;
     }
 }
 
@@ -94,5 +172,54 @@ img {
     .grid-container-grid {
         grid-template-columns: none;
         height: 12em;
+    }
+    .mobile {
+        display: none;
+    }
+
+    .sidebar {
+        display: block;
+        width: 250px;
+        height: 80%;
+        background-color: #333;
+        color: white;
+        padding: 20px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        
+    }
+
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .sidebar ul li {
+        margin: 12px 0;
+    }
+
+    .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        display: block;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .sidebar ul li a:hover {
+        background-color: #575757;
+        border-radius: 5px;
+    }
+
+    .content {
+        margin-left: 250px;
+        padding: 20px;
+        width: calc(100% - 250px);
+        height: 100%;
+        background-color: #f4f4f4;
+        overflow-y: auto;
+        margin-top: 0px;
     }
 }
