@@ -78,7 +78,7 @@ img {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    background-color: #fff;
+    background-color: #dad5d5;
     padding: 20px 20px;
 }
 
@@ -118,7 +118,7 @@ img {
 }
 
 .nav-links li {
-    margin: 15px 10px;
+    margin: 20px 10px;
 }
 
 .nav-links a {
@@ -132,11 +132,12 @@ img {
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 50px;
+    top: 60px;
     left: 0;
-    background-color: #fff;
+    background-color: #dad5d5;
     width: 100%;
     text-align: center;
+    padding-bottom: 30px;
 }
 
 
@@ -156,8 +157,8 @@ img {
     font-size: 1rem;
 
 }
+
 .button {
-   
     padding: 0.5rem 1rem;
     font-size: 1rem;
     color: white;
@@ -188,82 +189,6 @@ img {
     height: 2px; /* Thickness of the line */
     background-color: black; /* Black line color */
     top: 10%; /* Center vertically */
-}
-
-/* Media query for tablets */
-@media (min-width: 768px) {
-    .grid-container-flex {
-        font-size: 1.3rem;
-    }
-
-    .grid-container-grid {
-        grid-template-columns: none;
-        height: 10em;
-    }
-    .sidebar {
-        display: none;
-    }
-}
-
-/* Media query for desktops */
-@media (min-width: 1024px) {
-    .grid-container-flex {
-        font-size: 2rem;
-    }
-
-    .grid-container-grid {
-        grid-template-columns: none;
-        height: 12em;
-    }
-    .mobile {
-        display: none;
-    }
-
-    .sidebar {
-        display: block;
-        width: 250px;
-        height: 80%;
-        background-color: #333;
-        color: white;
-        padding: 20px;
-        position: fixed;
-        top: 0;
-        left: 0;
-
-    }
-
-    .sidebar ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    .sidebar ul li {
-        margin: 12px 0;
-    }
-
-    .sidebar ul li a {
-        color: white;
-        text-decoration: none;
-        font-size: 16px;
-        display: block;
-        padding: 10px;
-        transition: background-color 0.3s ease;
-    }
-
-    .sidebar ul li a:hover {
-        background-color: #575757;
-        border-radius: 5px;
-    }
-
-    .content {
-        margin-left: 250px;
-        padding: 20px;
-        width: calc(100% - 250px);
-        height: 100%;
-        background-color: #f4f4f4;
-        overflow-y: auto;
-        margin-top: 0px;
-    }
 }
 
 /* Login side */
@@ -336,4 +261,123 @@ img {
     margin-top: 10px;
     font-size: 14px;
     color: #777;
+}
+
+/* Breadcrumbs section */
+.breadcrumb {
+    list-style: none;
+    padding: 0;
+    margin: 0.6rem 1rem;
+    display: flex;
+}
+
+.breadcrumb li {
+    margin-right: 0.5rem;
+    font-size: 0.8rem;
+    color: #6291FF;
+}
+
+.breadcrumb li a {
+    text-decoration: none;
+    color: #6291FF;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb li a:hover {
+    color: #0056b3;
+}
+
+/* Add separator (such as a slash) between breadcrumb items */
+.breadcrumb li+li::before {
+    content: ">";
+    margin-right: 0.5rem;
+    color: #6c757d;
+}
+
+.breadcrumb li:last-child a {
+    color: #6c757d;
+    pointer-events: none;
+    /* Disable click on current page */
+    cursor: default;
+}
+
+/* Media query for tablets */
+@media (min-width: 768px) {
+    .grid-container-flex {
+        font-size: 1.3rem;
+    }
+
+    .grid-container-grid {
+        grid-template-columns: none;
+        height: 10em;
+    }
+    .sidebar {
+        display: none;
+    }
+}
+
+/* Media query for desktops */
+@media (min-width: 1024px) {
+    .grid-container-flex {
+        font-size: 2rem;
+    }
+
+    .grid-container-grid {
+        grid-template-columns: none;
+        height: 12em;
+    }
+    .mobile {
+        display: none;
+    }
+
+    .sidebar {
+        display: block;
+        width: 250px;
+        height: 80%;
+        background-color: #333;
+        color: white;
+        padding: 20px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        border-radius: 0 0 10px 0;
+    }
+
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 3rem;
+    }
+
+    .sidebar ul li {
+        margin: 1.2rem 0;
+    }
+
+    .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        display: block;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .sidebar ul li a:hover {
+        background-color: #575757;
+        border-radius: 5px;
+    }
+
+    .content {
+        margin-left: 250px;
+        padding: 20px;
+        width: calc(100% - 250px);
+        height: 100%;
+        background-color: #f4f4f4;
+        overflow-y: auto;
+        margin-top: 0px;
+    }
+
+    .breadcrumb {
+        margin: 0.5rem 0;
+    }
 }
