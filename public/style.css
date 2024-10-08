@@ -305,6 +305,8 @@ img {
   cursor: default;
 }
 
+
+
 /* Media query for tablets */
 @media (min-width: 768px) {
   .grid-container-flex {
