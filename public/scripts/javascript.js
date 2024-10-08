@@ -18,8 +18,6 @@ document.getElementById("burger-menu").addEventListener("click", function () {
 
 document.getElementById("myButton").addEventListener("click", function () {});
 
-document
-  .getElementById("indexCreateNewProject")
-  .addEventListener("click", function () {
-    window.location.href = "/create-new-project";
-  });
+document.getElementById("main-Button").addEventListener("click", function () {
+  window.location.href = "/create-new-project";
+});
