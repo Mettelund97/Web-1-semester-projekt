@@ -1,123 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kubelab</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-        rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
     <header>
-        <div class="mobile">
-            <nav class="navbar">
-                <!-- Hamburger Icon -->
-                <div class="burger" id="burger-menu">
-                    <span class="bar-1"></span>
-                    <span class="bar-2"></span>
-                    <span class="bar-3"></span>
-                </div>
-                <!-- Navigation Links -->
-                <ul class="nav-links" id="nav-links">
-                    <li><a href="/">Dashboard</a></li>
-                    <li><a href="/group-administration">Group administration</a></li>
-                    <li><a href="/add-new-member">Add new member</a></li>
-                    <li><a href="/settings">Settings</a></li>
-                <!-- <li><a href="#logout">Log out</a></li> -->
-            <li><a href="/login">Log out</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <div class="sidebar">
-        <ul>
-            <div class="sidebarlogodiv">
-                <h1>Kubelab</h1>
-            </div>
+      <div class="mobile">
+        <nav class="navbar">
+          <!-- Hamburger Icon -->
+          <div class="burger" id="burger-menu">
+            <span class="bar-1"></span>
+            <span class="bar-2"></span>
+            <span class="bar-3"></span>
+          </div>
+          <!-- Navigation Links -->
+          <ul class="nav-links" id="nav-links">
             <li><a href="/">Dashboard</a></li>
             <li><a href="/group-administration">Group administration</a></li>
             <li><a href="/add-new-member">Add new member</a></li>
             <li><a href="/settings">Settings</a></li>
             <!-- <li><a href="#logout">Log out</a></li> -->
             <li><a href="/login">Log out</a></li>
-        </ul>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div class="sidebar">
+      <ul>
+        <div class="sidebarlogodiv">
+          <h1>Kubelab</h1>
+        </div>
+        <li><a href="/">Dashboard</a></li>
+        <li><a href="/group-administration">Group administration</a></li>
+        <li><a href="/add-new-member">Add new member</a></li>
+        <li><a href="/settings">Settings</a></li>
+        <!-- <li><a href="#logout">Log out</a></li> -->
+        <li><a href="/login">Log out</a></li>
+      </ul>
     </div>
-        
-        <section class="content">
-                <nav aria-label="Breadcrumb">
-                    <ol class="breadcrumb">
-                        <li aria-current="page">Dashboard</li>
-                    </ol>
-                </nav>
-                <h2>My Projects</h2>
-                <div class="line"></div>
 
+    <section class="content">
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb">
+          <li aria-current="page">Dashboard</li>
+        </ol>
+      </nav>
+      <h2>My Projects</h2>
+      <div class="line"></div>
 
-                <div class="SearchBar">
-                    <input type="text" placeholder="Search..">                
-                </div>
+      <div class="SearchBar">
+        <input type="text" placeholder="Search.." />
+      </div>
 
+      <section class="grid-container-flex">
+        <div class="dashboard-content">
+          <div class="box">
+            <h3 class="title">Project Name</h3>
+            <h3 class="title">Status</h3>
+            <h3 class="title">Actions</h3>
+          </div>
+          <div class="box">
+            <p class="titleGrey">
+              Name <br />
+              DomainName
+            </p>
+            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
+            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
+          </div>
+          <div class="box">
+            <p class="titleGrey">
+              Name <br />
+              DomainName
+            </p>
+            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
+            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
+          </div>
+          <div class="box">
+            <p class="titleGrey">
+              Name <br />
+              DomainName
+            </p>
+            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
+            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
+          </div>
+        </div>
+      </section>
 
-            <section class="grid-container-flex">
-                <div class="dashboard-content">
-                    <div class="box">
-                        <h3 class="title">Project Name</h3>
-                        <h3 class="title">Status</h3>
-                        <h3 class="title">Actions</h3>
-                    </div>
-                    <div class="box">
-                        <p class="titleGrey">Name <br> DomainName</p>
-                        <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-                        <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-                    </div>
-                    <div class="box">
-                        <p class="titleGrey">Name <br> DomainName</p>
-                        <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-                        <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-                    </div>
-                    <div class="box">
-                        <p class="titleGrey">Name <br> DomainName</p>
-                        <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-                        <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-                    </div>
-                </div>
-            </section>
-            <div class="container-btn">
-                <button id="main-Button" class="button">Create new project</button>
-            </div>
+      <div class="container-btn">
+        <a href="/create-new-group" class="button-link">Create new project</a>
+      </div>
 
-            <h2>Recent Projects</h2>
-            <div class="line"></div>
+      <h2>Recent Projects</h2>
+      <div class="line"></div>
 
-            <section class="grid-container-flex">
-            <div class="dashboard-content">
-                    <div class="box">
-                        <h3 class="title">Project Name</h3>
-                        <h3 class="title">Status</h3>
-                        <h3 class="title">Actions</h3>
-                    </div>
-                    <div class="box">
-                        <p class="titleGrey">Name <br> DomainName</p>
-                        <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-                        <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-                    </div>
-                    <div class="box">
-                        <p class="titleGrey">Name <br> DomainName</p>
-                        <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-                        <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-                    </div>
-                    <div class="box">
-                        <p class="titleGrey">Name <br> DomainName</p>
-                        <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-                        <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-                    </div>
-                </div>
-            </section>
-        </section>
-        <script src="/scripts/javascript.js"></script>
-</body>
+      <section class="grid-container-flex">
+        <div class="dashboard-content">
+          <div class="box">
+            <h3 class="title">Project Name</h3>
+            <h3 class="title">Status</h3>
+            <h3 class="title">Actions</h3>
+          </div>
+          <div class="box">
+            <p class="titleGrey">
+              Name <br />
+              DomainName
+            </p>
+            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
+            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
+          </div>
+          <div class="box">
+            <p class="titleGrey">
+              Name <br />
+              DomainName
+            </p>
+            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
+            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
+          </div>
+          <div class="box">
+            <p class="titleGrey">
+              Name <br />
+              DomainName
+            </p>
+            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
+            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
+          </div>
+        </div>
+      </section>
+    </section>
+    <script src="/scripts/javascript.js"></script>
+  </body>
 </html>

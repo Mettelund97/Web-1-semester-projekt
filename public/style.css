@@ -188,6 +188,19 @@ img {
   background-color: #1c6690;
 }
 
+.button-link {
+  background-color: deeppink;
+  color: white;
+  padding: 15px 25px;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+.button-link:hover {
+  background-color: #333;
+}
+
 .container-btn {
   padding: 1rem;
   margin: 1rem;
@@ -313,8 +326,6 @@ img {
   /* Disable click on current page */
   cursor: default;
 }
-
-
 
 /* Media query for tablets */
 @media (min-width: 768px) {
