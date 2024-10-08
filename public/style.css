@@ -38,19 +38,28 @@ h4 {
 }
 
 h1 {
-  line-height: 1.05;
-  font-weight: 900;
-  color: var(--clr-primary-heading-dm);
+  line-height: 1.5;
+  font-weight: 700;
+  color: var(--clr-primary-heading-lm);
 }
 
 h2 {
-  line-height: 1.05;
-  font-weight: 700;
+  line-height: 2;
+  font-weight: 600;
+  color: var(--clr-primary-heading-dm);
+  font-size: 1.6rem;
 }
 
 h3 {
-  line-height: 1.05;
-  font-weight: 600;
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--clr-primary-heading-dm);
+  font-size: 1rem;
+}
+
+p {
+  line-height: 1.2;
+  font-size: 1rem;
 }
 
 img {
@@ -341,7 +350,7 @@ img {
     height: 100vh; /* Full height */
     background-color: #333;
     color: white;
-    padding: 20px;
+    padding: 30px 20px;
     position: fixed;
     top: 0;
     left: 0;
@@ -433,12 +442,10 @@ img {
 
 .title {
   margin: 0;
-  font-size: 1.5rem;
   color: #333;
 }
 
 .titleGrey {
   margin: 0;
-  font-size: 1.5rem;
   color: #949494;
 }
