@@ -58,85 +58,79 @@
           <li aria-current="page">Dashboard</li>
         </ol>
       </nav>
-      <h2>My Projects</h2>
-      <div class="line"></div>
 
-      <div class="SearchBar">
-        <input type="text" placeholder="Search.." />
-      </div>
-
-      <section class="grid-container-flex">
+      <section class="my-projects">
+        <div class="sectionheading">
+          <h2>My Projects</h2>
+          <div class="line"></div>
+        </div>
+        <div class="SearchBar">
+          <input type="text" placeholder="Search.." />
+        </div>
         <div class="dashboard-content">
-          <div class="box">
-            <h3 class="title">Project Name</h3>
-            <h3 class="title">Status</h3>
-            <h3 class="title">Actions</h3>
-          </div>
-          <div class="box">
-            <p class="titleGrey">
-              Name <br />
-              DomainName
-            </p>
-            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-          </div>
-          <div class="box">
-            <p class="titleGrey">
-              Name <br />
-              DomainName
-            </p>
-            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-          </div>
-          <div class="box">
-            <p class="titleGrey">
-              Name <br />
-              DomainName
-            </p>
-            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
+          <table>
+            <tr class="tablerow">
+              <th class="tablehead">
+                <h3>Project Name</h3>
+              </th>
+              <th class="tablehead">
+                <h3>Status</h3>
+              </th>
+              <th class="tablehead">
+                <h3>Action</h3>
+              </th>
+            </tr>
+            <tr>
+              <td>
+                <p class="tablep">Name</p>
+                <p>DomainName</p>
+              </td>
+              <td><i class="fas fa-star"></i></td>
+              <td><i class="fas fa-star"></i></td>
+            </tr>
+            <tr>
+              <td>
+                <p class="tablep">Name</p>
+                <p>DomainName</p>
+              </td>
+              <td><i class="fas fa-star"></i></td>
+              <td><i class="fas fa-star"></i></td>
+            </tr>
+          </table>
+        </div>
+        <div>
+          <div class="container-btn">
+            <a href="/create-new-group" class="button-link">Create new project</a>
           </div>
         </div>
       </section>
 
-      <div class="container-btn">
-        <a href="/create-new-group" class="button-link">Create new project</a>
-      </div>
-
-      <h2>Recent Projects</h2>
-      <div class="line"></div>
-
-      <section class="grid-container-flex">
+      <section class="recent-projects">
+        <div class="sectionheading">
+        <h2>Recent Projects</h2>
+        <div class="line"></div>
+        </div>
         <div class="dashboard-content">
-          <div class="box">
-            <h3 class="title">Project Name</h3>
-            <h3 class="title">Status</h3>
-            <h3 class="title">Actions</h3>
-          </div>
-          <div class="box">
-            <p class="titleGrey">
-              Name <br />
-              DomainName
-            </p>
-            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-          </div>
-          <div class="box">
-            <p class="titleGrey">
-              Name <br />
-              DomainName
-            </p>
-            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-          </div>
-          <div class="box">
-            <p class="titleGrey">
-              Name <br />
-              DomainName
-            </p>
-            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-            <h3 class="titleGrey"><i class="fas fa-star"></i></h3>
-          </div>
+          <table>
+            <tr class="tablerow">
+              <th class="tablehead"><h3>Project Name</h3></th>
+              <th class="tablehead"><h3>Status</h3></th>
+              <th class="tablehead"><h3>Action</h3></th>
+            </tr>
+            <tr>
+              <td>
+                <p class="tablep">Name</p>
+                <p>DomainName</p>
+              </td>
+              <td><i class="fas fa-star"></i></td>
+              <td><i class="fas fa-star"></i></td>
+            </tr>
+            <tr>
+              <td><p class="tablep">Name</p><p>DomainName</p></td>
+              <td><i class="fas fa-star"></i></td>
+              <td><i class="fas fa-star"></i></td>
+            </tr>
+          </table>
         </div>
       </section>
     </section>
