@@ -8,8 +8,8 @@
   --clr-secondary-background-dm: #111;
 
   /* heading colors */
-  --clr-primary-heading-lm: #ffffff;
-  --clr-primary-heading-dm: #111111;
+  --clr-primary-heading-lm: #080f25;
+  --clr-primary-heading-dm: #ffffff;
 
   /*  */
 }
@@ -27,7 +27,7 @@ body {
 }
 
 body {
-  background-color: var(--clr-primary-background-lm);
+  background-color: #E6E8F4;
 }
 
 h1,
@@ -46,14 +46,14 @@ h1 {
 h2 {
   line-height: 2;
   font-weight: 600;
-  color: var(--clr-primary-heading-dm);
+  color: var(--clr-primary-heading-lm);
   font-size: 1.6rem;
 }
 
 h3 {
   line-height: 1.5;
   font-weight: 500;
-  color: var(--clr-primary-heading-dm);
+  color: var(--clr-primary-heading-lm);
   font-size: 1rem;
 }
 
@@ -72,7 +72,7 @@ img {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background-color: #dad5d5;
+  background-color: #f9f9f9;
   padding: 20px 20px;
 }
 
@@ -162,8 +162,8 @@ img {
 
 .login-container {
   width: 100%;
-  max-width: 400px;
-  padding: 20px;
+  max-width: 500px;
+  padding: 40px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -171,13 +171,10 @@ img {
 
 .loginh2 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   font-size: 24px;
-  color: #333;
-}
-
-.input-field {
-  margin-bottom: 20px;
+  font-weight: 700;
+  color: #000000;
 }
 
 .input-field label {
@@ -185,6 +182,10 @@ img {
   margin-bottom: 5px;
   font-size: 14px;
   color: #555;
+}
+
+.input-field {
+  margin-bottom: 20px;
 }
 
 .input-field input {
@@ -204,7 +205,7 @@ img {
 .login-btn {
   width: 100%;
   padding: 10px;
-  background-color: #007bff;
+  background-color: #654CE5;
   border: none;
   color: white;
   font-size: 16px;
@@ -214,7 +215,7 @@ img {
 }
 
 .login-btn:hover {
-  background-color: #0056b3;
+  background-color: #4937a3;
 }
 
 .login-container p {
@@ -272,7 +273,8 @@ table {
 }
 
 tr {
-  border: 1px solid black;
+  border-top: 8px solid #E6E8F4;
+  border-bottom: 8px solid #E6E8F4;
 }
 
 th, td {
@@ -289,8 +291,8 @@ th {
 
 .sectionheading {
   margin-bottom: 1rem;
+  margin-top: 1rem;
 }
-
 
 .button:hover {
   background-color: #2980b9;
@@ -301,16 +303,17 @@ th {
 }
 
 .button-link {
-  background-color: deeppink;
+  background-color: #654CE5;
   color: white;
   padding: 15px 25px;
   text-decoration: none;
   display: inline-block;
   border-radius: 5px;
+  margin-right: 8px;
 }
 
 .button-link:hover {
-  background-color: #333;
+  background-color: #4937a3;
 }
 
 .container-btn {
@@ -335,15 +338,6 @@ th {
   top: 10%;
 }
 
-.my-projects {
-  margin-top: 0.5rem;
-  padding: 1rem;
-}
-
-.recent-projects {
-  padding: 1rem;
-}
-
 /* search bar */
 /* Style the search box inside the navigation bar */
 .SearchBar input[type="text"] {
@@ -352,6 +346,156 @@ th {
   margin-bottom: 1rem;
   font-size: 1rem;
   width: 80%;
+}
+
+/* start new project page */
+
+.custom-select {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+select {
+  width: 50%;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  margin-bottom: 20px;
+  border: none;
+  font-size: 16px;
+  color: #333;
+  appearance: none;
+  /* Remove default arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+select:hover {
+  border-color: #888;
+}
+
+select:focus {
+  outline: none;
+  border-color: #555;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.sectionhead {
+  margin-bottom: 2rem;
+}
+
+.input-field2 input {
+  width: 50%;
+  padding: 15px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+  margin-bottom: 15px;
+}
+
+.input-field2 input:focus {
+  border-color: #007bff;
+}
+
+.buttonikon {
+  display: inline-block !important;
+  vertical-align: middle;
+  width: 16px !important;
+  height: 16px !important;
+  margin-right: 10px !important;
+}
+
+/* groups section */
+.groupssection {
+  margin-top: 20px;
+}
+
+.searchBar2 {
+  width: 60%;
+}
+
+.searchBar2 input[type="text"] {
+  padding: 1rem;
+  border: none;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.groupssection {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.groups {
+  width: 100%;
+}
+
+/* Container to center the toggle */
+.toggle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+/* Hide the original checkbox */
+.toggle-input {
+  display: none;
+}
+
+/* Styling for the toggle switch */
+.toggle-label {
+  width: 60px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Toggle button (circle) inside the switch */
+.toggle-label::before {
+  content: "";
+  width: 25px;
+  height: 25px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  transform: translateY(-50%);
+  transition: left 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Change background color and move circle when checked */
+.toggle-input:checked+.toggle-label {
+  background-color: #654CE5;
+}
+
+.toggle-input:checked+.toggle-label::before {
+  left: 32px;
+}
+
+.togglep {
+  margin-left: 10px;
+}
+
+/* settings */
+.loginheading {
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.logininfo {
+  margin-bottom: 30px;
 }
 
 
@@ -369,11 +513,11 @@ th {
   }
 
   .sidebar {
-    width: 250px;
+    width: 310px;
     height: 100vh; /* Full height */
-    background-color: #333;
-    color: white;
-    padding: 30px 20px;
+    background-color: #f9f9f9;
+    color: #080f25;
+    padding: 30px 40px;
     position: fixed;
     top: 0;
     left: 0;
@@ -407,7 +551,9 @@ th {
   }
 
   .sidebar ul li a {
-    color: white;
+    display: inline-flex;
+    align-items: center;
+    color: #080f25;
     text-decoration: none;
     font-size: 16px;
     display: block;
@@ -417,29 +563,38 @@ th {
   }
 
   .sidebar ul li a:hover {
-    background-color: #575757;
+    background-color: #E6E8F4;
     padding-left: 20px; /* hover "animation" */
+    border-left: 3px solid #654CE5;
   }
 
   .sidebar ul li:last-child {
     margin-top: auto;
   }
 
+  .ikon {
+    display: inline-block !important;
+    vertical-align: bottom; 
+    width: 24px !important;
+    height: 24px !important;
+    margin-right: 10px !important;
+  }
+
   .content {
-    margin-left: 250px;
+    margin-left: 350px;
     padding: 20px;
-    width: calc(100% - 250px);
+    width: calc(100% - 400px);
     height: 100%;
-    background-color: #f4f4f4;
+    background-color: #E6E8F4;
     overflow-y: auto;
     margin-top: 0px;
   }
 
   .breadcrumb {
-    margin: 0 1rem;
+    margin: 1rem 0rem;
   }
 
-  .container-btn {
-    font-size: 16px;
+  .container-btn, .container-btn2 {
+    font-size: 14px;
   }
 }
