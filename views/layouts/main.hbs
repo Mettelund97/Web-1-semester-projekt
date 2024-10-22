@@ -7,22 +7,12 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <!-- Header section -->
-  <header>
-    <h1>{{ title }}</h1>
-  </header>
-
-  <!-- Include the sidebar partial if needed -->
+  <!-- this is displaying the sidebar globally, tror jeg -->
   {{> sidebar }}
 
   <!-- Body content from individual views will be injected here -->
   <main>
     {{{ body }}}
   </main>
-
-  <!-- Footer section -->
-  <footer>
-    <p>Copyright © 2024</p>
-  </footer>
 </body>
 </html>
