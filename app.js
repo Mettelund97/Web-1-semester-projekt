@@ -1,9 +1,22 @@
 const express = require("express");
+const exphbs = require("express-handlebars");
 const app = express();
 
 const path = require("path");
 const PORT = 3000;
 app.use(express.json());
+
+app.engine(
+  "hbs",
+  exphbs.engine({
+    extname: "hbs",
+    defaultLayout: "main",
+    layoutsDir: path.join(__dirname, "views/layouts"),
+    partialsDir: path.join(__dirname, "views/partials"), // <-- Add this line
+  })
+);
+
+app.set("view engine", "hbs");
 
 // Static files middleware
 app.use(express.static(path.join(__dirname, "public")));
