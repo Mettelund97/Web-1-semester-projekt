@@ -6,6 +6,6 @@
 
 exports.getGroupAdministration = (req, res) => {
   res.render("groupAdministration", {
-    title: "Kubelab",
+    title: "Group administration",
   });
 };
