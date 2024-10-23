@@ -1,5 +1,6 @@
-const path = require("path");
-
 exports.getLogin = (req, res) => {
-  res.sendFile(path.join(__dirname, "../views", "login.html"));
+  res.render("login", {
+    title: "Login",
+    hideSidebar: true, //variable til at bestemme om nav/sidebar skal være synlig eller ej.
+  });
 };
