@@ -513,6 +513,35 @@ th {
   top: 10%;
 }
 
+/* Group management page */
+.accordion-section {
+  margin-bottom: 10px;
+  margin: 20px 0;
+}
+
+.accordion-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px;
+  cursor: pointer;
+  background-color: #f9f9f9;
+}
+
+.accordion-content2 {
+  display: none;
+  /* Initially hidden */
+}
+
+.arrow-icon2 {
+  transition: transform 0.3s ease;
+}
+
+.accordion-content2.open .arrow-icon2 {
+  transform: rotate(180deg);
+  /* Rotates arrow when open */
+}
+
 /* start new project page */
 
 .custom-select {
