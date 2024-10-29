@@ -42,7 +42,7 @@ function toggleAccordion(row) {
 }
 
 /*Group management */
-function toggleAccordion(element) {
+function toggleAccordion2(element) {
   const accordionContent2 = element.nextElementSibling.querySelector('.accordion-content2');
 
   // Toggle display of the accordion content
