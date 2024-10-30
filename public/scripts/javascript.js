@@ -23,34 +23,47 @@ document.getElementById("main-Button").addEventListener("click", function () {
 });
 
 /* Projects */ 
-function toggleAccordion(row) {
-  const accordionContent = row.nextElementSibling; // Get the next row (accordion content)
-  const isVisible = accordionContent.style.display === "table-row";
-
-  // Toggle display
-  accordionContent.style.display = isVisible ? "none" : "table-row";
-
-  // Rotate arrow icon
-  row.classList.toggle("open", !isVisible);
-
-  // Add or remove the 'no-border' class based on visibility
-  if (isVisible) {
-    row.classList.remove("no-border"); // Show the bottom border when content is hidden
-  } else {
-    row.classList.add("no-border"); // Remove the bottom border when content is shown
+function toggleAccordion(element) {
+  const accordionRows = [];
+  let nextRow = element.nextElementSibling;
+  
+  while (nextRow && nextRow.classList.contains('accordion-content')) {
+    accordionRows.push(nextRow);
+    nextRow = nextRow.nextElementSibling;
   }
+  
+  const isOpen = accordionRows[0] && accordionRows[0].style.display === "table-row";
+  
+  accordionRows.forEach(row => {
+    row.style.display = isOpen ? "none" : "table-row";
+  });
+  
+  element.classList.toggle("open", !isOpen);
+  
+  const arrowIcon = element.querySelector('.arrow-icon');
+  if (arrowIcon) arrowIcon.style.transform = isOpen ? "rotate(0deg)" : "rotate(180deg)";
+  
+  element.classList.toggle("no-border", !isOpen);
 }
 
 /*Group management */
 function toggleAccordion2(element) {
-  const accordionContent2 = element.nextElementSibling.querySelector('.accordion-content2');
+  const accordionRows = element.nextElementSibling.querySelectorAll('.accordion-content2');
+  
+  // Check if the accordion is currently open (by checking the display of the first row)
+  const isOpen = accordionRows[0].style.display === "table-row";
+  
+  // Toggle display for all rows with the class "accordion-content2"
+  accordionRows.forEach(row => {
+    row.style.display = isOpen ? "none" : "table-row";
+  });
 
-  // Toggle display of the accordion content
-  if (accordionContent2.style.display === "table-row") {
-    accordionContent2.style.display = "none";
+  // Toggle the "open" class on the accordion block
+  if (isOpen) {
+    element.classList.remove('open'); // Remove "open" class when collapsed
     element.querySelector('.arrow-icon2').style.transform = "rotate(0deg)";
   } else {
-    accordionContent2.style.display = "table-row";
+    element.classList.add('open'); // Add "open" class when expanded
     element.querySelector('.arrow-icon2').style.transform = "rotate(180deg)";
   }
 }

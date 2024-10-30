@@ -451,8 +451,28 @@ th {
   transition: transform 0.2s ease;
 }
 
+.accordion-header.open {
+  background-color: #D7DAEA;
+}
+
 .accordion-header.open .arrow-icon {
   transform: rotate(180deg);
+}
+
+
+.td2 {
+  padding-bottom: 20px !important;
+  padding-top: 0px !important;
+}
+
+.td2:first-child {
+  text-align: left;
+  /* Align the first td to the left */
+}
+
+.td2:last-child {
+  text-align: right;
+  /* Align the last td to the right */
 }
 
 .ikon2 {
@@ -530,14 +550,28 @@ th {
 
 .accordion-content2 {
   display: none;
+  background-color: #f9f9f9;
   /* Initially hidden */
+}
+
+.statusp {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.cell-p {
+  font-weight: 400 !important;
 }
 
 .arrow-icon2 {
   transition: transform 0.3s ease;
 }
 
-.accordion-content2.open .arrow-icon2 {
+.accordion-block.open {
+  background-color: #D7DAEA;
+}
+
+.accordion-block.open .arrow-icon2 {
   transform: rotate(180deg);
   /* Rotates arrow when open */
 }
