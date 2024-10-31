@@ -32,8 +32,8 @@
   --color-breadcrumbs: #6291ff;
   --color-breadcrumbs-hover: #007bff;
 
-  --container-element: #f9f9f9;
-  --container-clicked: #d7daea;
+  --container-element: #0E1836;
+  --container-clicked: #0A1228;
 
   --btn-container: #6C72FF;
   --btn-container-hover: #6368f1;
@@ -497,7 +497,7 @@ th {
 }
 
 .accordion-header.open {
-  background-color: #D7DAEA;
+  background-color: var(--container-clicked);
 }
 
 .accordion-header.open .arrow-icon {
