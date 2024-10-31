@@ -381,10 +381,66 @@ th {
   margin-right: auto;
 }
 
-.toggle-container {
+.toggle-container2 {
   display: flex;
   align-items: center;
   justify-content: end;
+}
+
+.toggle-input2 {
+  display: none;
+}
+
+.toggle-label2 {
+  width: 80px;
+  height: 40px;
+  background-color: #ccc;
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-label2::before {
+  content: "";
+  width: 40px;
+  height: 40px;
+  background-color: var(--container-element);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: -1px;
+  transform: translateY(-50%);
+  transition: left 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-input2:checked+.toggle-label2 {
+  background-color: var(--btn-container);
+}
+
+.toggle-input2:checked+.toggle-label2 .toggle-icon2 {
+  transform: translateX(45px);
+}
+
+.toggle-input2:checked+.toggle-label2::before {
+  left: 42px;
+}
+
+.toggle-icon2 {
+  width: 18px;
+  height: 18px;
+  position: relative;
+  z-index: 1;
+  left: 6px;
+  top:8px;
+  transition: transform 0.3s ease;
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
 }
 
 .toggle-input {
@@ -519,11 +575,11 @@ th {
 }
 
 .ikon2 {
-  display: inline-block !important;
+  display: inline-block;
   vertical-align: bottom;
-  width: 24px !important;
-  height: 24px !important;
-  margin-right: 5px !important;
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
 }
 
 .sectionheading {
@@ -774,10 +830,15 @@ select:focus {
 
 
 /* settings */
-.loginheading {
+.loginbody {
+  background-color: #e6e8f4;
+}
+
+.loginh2 {
   margin-bottom: 10px;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 26px;
+  color: #080f25;
 }
 
 .logininfo {
@@ -902,12 +963,28 @@ select:focus {
     border-left: 3px solid var(--btn-container);
   }
 
-  .ikon {
-    display: inline-block !important;
+  .iconlight {
+    display: inline-block;
     vertical-align: bottom; 
-    width: 24px !important;
-    height: 24px !important;
-    margin-right: 10px !important;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+
+  .icondarkmode {
+    display: none;
+  }
+  
+  .iconlight.disabled {
+    display: none;
+  }
+
+  .icondarkmode.active {
+    display: inline-block;
+    vertical-align: bottom;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
   }
 
   .content {

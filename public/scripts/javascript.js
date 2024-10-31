@@ -9,27 +9,70 @@
 //   });
 // }
 
-    // Select the toggle checkbox and the root element
-// Check and apply the saved theme on page load
 document.addEventListener('DOMContentLoaded', () => {
-const root = document.documentElement; // This refers to the <html> element
-const isDark = localStorage.getItem('dark-theme') === 'true';
+    const root = document.documentElement; // This refers to the <html> element
+    const isDark = localStorage.getItem('dark-theme') === 'true'; // Get the theme preference
 
-// Apply the class based on saved preference
-root.classList.toggle('dark', isDark);
+    // Apply the class based on saved preference
+    root.classList.toggle('dark', isDark);
+
+    // Get the toggle button
+    const toggle = document.getElementById('toggle');
+
+    // Set the checked state of the toggle based on the theme preference
+    if (toggle) {
+        toggle.checked = isDark; // Only set checked if the toggle exists
+    }
+
+    // Manage icon classes based on theme
+    const iconLights = document.querySelectorAll('.iconlight');
+    const iconDarks = document.querySelectorAll('.icondarkmode');
+
+    // Function to update icons based on the current theme
+    function updateIcons(isDark) {
+        iconLights.forEach(icon => {
+            icon.classList.toggle('disabled', isDark); // Add 'disabled' class to light icons
+        });
+
+        iconDarks.forEach(icon => {
+            icon.classList.toggle('active', isDark); // Add 'active' class to dark icons
+        });
+    }
+
+    // Initial icon update based on stored theme preference
+    updateIcons(isDark);
 });
 
 // Event listener for change on the checkbox
 document.getElementById('toggle')?.addEventListener('change', (event) => {
-const root = document.documentElement; // This refers to the <html> element
-const isChecked = event.target.checked;
+    const root = document.documentElement; // This refers to the <html> element
+    const isChecked = event.target.checked;
 
-// Toggle the dark class on the root element
-root.classList.toggle('dark', isChecked);
+    // Toggle the dark class on the root element
+    root.classList.toggle('dark', isChecked);
 
-// Save the theme preference in local storage
-localStorage.setItem('dark-theme', isChecked);
+    // Save the theme preference in local storage
+    localStorage.setItem('dark-theme', isChecked);
+
+    // Manage icon classes based on theme
+    updateIcons(isChecked);
 });
+
+// Function to manage icon classes
+function updateIcons(isDark) {
+    const iconLights = document.querySelectorAll('.iconlight');
+    const iconDarks = document.querySelectorAll('.icondarkmode');
+
+    iconLights.forEach(icon => {
+        icon.classList.toggle('disabled', isDark); // Add 'disabled' class to light icons
+    });
+
+    iconDarks.forEach(icon => {
+        icon.classList.toggle('active', isDark); // Add 'active' class to dark icons
+    });
+}
+
+
 
 
 document.getElementById("burger-menu").addEventListener("click", function () {
