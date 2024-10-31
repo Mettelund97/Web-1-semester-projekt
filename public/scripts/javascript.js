@@ -32,46 +32,60 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateIcons(isDark) {
         iconLights.forEach(icon => {
             icon.classList.toggle('disabled', isDark); // Add 'disabled' class to light icons
+            icon.style.display = isDark ? 'none' : 'inline-block'; // Hide light icons in dark mode
         });
 
         iconDarks.forEach(icon => {
             icon.classList.toggle('active', isDark); // Add 'active' class to dark icons
+            icon.style.display = isDark ? 'inline-block' : 'none'; // Show dark icons in dark mode
         });
     }
 
     // Initial icon update based on stored theme preference
     updateIcons(isDark);
+
+    // Event listener for change on the checkbox
+    toggle?.addEventListener('change', (event) => {
+        const isChecked = event.target.checked;
+
+        // Toggle the dark class on the root element
+        root.classList.toggle('dark', isChecked);
+
+        // Save the theme preference in local storage
+        localStorage.setItem('dark-theme', isChecked);
+
+        // Manage icon classes based on theme
+        updateIcons(isChecked);
+    });
 });
 
-// Event listener for change on the checkbox
-document.getElementById('toggle')?.addEventListener('change', (event) => {
-    const root = document.documentElement; // This refers to the <html> element
-    const isChecked = event.target.checked;
 
-    // Toggle the dark class on the root element
-    root.classList.toggle('dark', isChecked);
-
-    // Save the theme preference in local storage
-    localStorage.setItem('dark-theme', isChecked);
-
-    // Manage icon classes based on theme
-    updateIcons(isChecked);
-});
 
 // Function to manage icon classes
 function updateIcons(isDark) {
-    const iconLights = document.querySelectorAll('.iconlight');
-    const iconDarks = document.querySelectorAll('.icondarkmode');
+  const iconLights = document.querySelectorAll('.iconlight');
+  const iconDarks = document.querySelectorAll('.icondarkmode');
 
-    iconLights.forEach(icon => {
-        icon.classList.toggle('disabled', isDark); // Add 'disabled' class to light icons
-    });
+  iconLights.forEach(icon => {
+      icon.classList.toggle('disabled', isDark); // Add 'disabled' class to light icons
+  });
 
-    iconDarks.forEach(icon => {
-        icon.classList.toggle('active', isDark); // Add 'active' class to dark icons
-    });
+  iconDarks.forEach(icon => {
+      icon.classList.toggle('active', isDark); // Add 'active' class to dark icons
+  });
 }
 
+const toggleInput = document.getElementById('toggle2');
+  
+ function toggleActiveClass() {
+  const emptyBoxes = document.querySelectorAll('.emptybox, .emptybox2');
+    
+  emptyBoxes.forEach(box => {
+      box.classList.toggle('active');
+    });
+  }
+
+toggleInput.addEventListener('change', toggleActiveClass);
 
 
 

@@ -5,7 +5,7 @@
     </ol>
   </nav>
   <section class="my-projects">
-    <div class="sectionheading">
+    <div class="sectionhead">
       <h2>My Projects</h2>
       <div class="line"></div>
     </div>
@@ -54,7 +54,10 @@
       <table>
         <tr class="accordion-header" onclick="toggleAccordion(this)">
           <td>
+            <div class="cellcheckbox">
+            <div class="emptybox"></div>
             <p class="tablep">Project Name</p>
+            </div>
           </td>
           <td class="mobileonly">
             <p>WordPress</p>
@@ -101,33 +104,33 @@
         </tr>
         
         <tr class="accordion-content accordion-buttonrow">
-         <td class="td2">
+          <td class="td2">
             <div class="container-btn2">
-              <div class="btn2-icon-delete"><img src="/images/Trash_Full.svg" alt="Icon"/></div>
+              <div class="btn2-icon-delete">
+                <img src="/images/Trash_Full.svg" alt="Icon"/>
+              </div>
               <button class="btn2-delete">Delete project</button>
             </div>
           </td>
 
-            <td class="td2">
-          <div class="container-btn2">
-              <div class="btn2-icon-restart"><img src="/images/Redo.svg" alt="Icon"
-                /></div>
+          <td class="td2">
+            <div class="container-btn2">
+              <div class="btn2-icon-restart">
+                <img src="/images/Redo.svg" alt="Icon"/>
+              </div>
               <button class="btn2-restart">Restart project</button>
             </div>
           </td>
-         <!-- <td class="td2">
-            <div class="container-btn2">
-              <a href="/start-new-project" class="button-link"><img src="/images/plusikon.svg" alt="Icon"
-                  class="buttonikon" />Create new project</a>
-            </div>-->
-            </td> 
-          </tr>
+        </tr>
           
         
 
         <tr class="accordion-header" onclick="toggleAccordion(this)">
           <td>
-            <p class="tablep">Project Name</p>
+            <div class="cellcheckbox">
+              <div class="emptybox"></div>
+              <p class="tablep">Project Name</p>
+              </div>
           </td>
           <td class="mobileonly">
             <p>WordPress</p>
@@ -175,17 +178,22 @@
         </tr>
         <tr class="accordion-content accordion-buttonrow">
           <td class="td2">
-              <div class="container-btn2">
-                <a href="/start-new-project" class="button-link"><img src="/images/plusikon.svg" alt="Icon"
-                    class="buttonikon" />Create new project</a>
+            <div class="container-btn2">
+              <div class="btn2-icon-delete">
+                <img src="/images/Trash_Full.svg" alt="Icon" />
               </div>
+              <button class="btn2-delete">Delete project</button>
+            </div>
           </td>
+        
           <td class="td2">
             <div class="container-btn2">
-              <a href="/start-new-project" class="button-link"><img src="/images/plusikon.svg" alt="Icon"
-                  class="buttonikon" />Create new project</a>
+              <div class="btn2-icon-restart">
+                <img src="/images/Redo.svg" alt="Icon" />
+              </div>
+              <button class="btn2-restart">Restart project</button>
             </div>
-          </td> 
+          </td>
         </tr>
       </table>
     </div>
