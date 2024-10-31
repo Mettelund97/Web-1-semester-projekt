@@ -9,25 +9,26 @@
 //   });
 // }
 
-const toggle = document.getElementById('toggle');
+    // Select the toggle checkbox and the root element
+// Check and apply the saved theme on page load
+document.addEventListener('DOMContentLoaded', () => {
 const root = document.documentElement; // This refers to the <html> element
+const isDark = localStorage.getItem('dark-theme') === 'true';
+
+// Apply the class based on saved preference
+root.classList.toggle('dark', isDark);
+});
 
 // Event listener for change on the checkbox
-toggle.addEventListener('change', () => {
-    root.classList.toggle('dark', toggle.checked);
-});
+document.getElementById('toggle')?.addEventListener('change', (event) => {
+const root = document.documentElement; // This refers to the <html> element
+const isChecked = event.target.checked;
 
-
-// Maintain the theme on page reload
-document.addEventListener('DOMContentLoaded', () => {
-    const isDark = localStorage.getItem('dark-theme') === 'true';
-    toggle.checked = isDark; // Set the toggle state based on saved preference
-    root.classList.toggle('dark', isDark); // Apply the class based on saved preference
-});
+// Toggle the dark class on the root element
+root.classList.toggle('dark', isChecked);
 
 // Save the theme preference in local storage
-toggle.addEventListener('change', () => {
-    localStorage.setItem('dark-theme', toggle.checked);
+localStorage.setItem('dark-theme', isChecked);
 });
 
 

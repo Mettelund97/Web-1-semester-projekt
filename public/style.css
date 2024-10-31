@@ -446,10 +446,12 @@ th {
 
 .searchBar input[type="text"] {
   padding: 1rem;
-  border: none;
+  border: var(--container-element);
   border-radius: 5px;
   font-size: 1rem;
   width: 100%;
+  background-color: var(--container-element);
+  color: var(--color-paragraph);
 }
 
 
@@ -482,10 +484,6 @@ th {
   border-bottom: 20px solid var(--color-body-bg);
 }
 
-.accordion-header:nth-child(2) {
-  border-top: 12px solid #E6E8F4 !important;
-  /* Smaller top border for the first header */
-}
 
 .accordion-header.no-border {
   border-bottom: none;
@@ -630,7 +628,7 @@ select {
   margin-bottom: 20px;
   border: none;
   font-size: 16px;
-  color: #333;
+  color: var(--color-paragraph);
   appearance: none;
   /* Remove default arrow */
   -webkit-appearance: none;
@@ -639,12 +637,12 @@ select {
 }
 
 select:hover {
-  border-color: #888;
+  border-color: var(--color-paragraph);
 }
 
 select:focus {
   outline: none;
-  border-color: #555;
+  border-color: var(--container-element);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -656,11 +654,13 @@ select:focus {
   width: 50%;
   padding: 15px;
   font-size: 16px;
-  border: 1px solid #ddd;
+  border: 1px;
   border-radius: 5px;
   outline: none;
   transition: border-color 0.3s;
   margin-bottom: 15px;
+  background-color: var(--container-element);
+  color: var(--color-paragraph);
 }
 
 .input-field2 input:focus {
@@ -690,6 +690,8 @@ select:focus {
   margin-bottom: 1rem;
   font-size: 1rem;
   width: 100%;
+  background-color: var(--container-element);
+  color: var(--color-paragraph);
 }
 
 .groupssection {
@@ -826,7 +828,7 @@ select:focus {
   }
 
   .sidebar ul li a:hover {
-    background-color: #E6E8F4;
+    background-color: var(--hover-navbar);
     padding-left: 12px;
     border-left: 3px solid var(--btn-container);
   }
