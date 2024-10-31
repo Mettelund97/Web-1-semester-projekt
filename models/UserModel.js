@@ -6,7 +6,7 @@ exports.getAllUsers = async () => {
     const [rows, fields] = await dbConn.query(
       //   `SELECT id, firstName, lastName, email, password, expiredAt, RoleId FROM Users`
       // );
-      `SELECT Users.id, Users.firstName, Users.lastName, Users.email, Users.password, Users.expiredAt, Roles.name AS roleName
+      `SELECT Users.id, Users.firstName, Users.lastName, Users.email, Users.password, Users.expiredAt, Users.RoleId, Roles.name AS roleName
     FROM Users
     JOIN Roles ON Users.RoleId = Roles.id`
     );
