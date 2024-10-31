@@ -23,6 +23,7 @@
   --navbar-text: #080f25;
 }
 
+
 :root.dark {
   --color-nav-bg: #0e1836;
   --color-body-bg: #060c1e;
@@ -30,6 +31,9 @@
   --color-paragraph: #fafafb;
   --color-breadcrumbs: #6291ff;
   --color-breadcrumbs-hover: #007bff;
+
+  --container-element: #f9f9f9;
+  --container-clicked: #d7daea;
 
   --btn-container: #6C72FF;
   --btn-container-hover: #6368f1;

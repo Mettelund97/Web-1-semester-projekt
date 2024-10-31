@@ -9,6 +9,28 @@
 //   });
 // }
 
+const toggle = document.getElementById('toggle');
+const root = document.documentElement; // This refers to the <html> element
+
+// Event listener for change on the checkbox
+toggle.addEventListener('change', () => {
+    root.classList.toggle('dark', toggle.checked);
+});
+
+
+// Maintain the theme on page reload
+document.addEventListener('DOMContentLoaded', () => {
+    const isDark = localStorage.getItem('dark-theme') === 'true';
+    toggle.checked = isDark; // Set the toggle state based on saved preference
+    root.classList.toggle('dark', isDark); // Apply the class based on saved preference
+});
+
+// Save the theme preference in local storage
+toggle.addEventListener('change', () => {
+    localStorage.setItem('dark-theme', toggle.checked);
+});
+
+
 document.getElementById("burger-menu").addEventListener("click", function () {
   const navLinks = document.getElementById("nav-links");
   navLinks.classList.toggle("active");
@@ -68,32 +90,17 @@ function toggleAccordion2(element) {
   }
 }
 
-//* Dark light mode switch //
 
-const modeBtn = document.getElementById('mode');
-modeBtn.onchange = (e) => {
-  if (modeBtn.checked === true) {
-    document.documentElement.classList.remove("light")
-    document.documentElement.classList.add("dark")
-    window.localStorage.setItem('mode', 'dark');
-  } else {
-    document.documentElement.classList.remove("dark")
-    document.documentElement.classList.add("light")
-    window.localStorage.setItem('mode', 'light');
-  }
-}
 
-const mode = window.localStorage.getItem('mode');
-if (mode == 'dark') {
-  modeBtn.checked = true;
-  document.documentElement.classList.remove("light")
-  document.documentElement.classList.add("dark")
-}
 
-if (mode == 'light') {
-  modeBtn.checked = false;
-  document.documentElement.classList.remove("dark")
-  document.documentElement.classList.add("light")
-}
+
+
+
+
+
+
+
+
+
 
 // Mode end//
