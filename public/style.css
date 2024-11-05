@@ -953,6 +953,29 @@ select:focus {
   margin-bottom: 40px;
 }
 
+/* add member page file uploader */
+
+#drop-area {
+  width: 400px;
+  height: 200px;
+  margin: 20px auto;
+  text-align: center;
+  float: left;
+  line-height: 200px;
+  border: 2px dashed #ccc;
+  color: #d7daea;
+  cursor: pointer;
+}
+
+#drop-area.drag-over {
+  background-color: var(--container-element);
+}
+
+#preview-container {
+  text-align: center;
+}
+
+
 
 /* Media query for tablets */
 @media (min-width: 768px) {
