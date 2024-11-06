@@ -55,11 +55,35 @@ body {
   height: 100%;
   font-family: var(--font-family);
   width: 100%;
+
 }
 
 body {
+  position: relative;
   background-color: var(--color-body-bg);
+  font-family: var(--font-family);
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('images/bgcubesoriginal.svg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 0.04; 
+  z-index: -1; 
+}
+
 
 h1,
 h2,
@@ -1072,7 +1096,7 @@ select:focus {
     padding: 20px;
     width: calc(100% - 400px);
     height: 100%;
-    background-color: var(--color-body-bg);
+    
     overflow-y: auto;
     margin-top: 0px;
   }
