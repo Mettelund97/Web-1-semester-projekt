@@ -7,7 +7,7 @@ const addNewMemberController = require("../controllers/addNewMemberController");
 const groupAdministrationController = require("../controllers/groupAdministrationController");
 const createNewGroupController = require("../controllers/createNewGroupController");
 const startNewProjectController = require("../controllers/startNewProjectController");
-const UserController = require("../controllers/UserController");
+const UserController = require("../controllers/userController");
 
 const router = express.Router();
 
@@ -16,11 +16,12 @@ router.get("/", UserController.getAllUsers);
 router.get("/", homeController.getHome);
 router.get("/settings", settingsController.getSettings);
 router.get("/login", loginController.getLogin);
+
 router.get("/add-new-member", addNewMemberController.getAddNewMember);
-router.get(
-  "/group-administration",
-  groupAdministrationController.getGroupAdministration
-);
+router.post("/add-new-member", addNewMemberController.postAddNewMember);
+
+
+router.get("/group-administration", groupAdministrationController.getGroupAdministration);
 router.get("/create-new-group", createNewGroupController.getCreateNewGroup);
 router.get("/start-new-project", startNewProjectController.getStartNewProject);
 
