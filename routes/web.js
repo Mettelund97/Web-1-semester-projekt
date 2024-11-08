@@ -12,9 +12,12 @@ const roleController = require("../controllers/roleController");
 const groupController = require("../controllers/groupController");
 const router = express.Router();
 
-router.get("/", userController.getAllUsers);
+// linje 16 skal slettes senere, er der kun for testing
+router.get("/user/:id", userController.getUserById);
 
-router.get("/", homeController.getHome);
+// altid efterfulgt af "/urlen", så start med userController.getAllUsers hvis man skal bruge data fra user osv.
+// og ikke homeController.getHome først.
+router.get("/", userController.getAllUsers, homeController.getHome);
 router.get("/settings", settingsController.getSettings);
 router.get("/login", loginController.getLogin);
 

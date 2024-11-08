@@ -1,8 +1,9 @@
 const dbConn = require("../config/db.js");
+
 // getting all users from the database
 exports.getAllUsers = async () => {
   try {
-    const [rows, fields] = await dbConn.query(
+    const [rows] = await dbConn.query(
       //   `SELECT id, firstName, lastName, email, password, expiredAt, roleId FROM Users`
       // );
       `SELECT Users.id, Users.firstName, Users.lastName, Users.email, Users.password, Users.expiredAt, Users.RoleId,
@@ -14,6 +15,42 @@ exports.getAllUsers = async () => {
   } catch (error) {
     console.error(error);
     return [];
+  }
+};
+
+// getting a user by it's ID from the database
+exports.getUserById = async (id) => {
+  try {
+    const [rows] = await dbConn.query("SELECT * FROM Users WHERE id = ?", [id]);
+    if (rows.length > 0) {
+      // sends the userdata back
+      return rows[0];
+    } else {
+      console.log("No user found with the specified ID.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching user by ID:", error);
+    throw error;
+  }
+};
+
+// database function to check if there already is a user with that email.
+exports.checkUserByEmail = async (email) => {
+  try {
+    const [rows] = await dbConn.query(
+      `SELECT * FROM Users WHERE email = ? LIMIT 1`,
+      [email]
+    );
+    // if the users email match a existing email in db then go inside the if-statement.
+    if (rows.length > 0) {
+      return rows[0];
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error finding user by email:", error);
+    throw error;
   }
 };
 
@@ -29,7 +66,7 @@ exports.createNewUser = async (user, groupId) => {
     `;
 
     // Execute the query with parameters
-    const [userResult] = await dbConn.query(userQuery, [
+    const [result] = await dbConn.query(userQuery, [
       firstName,
       lastName,
       email,
@@ -38,7 +75,7 @@ exports.createNewUser = async (user, groupId) => {
     ]);
 
     // Get the newly created user's ID
-    const userId = userResult.insertId;
+    const userId = result.insertId;
 
     // Step 2: Insert into the UserGroup table to link user with the group
     const groupQuery = `
@@ -57,3 +94,5 @@ exports.createNewUser = async (user, groupId) => {
     return { success: false, message: "Error adding user" };
   }
 };
+
+// todo: Update and delete user missing:
