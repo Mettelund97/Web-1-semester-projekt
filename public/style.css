@@ -1105,9 +1105,9 @@ select:focus {
     font-size: 14px;
   }
 }
-
+/* logo on nav-bar */
 .logo {
-  font-size: 36px;
+  /* font-size: 36px; */
   font-weight: bold;
   margin: 0;
 }
