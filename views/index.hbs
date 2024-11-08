@@ -16,28 +16,45 @@
             <input type="text" placeholder="Search.." />
           </div>
           <div>
-            <img class="filtericon iconlight" src="/images/Filtericonblack.svg" alt="Filter Icon" />
-            <img class="filtericon icondarkmode" src="/images/Filtericon.svg" alt="Filter Icon" />
+            <img
+              class="filtericon iconlight"
+              src="/images/Filtericonblack.svg"
+              alt="Filter Icon"
+            />
+            <img
+              class="filtericon icondarkmode"
+              src="/images/Filtericon.svg"
+              alt="Filter Icon"
+            />
           </div>
         </div>
         <div class="toggle-container2">
           <input type="checkbox" id="toggle2" class="toggle-input2" />
           <label for="toggle2" class="toggle-label2">
-            <img src="/images/editiconblack.svg" alt="Edit Icon" class="toggle-icon2 iconlight" />
-            <img src="/images/editicon.svg" alt="Edit Icon" class="toggle-icon2 icondarkmode" />
+            <img
+              src="/images/editiconblack.svg"
+              alt="Edit Icon"
+              class="toggle-icon2 iconlight"
+            />
+            <img
+              src="/images/editicon.svg"
+              alt="Edit Icon"
+              class="toggle-icon2 icondarkmode"
+            />
           </label>
         </div>
       </div>
     </div>
 
-
-
-    
     <div>
       <div class="container-btn">
         <a href="/start-new-project" class="button-link">
-        <img src="/images/plusikon.svg" alt="Icon" class="buttonikon iconlight" />
-            Create new project</a>
+          <img
+            src="/images/plusikon.svg"
+            alt="Icon"
+            class="buttonikon iconlight"
+          />
+          Create new project</a>
       </div>
     </div>
 
@@ -55,8 +72,8 @@
         <tr class="accordion-header" onclick="toggleAccordion(this)">
           <td>
             <div class="cellcheckbox">
-            <div class="emptybox"></div>
-            <p class="tablep">Project Name</p>
+              <div class="emptybox"></div>
+              <p class="tablep">Project Name</p>
             </div>
           </td>
           <td class="mobileonly">
@@ -73,14 +90,30 @@
           </td>
           <td>
             <div class="actiontablecell">
-              <img src="/images/playikon.svg" alt="Icon" class="ikon2 iconlight" />
-              <img src="/images/playiconwhite.svg" alt="Icon" class="ikon2 icondarkmode" />
-              <img src="/images/arrowblack.svg" alt="Icon" class="ikon2 arrow-icon iconlight" />
-              <img src="/images/arrowwhite.svg" alt="Icon" class="ikon2 arrow-icon icondarkmode" />
+              <img
+                src="/images/playikon.svg"
+                alt="Icon"
+                class="ikon2 iconlight"
+              />
+              <img
+                src="/images/playiconwhite.svg"
+                alt="Icon"
+                class="ikon2 icondarkmode"
+              />
+              <img
+                src="/images/arrowblack.svg"
+                alt="Icon"
+                class="ikon2 arrow-icon iconlight"
+              />
+              <img
+                src="/images/arrowwhite.svg"
+                alt="Icon"
+                class="ikon2 arrow-icon icondarkmode"
+              />
             </div>
           </td>
         </tr>
-        
+
         <!-- Accordion Content Row -->
         <tr class="accordion-content">
           <td>
@@ -102,12 +135,12 @@
             </div>
           </td>
         </tr>
-        
+
         <tr class="accordion-content accordion-buttonrow">
           <td class="td2">
             <div class="container-btn2">
               <div class="btn2-icon-delete">
-                <img src="/images/Trash_Full.svg" alt="Icon"/>
+                <img src="/images/Trash_Full.svg" alt="Icon" />
               </div>
               <button class="btn2-delete">Delete project</button>
             </div>
@@ -116,21 +149,19 @@
           <td class="td2">
             <div class="container-btn2">
               <div class="btn2-icon-restart">
-                <img src="/images/Redo.svg" alt="Icon"/>
+                <img src="/images/Redo.svg" alt="Icon" />
               </div>
               <button class="btn2-restart">Restart project</button>
             </div>
           </td>
         </tr>
-          
-        
 
         <tr class="accordion-header" onclick="toggleAccordion(this)">
           <td>
             <div class="cellcheckbox">
               <div class="emptybox"></div>
               <p class="tablep">Project Name</p>
-              </div>
+            </div>
           </td>
           <td class="mobileonly">
             <p>WordPress</p>
@@ -146,15 +177,31 @@
           </td>
           <td>
             <div class="actiontablecell">
-              <img src="/images/pauseikon.svg" alt="Icon" class="ikon2 iconlight" />
-              <img src="/images/pauseikonwhite.svg" alt="Icon" class="ikon2 icondarkmode" />
+              <img
+                src="/images/pauseikon.svg"
+                alt="Icon"
+                class="ikon2 iconlight"
+              />
+              <img
+                src="/images/pauseikonwhite.svg"
+                alt="Icon"
+                class="ikon2 icondarkmode"
+              />
 
-              <img src="/images/arrowblack.svg" alt="Icon" class="ikon2 arrow-icon iconlight" />
-              <img src="/images/arrowwhite.svg" alt="Icon" class="ikon2 arrow-icon icondarkmode" />
+              <img
+                src="/images/arrowblack.svg"
+                alt="Icon"
+                class="ikon2 arrow-icon iconlight"
+              />
+              <img
+                src="/images/arrowwhite.svg"
+                alt="Icon"
+                class="ikon2 arrow-icon icondarkmode"
+              />
             </div>
           </td>
         </tr>
-        
+
         <!-- Accordion Content Row -->
         <tr class="accordion-content">
           <td>
@@ -185,7 +232,7 @@
               <button class="btn2-delete">Delete project</button>
             </div>
           </td>
-        
+
           <td class="td2">
             <div class="container-btn2">
               <div class="btn2-icon-restart">
@@ -197,7 +244,30 @@
         </tr>
       </table>
     </div>
+    {{! test for at se om data'en kommer korrekt ud. }}
+    <div>
+      <div class="sectionhead">
+        <h2>Users Table:</h2>
+        <div class="line"></div>
+      </div>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Role</th>
+        </tr>
+        {{#each users}}
+          <tr>
+            <td>{{id}}</td>
+            <td>{{firstName}}</td>
+            <td>{{lastName}}</td>
+            <td>{{email}}</td>
+            <td>{{roleName}}</td>
+          </tr>
+        {{/each}}
+      </table>
+    </div>
   </section>
-
- 
 </section>
