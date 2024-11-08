@@ -12,9 +12,8 @@ const PORT = process.env.PORT || 3000;
 
 // Add this before your routes are used
 
-app.use(express.json());  // For JSON data
+app.use(express.json()); // For JSON data
 app.use(express.urlencoded({ extended: true }));
-
 
 // Static files middleware
 app.use(express.static(path.join(__dirname, "public")));

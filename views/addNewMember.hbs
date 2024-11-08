@@ -4,62 +4,87 @@
       <li aria-current="page">Add new member</li>
     </ol>
   </nav>
-<section class="my-projects">
-  <div class="sectionhead">
-    <h2>Add Member</h2>
-    <div class="line"></div>
-  </div>
+  <section class="my-projects">
+    <div class="sectionhead">
+      <h2>Add Member</h2>
+      <div class="line"></div>
+    </div>
 
-<form id="memberForm" method="POST" action="/add-new-member">
-  <div class="input-field2">
-    <input type="text" id="firstname" name="firstname" placeholder="First name" required />
-  </div>
-  <div class="input-field2">
-    <input type="text" id="lastname" name="lastname" placeholder="Last name" required />
-  </div>
-  <div class="input-field2">
-    <input type="email" id="email" name="email" placeholder="Email" required />
-  </div>
-  <div class="input-field2">
-    <input type="password" id="password" name="password" placeholder="Password" required />
-  </div>
+    <form id="memberForm" method="POST" action="/add-new-member">
+      <div class="input-field2">
+        <input
+          type="text"
+          id="firstname"
+          name="firstname"
+          placeholder="First name"
+          required
+        />
+      </div>
+      <div class="input-field2">
+        <input
+          type="text"
+          id="lastname"
+          name="lastname"
+          placeholder="Last name"
+          required
+        />
+      </div>
+      <div class="input-field2">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
+          required
+        />
+      </div>
+      <div class="input-field2">
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+      </div>
 
-  <div class="custom-select">
-    <select id="role" name="role" required>
-      <option value="">Choose member role</option>
-      <option value="1">Superadmin</option>
-      <option value="2">Admin</option> <!-- Role ID 2 for Admin -->
-      <option value="3">Student</option> <!-- Role ID 3 for Student -->
-    </select>
-  </div>
+      <div class="custom-select">
+        <select id="role" name="role" required>
+          <option>Choose member role</option>
+          {{#each roles}}
+            <option value="{{this.id}}">{{this.type}}</option>
+          {{/each}}
+        </select>
+      </div>
 
-  <div class="custom-select">
-    <select id="group" name="group" required>
-      <option value="">Choose group</option>
-      <option value="WUO24">WUO24</option>
-      <option value="WUO23">WUO23</option>
-    </select>
-  </div>
+      <div class="custom-select">
+        <select id="group" name="group" required>
+          <option value="">Choose group</option>
+          {{#each groups}}
+            <option value="{{this.id}}">{{this.name}}</option>
+          {{/each}}
+        </select>
+      </div>
 
-  <div class="container-btn2 btn3">
-    <button type="submit" class="button-link">Add New Member</button>
-  </div>
-</form>
+      <div class="container-btn2 btn3">
+        <button type="submit" class="button-link">Add New Member</button>
+      </div>
+    </form>
 
-<div class="sectionhead">
-  <h2>Create Members with CSV</h2>
-  <div class="line"></div>
-</div>
+    <div class="sectionhead">
+      <h2>Create Members with CSV</h2>
+      <div class="line"></div>
+    </div>
 
-<div class="sectionhead sectionhead2">
-  <h3>Upload CSV</h3>
-</div>
+    <div class="sectionhead sectionhead2">
+      <h3>Upload CSV</h3>
+    </div>
 
-<div id="drop-area">Drag here to preview</div>
-<input type="file" id="file-input" accept=".csv" hidden>
-<div id="preview-container"></div>
-<div class="container-btn2 btn3">
-  <button id="csvUploadBtn" class="button-link">Add Members from CSV</button>
-</div>
-</section>
+    <div id="drop-area">Drag here to preview</div>
+    <input type="file" id="file-input" accept=".csv" hidden />
+    <div id="preview-container"></div>
+    <div class="container-btn2 btn3">
+      <button id="csvUploadBtn" class="button-link">Add Members from CSV</button>
+    </div>
+  </section>
 </section>
