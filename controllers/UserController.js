@@ -1,9 +1,9 @@
-const userModel = require("../models/UserModel");
+const userModel = require("../models/userModel");
 
 exports.getAllUsers = async (req, res, next) => {
   try {
     const users = await userModel.getAllUsers();
-    console.table(users);
+    console.log("Users data in controller:", users); 
     res.locals.users = users || [];
     next();
   } catch (error) {
@@ -95,3 +95,4 @@ exports.createNewUser = async (req, res) => {
 };
 
 // todo: Update and delete user missing:
+

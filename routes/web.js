@@ -10,10 +10,10 @@ const startNewProjectController = require("../controllers/startNewProjectControl
 const userController = require("../controllers/UserController");
 const roleController = require("../controllers/roleController");
 const groupController = require("../controllers/groupController");
+const membersController = require("../controllers/membersController");
 const router = express.Router();
 
-// linje 16 skal slettes senere, er der kun for testing
-router.get("/user/:id", userController.getUserById);
+
 
 // altid efterfulgt af "/urlen", så start med userController.getAllUsers hvis man skal bruge data fra user osv.
 // og ikke homeController.getHome først.
@@ -21,13 +21,21 @@ router.get("/", userController.getAllUsers, homeController.getHome);
 router.get("/settings", settingsController.getSettings);
 router.get("/login", loginController.getLogin);
 
+router.get (
+    "/members",
+    userController.getAllUsers,
+    roleController.getAllRoles,  
+    membersController.getMembers
+);
+
 router.get(
   "/add-new-member",
   roleController.getAllRoles,
   groupController.getAllGroups,
   addNewMemberController.getAddNewMember
 );
-router.post("/add-new-member", userController.createNewUser);
+router.post(
+  "/add-new-member",userController.createNewUser );
 
 router.get(
   "/group-administration",
