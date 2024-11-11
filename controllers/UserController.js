@@ -1,9 +1,8 @@
-const userModel = require("../models/userModel");
+const userModel = require("../models/UserModel");
 
 exports.getAllUsers = async (req, res, next) => {
   try {
     const users = await userModel.getAllUsers();
-    console.log("Users data in controller:", users); 
     res.locals.users = users || [];
     next();
   } catch (error) {
@@ -50,7 +49,8 @@ exports.createNewUser = async (req, res) => {
   //     console.log("The entered email is not a verified UCL email.");
   //     return res.status(400).send("Invalid email: must be a UCL email.");
   //   }
-  if (!email.endsWith("@edu.ucl.dk") && !email.endsWith("@ucl.dk")) {
+
+  if (!email.endsWith("@ucl.dk") && !email.endsWith("@edu.ucl.dk")) {
     console.log("The entered email is not a verified UCL email.");
     return res.status(400).send("Invalid email: must be a UCL email.");
   }
@@ -96,38 +96,37 @@ exports.createNewUser = async (req, res) => {
 
 // todo: Update and delete user missing:
 
-
 exports.updateUserRole = async (req, res) => {
   const userId = req.params.id;
   const { roleId } = req.body;
 
   try {
-      // Validate roleId
-      if (![1, 2, 3].includes(parseInt(roleId))) {
-          return res.status(400).json({
-              success: false,
-              message: "Invalid role ID"
-          });
-      }
-
-      const result = await userModel.updateUserRole(userId, roleId);
-
-      if (result.success) {
-          res.json({
-              success: true,
-              message: "Role updated successfully"
-          });
-      } else {
-          res.status(500).json({
-              success: false,
-              message: result.message
-          });
-      }
-  } catch (error) {
-      console.error("Error updating user role:", error);
-      res.status(500).json({
-          success: false,
-          message: "Internal server error"
+    // Validate roleId
+    if (![1, 2, 3].includes(parseInt(roleId))) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid role ID",
       });
+    }
+
+    const result = await userModel.updateUserRole(userId, roleId);
+
+    if (result.success) {
+      res.json({
+        success: true,
+        message: "Role updated successfully",
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: result.message,
+      });
+    }
+  } catch (error) {
+    console.error("Error updating user role:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };

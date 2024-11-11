@@ -5,7 +5,6 @@ exports.getAllGroups = async () => {
     const [rows, fields] = await dbConn.query(
       `SELECT id, name, createdAt FROM \`Groups\``
     );
-
     return rows;
   } catch (error) {
     console.error(error);

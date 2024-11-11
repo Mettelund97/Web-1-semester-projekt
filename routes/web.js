@@ -13,7 +13,8 @@ const groupController = require("../controllers/groupController");
 const membersController = require("../controllers/membersController");
 const router = express.Router();
 
-
+// linje 16 skal slettes senere, er der kun for testing
+router.get("/user/:id", userController.getUserById);
 
 // altid efterfulgt af "/urlen", så start med userController.getAllUsers hvis man skal bruge data fra user osv.
 // og ikke homeController.getHome først.
@@ -22,15 +23,13 @@ router.get("/settings", settingsController.getSettings);
 router.get("/login", loginController.getLogin);
 
 // Update
-router.put('/user/:id/role', userController.updateUserRole);
+router.put("/user/:id/role", userController.updateUserRole);
 
-
-
-router.get (
-    "/members",
-    userController.getAllUsers,
-    roleController.getAllRoles,  
-    membersController.getMembers
+router.get(
+  "/members",
+  userController.getAllUsers,
+  roleController.getAllRoles,
+  membersController.getMembers
 );
 
 router.get(
@@ -39,8 +38,7 @@ router.get(
   groupController.getAllGroups,
   addNewMemberController.getAddNewMember
 );
-router.post(
-  "/add-new-member",userController.createNewUser );
+router.post("/add-new-member", userController.createNewUser);
 
 router.get(
   "/group-administration",
