@@ -26,9 +26,13 @@ app.engine(
     defaultLayout: "main",
     layoutsDir: path.join(__dirname, "views/layouts"),
     partialsDir: path.join(__dirname, "views/partials"),
-  
-  })
-);
+    helpers: {
+      eq: function (v1, v2) {
+          return v1 === v2;
+      }
+  }
+}));
+
 
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));

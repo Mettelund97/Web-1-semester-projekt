@@ -16,31 +16,15 @@
             <input type="text" placeholder="Search.." />
           </div>
           <div>
-            <img
-              class="filtericon iconlight"
-              src="/images/Filtericonblack.svg"
-              alt="Filter Icon"
-            />
-            <img
-              class="filtericon icondarkmode"
-              src="/images/Filtericon.svg"
-              alt="Filter Icon"
-            />
+            <img class="filtericon iconlight" src="/images/Filtericonblack.svg" alt="Filter Icon" />
+            <img class="filtericon icondarkmode" src="/images/Filtericon.svg" alt="Filter Icon" />
           </div>
         </div>
         <div class="toggle-container2">
           <input type="checkbox" id="toggle2" class="toggle-input2" />
           <label for="toggle2" class="toggle-label2">
-            <img
-              src="/images/editiconblack.svg"
-              alt="Edit Icon"
-              class="toggle-icon2 iconlight"
-            />
-            <img
-              src="/images/editicon.svg"
-              alt="Edit Icon"
-              class="toggle-icon2 icondarkmode"
-            />
+            <img src="/images/editiconblack.svg" alt="Edit Icon" class="toggle-icon2 iconlight" />
+            <img src="/images/editicon.svg" alt="Edit Icon" class="toggle-icon2 icondarkmode" />
           </label>
         </div>
       </div>
@@ -49,12 +33,9 @@
     <div>
       <div class="container-btn">
         <a href="/add-new-member" class="button-link">
-          <img
-            src="/images/plusikon.svg"
-            alt="Icon"
-            class="buttonikon iconlight"
-          />
-          Add member</a>
+          <img src="/images/plusikon.svg" alt="Icon" class="buttonikon iconlight" />
+          Add member
+        </a>
       </div>
     </div>
 
@@ -62,134 +43,138 @@
       <table>
         <tr class="tablerow">
           <th class="tablehead"><h3>Name</h3></th>
-          <th class="tablehead mobileonly"><h3>Domain</h3></th>
-          <th class="tablehead mobileonly"><h3>Role</h3></th>
+          <th class="tablehead"><h3>Email</h3></th>
+          <th class="tablehead"><h3>Role</h3></th>
           <th class="tablehead"><h3>Status</h3></th>
           <th class="tablehead"><h3>Action</h3></th>
         </tr>
-      </table>
-      <table>
         {{#each users}}
-        <tr class="accordion-header" onclick="toggleAccordion(this)">
-          <td>
-            <div class="cellcheckbox">
-              <div class="emptybox"></div>
-              <p class="tablep">{{this.firstName}} {{this.lastName}}</p>
-            </div>
-          </td>
-          <td class="mobileonly">
-            <p>{{this.email}}</p>
-          </td>
-          <td class="mobileonly">
-            <p>{{this.roleName}}</p>
-          </td>
-          <td>
-            <div class="statusrow">
-              <img src="/images/greenstatus.svg" alt="Icon" class="ikon2" />
-              <p class="statusp">ONLINE</p>
-            </div>
-          </td>
-          <td>
-            <div class="actiontablecell">
-              <img
-                src="/images/playikon.svg"
-                alt="Icon"
-                class="ikon2 iconlight"
-              />
-              <img
-                src="/images/playiconwhite.svg"
-                alt="Icon"
-                class="ikon2 icondarkmode"
-              />
-              <img
-                src="/images/arrowblack.svg"
-                alt="Icon"
-                class="ikon2 arrow-icon iconlight"
-              />
-              <img
-                src="/images/arrowwhite.svg"
-                alt="Icon"
-                class="ikon2 arrow-icon icondarkmode"
-              />
-            </div>
-          </td>
-        </tr>
-        <!--
-        <!-- Accordion Content Row -->
-        <tr class="accordion-content">
-          <td>
-            <div class="cell-content">
-              <h5>Domain name</h5>
-              <p>hej.kubelab.dk</p>
-            </div>
-          </td>
-          <td>
-            <div class="cell-content">
-              <h5>Created</h5>
-              <p>15 Oktober 2024 - 15:15:15</p>
-            </div>
-          </td>
-          <td>
-            <div class="cell-content">
-              <h5>Group</h5>
-              <p>Group name</p>
-            </div>
-          </td>
-        </tr>
-
-        <tr class="accordion-content accordion-buttonrow">
-          <td class="td2">
-            <div class="container-btn2">
-              <div class="btn2-icon-delete">
-                <img src="/images/Trash_Full.svg" alt="Icon" />
+          <tr class="accordion-header" data-user-id="{{this.id}}">
+            <td>
+              <div class="cellcheckbox">
+                <div class="emptybox"></div>
+                <p class="tablep">{{this.firstName}} {{this.lastName}}</p>
               </div>
-              <button class="btn2-delete">Delete project</button>
-            </div>
-          </td>
-
-          <td class="td2">
-            <div class="container-btn2">
-              <div class="btn2-icon-restart">
-                <img src="/images/Redo.svg" alt="Icon" />
+            </td>
+            <td>
+              <p>{{this.email}}</p>
+            </td>
+            <td class="role-cell">
+                <div id="role-display-{{this.id}}" class="role-display-element">
+                    <span>{{this.roleName}}</span>
+                    <button class="edit-role-btn" onclick="showRoleEdit('{{this.id}}')">
+                        <img src="/images/editiconblack.svg" alt="Edit" class="ikon2 iconlight"/>
+                        <img src="/images/editicon.svg" alt="Edit" class="ikon2 icondarkmode"/>
+                    </button>
+                </div>
+                <div id="role-edit-{{this.id}}" class="role-edit" style="display: none;">
+                    <select id="role-select-{{this.id}}" onchange="handleRoleChange('{{this.id}}', '{{this.RoleId}}')">
+                        {{#each ../roles}}
+                            <option value="{{this.id}}" {{#if (eq this.id ../RoleId)}}selected{{/if}}>
+                                {{this.type}}
+                            </option>
+                        {{/each}}
+                    </select>
+                    <div id="button-group-{{this.id}}" class="button-group" style="display: none;">
+                        <button onclick="updateRole('{{this.id}}')" class="confirm-btn">Confirm</button>
+                        <button onclick="cancelEdit('{{this.id}}')" class="cancel-btn">Cancel</button>
+                    </div>
+                </div>
+            </td>
+            <td>
+              <div class="statusrow">
+                <img src="/images/greenstatus.svg" alt="Icon" class="ikon2" />
+                <p class="statusp">ONLINE</p>
               </div>
-              <button class="btn2-restart">Restart project</button>
-            </div>
-          </td>
-        </tr>
+            </td>
+            </td>
+            <td>
+              <div class="actiontablecell">
+                <img src="/images/playikon.svg" alt="Icon" class="ikon2 iconlight" />
+                <img src="/images/playiconwhite.svg" alt="Icon" class="ikon2 icondarkmode" />
+                <img src="/images/arrowblack.svg" alt="Icon" class="ikon2 arrow-icon iconlight" />
+                <img src="/images/arrowwhite.svg" alt="Icon" class="ikon2 arrow-icon icondarkmode" />
+              </div>
+            </td>
+          </tr>
         {{/each}}
       </table>
     </div>
-    {{! test for at se om data'en kommer korrekt ud. }}
-    <div>
-    <div class="sectionhead">
-        <h2>Users Table:</h2>
-        <div class="line"></div>
-    </div>
-    {{log users}} {{!-- For debug --}}
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Role</th>
-        </tr>
-        {{#if users}}
-            {{#each users}}
-                <tr>
-                    <td>{{this.id}}</td>
-                    <td>{{this.firstName}}</td>
-                    <td>{{this.lastName}}</td>
-                    <td>{{this.email}}</td>
-                    <td>{{this.roleName}}</td>
-                </tr>
-            {{/each}}
-        {{else}}
-            <tr>
-                <td colspan="5">No users found</td>
-            </tr>
-        {{/if}}
-    </table>
-    </div>
   </section>
 </section>
+{{!-- Add this at the bottom of your members.hbs, before the closing </section> tag --}}
+
+
+
+<script>
+// Role editing functions
+function showRoleEdit(userId) {
+    const displayElement = document.getElementById(`role-display-${userId}`);
+    const editElement = document.getElementById(`role-edit-${userId}`);
+    const buttonGroup = document.getElementById(`button-group-${userId}`);
+    
+    if (displayElement && editElement) {
+        displayElement.style.display = 'none';
+        editElement.style.display = 'flex';
+        // Hide buttons initially
+        if (buttonGroup) {
+            buttonGroup.style.display = 'none';
+        }
+    }
+}
+
+function handleRoleChange(userId, currentRoleId) {
+    const select = document.getElementById(`role-select-${userId}`);
+    const buttonGroup = document.getElementById(`button-group-${userId}`);
+    
+    // Only show buttons if selected role is different from current role
+    if (buttonGroup) {
+        buttonGroup.style.display = select.value !== currentRoleId ? 'flex' : 'none';
+    }
+}
+
+function cancelEdit(userId) {
+    const displayElement = document.getElementById(`role-display-${userId}`);
+    const editElement = document.getElementById(`role-edit-${userId}`);
+    const select = document.getElementById(`role-select-${userId}`);
+    const buttonGroup = document.getElementById(`button-group-${userId}`);
+    
+    if (displayElement && editElement) {
+        displayElement.style.display = 'flex';
+        editElement.style.display = 'none';
+        // Reset select to original value
+        if (select) {
+            select.value = currentRoleId;
+        }
+        // Hide buttons
+        if (buttonGroup) {
+            buttonGroup.style.display = 'none';
+        }
+    }
+}
+
+function updateRole(userId) {
+    const select = document.getElementById(`role-select-${userId}`);
+    const newRoleId = select.value;
+
+    fetch(`/user/${userId}/role`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ roleId: newRoleId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert('Error updating role: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error updating role');
+    });
+}
+</script>

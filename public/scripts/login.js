@@ -1,8 +1,10 @@
-// Handle login form submission
-document
-  .getElementById("loginForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
-    console.log("Form submitted");
-    window.location.href = "/";
-  });
+document.addEventListener('DOMContentLoaded', function() {
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+      loginForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          console.log('Form submitted');
+          window.location.href = '/';
+      });
+  }
+});

@@ -96,3 +96,38 @@ exports.createNewUser = async (req, res) => {
 
 // todo: Update and delete user missing:
 
+
+exports.updateUserRole = async (req, res) => {
+  const userId = req.params.id;
+  const { roleId } = req.body;
+
+  try {
+      // Validate roleId
+      if (![1, 2, 3].includes(parseInt(roleId))) {
+          return res.status(400).json({
+              success: false,
+              message: "Invalid role ID"
+          });
+      }
+
+      const result = await userModel.updateUserRole(userId, roleId);
+
+      if (result.success) {
+          res.json({
+              success: true,
+              message: "Role updated successfully"
+          });
+      } else {
+          res.status(500).json({
+              success: false,
+              message: result.message
+          });
+      }
+  } catch (error) {
+      console.error("Error updating user role:", error);
+      res.status(500).json({
+          success: false,
+          message: "Internal server error"
+      });
+  }
+};

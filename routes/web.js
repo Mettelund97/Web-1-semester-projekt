@@ -21,6 +21,11 @@ router.get("/", userController.getAllUsers, homeController.getHome);
 router.get("/settings", settingsController.getSettings);
 router.get("/login", loginController.getLogin);
 
+// Update
+router.put('/user/:id/role', userController.updateUserRole);
+
+
+
 router.get (
     "/members",
     userController.getAllUsers,

@@ -98,3 +98,32 @@ exports.createNewUser = async (user, groupId) => {
 // todo: Update and delete user missing:
 
 
+exports.updateUserRole = async (userId, roleId) => {
+  try {
+      const updateQuery = `
+          UPDATE Users 
+          SET roleId = ?
+          WHERE id = ?
+      `;
+
+      const [result] = await dbConn.query(updateQuery, [roleId, userId]);
+
+      if (result.affectedRows === 0) {
+          return {
+              success: false,
+              message: "User not found"
+          };
+      }
+
+      return {
+          success: true,
+          message: "Role updated successfully"
+      };
+  } catch (error) {
+      console.error("Error updating user role:", error);
+      return {
+          success: false,
+          message: "Error updating role"
+      };
+  }
+};
