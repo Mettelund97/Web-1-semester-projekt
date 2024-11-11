@@ -96,3 +96,95 @@ exports.createNewUser = async (user, groupId) => {
 };
 
 // todo: Update and delete user missing:
+
+
+
+/*
+
+// Update user in the database
+exports.updateUser = async (userId, userData, groupId) => {
+  const { firstName, lastName, email, roleId } = userData;
+  
+  try {
+    // Begin transaction
+    await dbConn.beginTransaction();
+
+    // Update user information
+    const updateUserQuery = `
+      UPDATE Users 
+      SET firstName = ?,
+          lastName = ?,
+          email = ?,
+          roleId = ?
+      WHERE id = ?
+    `;
+
+    await dbConn.query(updateUserQuery, [
+      firstName,
+      lastName,
+      email,
+      roleId,
+      userId
+    ]);
+
+    // Update user's group if provided
+    if (groupId) {
+      // First delete existing group association
+      await dbConn.query('DELETE FROM UserGroup WHERE userId = ?', [userId]);
+      
+      // Then insert new group association
+      await dbConn.query('INSERT INTO UserGroup (userId, groupId) VALUES (?, ?)', [userId, groupId]);
+    }
+
+    await dbConn.commit();
+    
+    return {
+      success: true,
+      message: "User updated successfully"
+    };
+  } catch (error) {
+    await dbConn.rollback();
+    console.error("Error updating user:", error);
+    return {
+      success: false,
+      message: "Error updating user"
+    };
+  }
+};
+
+// Delete user from the database
+exports.deleteUser = async (userId) => {
+  try {
+    // Begin transaction
+    await dbConn.beginTransaction();
+
+    // First delete from UserGroup table (foreign key constraint)
+    await dbConn.query('DELETE FROM UserGroup WHERE userId = ?', [userId]);
+    
+    // Then delete from Users table
+    const [result] = await dbConn.query('DELETE FROM Users WHERE id = ?', [userId]);
+    
+    await dbConn.commit();
+
+    if (result.affectedRows === 0) {
+      return {
+        success: false,
+        message: "User not found"
+      };
+    }
+
+    return {
+      success: true,
+      message: "User deleted successfully"
+    };
+  } catch (error) {
+    await dbConn.rollback();
+    console.error("Error deleting user:", error);
+    return {
+      success: false,
+      message: "Error deleting user"
+    };
+  }
+};
+
+*/

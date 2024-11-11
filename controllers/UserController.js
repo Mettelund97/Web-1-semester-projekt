@@ -1,9 +1,9 @@
-const userModel = require("../models/UserModel");
+const userModel = require("../models/userModel");
 
 exports.getAllUsers = async (req, res, next) => {
   try {
     const users = await userModel.getAllUsers();
-    console.table(users);
+    console.log("Users data in controller:", users); 
     res.locals.users = users || [];
     next();
   } catch (error) {
@@ -95,3 +95,85 @@ exports.createNewUser = async (req, res) => {
 };
 
 // todo: Update and delete user missing:
+
+
+
+/*
+
+exports.updateUser = async (req, res) => {
+  const userId = req.params.id;
+  const { firstName, lastName, email, roleId, groupId } = req.body;
+
+  try {
+    // Validate email format
+    if (email && !email.endsWith("@edc.ucl.dk") && !email.endsWith("@ucl.dk")) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid email: must be a UCL email."
+      });
+    }
+
+    // Check if email exists for another user
+    if (email) {
+      const existingUser = await userModel.checkUserByEmail(email);
+      if (existingUser && existingUser.id !== parseInt(userId)) {
+        return res.status(409).json({
+          success: false,
+          message: "Email already in use by another user"
+        });
+      }
+    }
+
+    const result = await userModel.updateUser(
+      userId,
+      { firstName, lastName, email, roleId },
+      groupId
+    );
+
+    if (result.success) {
+      res.json({
+        success: true,
+        message: "User updated successfully"
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: result.message
+      });
+    }
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error"
+    });
+  }
+};
+
+exports.deleteUser = async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const result = await userModel.deleteUser(userId);
+
+    if (result.success) {
+      res.json({
+        success: true,
+        message: "User deleted successfully"
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: result.message
+      });
+    }
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error"
+    });
+  }
+};
+
+*/
