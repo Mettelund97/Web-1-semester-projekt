@@ -50,7 +50,7 @@ exports.createNewUser = async (req, res) => {
   //     console.log("The entered email is not a verified UCL email.");
   //     return res.status(400).send("Invalid email: must be a UCL email.");
   //   }
-  if (!email.endsWith("@edc.ucl.dk") && !email.endsWith("@ucl.dk")) {
+  if (!email.endsWith("@edu.ucl.dk") && !email.endsWith("@ucl.dk")) {
     console.log("The entered email is not a verified UCL email.");
     return res.status(400).send("Invalid email: must be a UCL email.");
   }
