@@ -1003,7 +1003,7 @@ select:focus {
 }
 
 .role-display-element:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: var(--container-element);
 }
 
 .role-display-element span {
@@ -1016,7 +1016,7 @@ select:focus {
   border: none;
   cursor: pointer;
   padding: 6px;
-  opacity: 0;
+  opacity: 1;
   transition: all 0.2s ease;
   border-radius: 4px;
 }
