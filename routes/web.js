@@ -14,11 +14,6 @@ const membersController = require("../controllers/membersController");
 const router = express.Router();
 
 
-// Update user
-router.put('/user/:id', userController.updateUser);
-
-// Delete user
-router.delete('/user/:id', userController.deleteUser);
 
 // altid efterfulgt af "/urlen", så start med userController.getAllUsers hvis man skal bruge data fra user osv.
 // og ikke homeController.getHome først.
@@ -39,7 +34,8 @@ router.get(
   groupController.getAllGroups,
   addNewMemberController.getAddNewMember
 );
-router.post("/add-new-member", userController.createNewUser);
+router.post(
+  "/add-new-member",userController.createNewUser );
 
 router.get(
   "/group-administration",

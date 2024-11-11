@@ -156,93 +156,6 @@
             </div>
           </td>
         </tr>
-
-        <tr class="accordion-header" onclick="toggleAccordion(this)">
-          <td>
-            <div class="cellcheckbox">
-              <div class="emptybox"></div>
-              <p class="tablep">Project Name</p>
-            </div>
-          </td>
-          <td class="mobileonly">
-            <p>WordPress</p>
-          </td>
-          <td class="mobileonly">
-            <p>16/09-2024</p>
-          </td>
-          <td>
-            <div class="statusrow">
-              <img src="/images/redstatus.svg" alt="Icon" class="ikon2" />
-              <p class="statusp">OFFLINE</p>
-            </div>
-          </td>
-          <td>
-            <div class="actiontablecell">
-              <img
-                src="/images/pauseikon.svg"
-                alt="Icon"
-                class="ikon2 iconlight"
-              />
-              <img
-                src="/images/pauseikonwhite.svg"
-                alt="Icon"
-                class="ikon2 icondarkmode"
-              />
-
-              <img
-                src="/images/arrowblack.svg"
-                alt="Icon"
-                class="ikon2 arrow-icon iconlight"
-              />
-              <img
-                src="/images/arrowwhite.svg"
-                alt="Icon"
-                class="ikon2 arrow-icon icondarkmode"
-              />
-            </div>
-          </td>
-        </tr>
-
-        <!-- Accordion Content Row -->
-        <tr class="accordion-content">
-          <td>
-            <div class="cell-content">
-              <h5>Domain name</h5>
-              <p>hej.kubelab.dk</p>
-            </div>
-          </td>
-          <td>
-            <div class="cell-content">
-              <h5>Created</h5>
-              <p>15 Oktober 2024 - 15:15:15</p>
-            </div>
-          </td>
-          <td>
-            <div class="cell-content">
-              <h5>Group</h5>
-              <p>Group name</p>
-            </div>
-          </td>
-        </tr>
-        <tr class="accordion-content accordion-buttonrow">
-          <td class="td2">
-            <div class="container-btn2">
-              <div class="btn2-icon-delete">
-                <img src="/images/Trash_Full.svg" alt="Icon" />
-              </div>
-              <button class="btn2-delete">Delete project</button>
-            </div>
-          </td>
-
-          <td class="td2">
-            <div class="container-btn2">
-              <div class="btn2-icon-restart">
-                <img src="/images/Redo.svg" alt="Icon" />
-              </div>
-              <button class="btn2-restart">Restart project</button>
-            </div>
-          </td>
-        </tr>
         {{/each}}
       </table>
     </div>
@@ -252,7 +165,7 @@
         <h2>Users Table:</h2>
         <div class="line"></div>
     </div>
-    {{log users}} {{!-- Add this line to debug --}}
+    {{log users}} {{!-- For debug --}}
     <table>
         <tr>
             <th>ID</th>
