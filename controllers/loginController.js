@@ -1,4 +1,5 @@
 const userModel = require("../models/UserModel");
+const jwt = require("jsonwebtoken");
 
 exports.getLogin = (req, res) => {
   res.render("login", {
@@ -20,7 +21,9 @@ exports.login = async (req, res) => {
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
-      res.json({ token, user });
+      res.cookie("authToken", token);
+      res.send();
+      // res.json({ token, user });
     } else {
       console.log("Invalid email or password.");
       res.status(401).send("Invalid email or password.");

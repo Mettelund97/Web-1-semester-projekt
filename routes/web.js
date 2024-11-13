@@ -1,6 +1,5 @@
 const express = require("express");
-// const authMiddleware = require("../middelware/authMiddelware");
-
+const authController = require("../controllers/authController");
 const homeController = require("../controllers/homeController");
 const settingsController = require("../controllers/settingsController");
 const loginController = require("../controllers/loginController");
@@ -14,33 +13,39 @@ const groupController = require("../controllers/groupController");
 const membersController = require("../controllers/membersController");
 const router = express.Router();
 
-// linje 16 skal slettes senere, er der kun for testing
-// router.get("/user/:id", userController.getUserById);
+// // linje 16 skal slettes senere, er der kun for testing
+// // router.get("/user/:id", userController.getUserById);
 
-// altid efterfulgt af "/urlen", så start med userController.getAllUsers hvis man skal bruge data fra user osv.
-// og ikke homeController.getHome først.
+// // altid efterfulgt af "/urlen", så start med userController.getAllUsers hvis man skal bruge data fra user osv.
+// // og ikke homeController.getHome først.
 
 router.get("/login", loginController.getLogin);
 router.post("/login", loginController.login);
 
-// Protected routes
-// router.get(
-//   "/",
-//   authMiddleware,
-//   userController.getAllUsers,
-//   homeController.getHome,
-//   (req, res) => {
-//     res.send("This is a protected route for authenticated users.");
-//   }
-// );
+// Alt herunder er beskyttet routes vha: "ensureAuthenticated"
+router.get(
+  "/",
+  authController.ensureAuthenticated,
+  userController.getAllUsers,
+  homeController.getHome
+);
 
-router.get("/", userController.getAllUsers, homeController.getHome);
-router.get("/settings", settingsController.getSettings);
-// Update
-router.put("/user/:id/role", userController.updateUserRole);
+router.get(
+  "/settings",
+  authController.ensureAuthenticated,
+  userController.getUserById,
+  settingsController.getSettings
+);
+
+router.put(
+  "/user/:id/role",
+  authController.ensureAuthenticated,
+  userController.updateUserRole
+);
 
 router.get(
   "/members",
+  authController.ensureAuthenticated,
   userController.getAllUsers,
   roleController.getAllRoles,
   membersController.getMembers
@@ -48,17 +53,34 @@ router.get(
 
 router.get(
   "/add-new-member",
+  authController.ensureAuthenticated,
   roleController.getAllRoles,
   groupController.getAllGroups,
   addNewMemberController.getAddNewMember
 );
-router.post("/add-new-member", userController.createNewUser);
+
+router.post(
+  "/add-new-member",
+  authController.ensureAuthenticated,
+  userController.createNewUser
+);
 
 router.get(
   "/group-administration",
+  authController.ensureAuthenticated,
   groupAdministrationController.getGroupAdministration
 );
-router.get("/create-new-group", createNewGroupController.getCreateNewGroup);
-router.get("/start-new-project", startNewProjectController.getStartNewProject);
+
+router.get(
+  "/create-new-group",
+  authController.ensureAuthenticated,
+  createNewGroupController.getCreateNewGroup
+);
+
+router.get(
+  "/start-new-project",
+  authController.ensureAuthenticated,
+  startNewProjectController.getStartNewProject
+);
 
 module.exports = router;

@@ -12,7 +12,7 @@ exports.getAllUsers = async (req, res, next) => {
 };
 
 exports.getUserById = async (req, res, next) => {
-  const userId = req.params.id;
+  const userId = req.user.id;
   try {
     const user = await userModel.getUserById(userId);
     //   if user is not found
@@ -21,8 +21,7 @@ exports.getUserById = async (req, res, next) => {
     }
     // locals to make the user data available to the views
     res.locals.user = user;
-    // linje 27 skal slettes senere, er der kun for testing
-    res.send(`User Info: ${JSON.stringify(user)}`);
+
     next();
   } catch (error) {
     console.error(`Error fetching user by ID: ${userId}`, error);

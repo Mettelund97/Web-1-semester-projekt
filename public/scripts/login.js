@@ -23,9 +23,9 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   });
 
   if (response.ok) {
-    const { token, user } = await response.json();
-    localStorage.setItem("authToken", token); // Store token
-    window.location.href = "/"; // Redirect to protected route
+    // const { token, user } = await response.json();
+    // localStorage.setItem("authToken", token); // Store token
+    window.location.href = "/"; // route to protected route
   } else {
     alert("Invalid email or password.");
   }

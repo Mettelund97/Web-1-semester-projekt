@@ -1,6 +1,5 @@
 const dbConn = require("../config/db.js");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 // getting all users from the database
 exports.getAllUsers = async () => {
