@@ -1,4 +1,6 @@
 const dbConn = require("../config/db.js");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // getting all users from the database
 exports.getAllUsers = async () => {
@@ -6,7 +8,7 @@ exports.getAllUsers = async () => {
     const [rows] = await dbConn.query(
       //   `SELECT id, firstName, lastName, email, password, expiredAt, roleId FROM Users`
       // );
-      `SELECT Users.id, Users.firstName, Users.lastName, Users.email, Users.password, Users.expiredAt, Users.RoleId,
+      `SELECT Users.id, Users.firstName, Users.lastName, Users.email, Users.password, Users.expiredAt, Users.roleId,
     Roles.type AS roleName
     FROM Users
     JOIN Roles ON Users.RoleId = Roles.id`
@@ -54,15 +56,40 @@ exports.checkUserByEmail = async (email) => {
   }
 };
 
+exports.checkIfUserCanLogin = async (email, password) => {
+  try {
+    const [rows] = await dbConn.query(
+      `SELECT * FROM Users WHERE email = ? LIMIT 1`,
+      [email]
+    );
+
+    if (rows.length === 0) return null;
+
+    const user = rows[0];
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (passwordMatch) {
+      return user;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error finding", error);
+    throw error;
+  }
+};
+
 // create a single user to the database with group and role
 exports.createNewUser = async (user, groupId) => {
   const { firstName, lastName, email, password, role } = user;
 
   try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     // Step 1: Insert the new user into the Users table
     const userQuery = `
       INSERT INTO Users (firstName, lastName, email, password, roleId)
-      VALUES (?, ?, ?, SHA2(?, 256), ?)
+      VALUES (?, ?, ?, ?, ?)
     `;
 
     // Execute the query with parameters
@@ -70,7 +97,7 @@ exports.createNewUser = async (user, groupId) => {
       firstName,
       lastName,
       email,
-      password,
+      hashedPassword,
       role,
     ]);
 
@@ -78,10 +105,7 @@ exports.createNewUser = async (user, groupId) => {
     const userId = result.insertId;
 
     // Step 2: Insert into the UserGroup table to link user with the group
-    const groupQuery = `
-      INSERT INTO UserGroup (userId, groupId)
-      VALUES (?, ?)
-    `;
+    const groupQuery = `INSERT INTO UserGroup (userId, groupId) VALUES (?, ?)`;
     await dbConn.query(groupQuery, [userId, groupId]);
 
     return {
