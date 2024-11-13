@@ -126,27 +126,7 @@ function toggleAccordion(element) {
   element.classList.toggle("no-border", !isOpen);
 }
 
-/*Group management */
-function toggleAccordion2(element) {
-  const accordionRows = element.nextElementSibling.querySelectorAll('.accordion-content2');
-  
-  // Check if the accordion is currently open (by checking the display of the first row)
-  const isOpen = accordionRows[0].style.display === "table-row";
-  
-  // Toggle display for all rows with the class "accordion-content2"
-  accordionRows.forEach(row => {
-    row.style.display = isOpen ? "none" : "table-row";
-  });
 
-  // Toggle the "open" class on the accordion block
-  if (isOpen) {
-    element.classList.remove('open'); // Remove "open" class when collapsed
-    element.querySelector('.arrow-icon2').style.transform = "rotate(0deg)";
-  } else {
-    element.classList.add('open'); // Add "open" class when expanded
-    element.querySelector('.arrow-icon2').style.transform = "rotate(180deg)";
-  }
-}
 
 
 

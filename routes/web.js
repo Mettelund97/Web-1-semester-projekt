@@ -42,9 +42,17 @@ router.post("/add-new-member", userController.createNewUser);
 
 router.get(
   "/group-administration",
+  groupController.getAllGroups,
+  userController.getAllUsers,
   groupAdministrationController.getGroupAdministration
 );
+
+router.post("/group-administration", groupController.createNewGroup);
+
 router.get("/create-new-group", createNewGroupController.getCreateNewGroup);
+router.post("/create-new-group", groupController.createNewGroup);
+
+
 router.get("/start-new-project", startNewProjectController.getStartNewProject);
 
 module.exports = router;

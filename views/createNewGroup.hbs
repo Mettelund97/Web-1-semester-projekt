@@ -10,21 +10,19 @@
       <h2>Create group</h2>
       <div class="line"></div>
     </div>
+    <form id="groupForm" method="POST" action="/create-new-group">
     <div class="input-field2">
       <input
         type="text"
         id="groupname"
-        name="groupname"
+        name="name"
         placeholder="Group name*"
         required
       />
     </div>
     <div class="container-btn2">
-      <a href="/group-administration" class="button-link"><img
-          src="/images/plusikon.svg"
-          alt="Icon"
-          class="buttonikon"
-        />Create new group</a>
+      <button type="submit" class="button-link">Create Group</button>
     </div>
+    </form>
   </section>
 </section>
