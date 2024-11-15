@@ -478,7 +478,29 @@ th {
 }
 
 
+.iconlight {
+  display: inline-block;
+  vertical-align: bottom;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
 
+.icondarkmode {
+  display: none;
+}
+
+.dark .iconlight {
+  display: none;
+}
+
+.dark .icondarkmode {
+  display: inline-block;
+  vertical-align: bottom;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
 
 /*filter icon end */
 
