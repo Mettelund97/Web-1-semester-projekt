@@ -799,6 +799,7 @@ th {
 .accordion-content2 {
   display: none;
   background-color: var(--container-element);
+  transition: all 0.3s ease-out;
   /* Initially hidden */
 }
 

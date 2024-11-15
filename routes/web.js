@@ -43,7 +43,6 @@ router.post("/add-new-member", userController.createNewUser);
 router.get(
   "/group-administration",
   groupController.getAllGroups,
-  userController.getAllUsers,
   groupAdministrationController.getGroupAdministration
 );
 

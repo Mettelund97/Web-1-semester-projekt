@@ -1,25 +1,42 @@
 const dbConn = require("../config/db.js");
 
-
 exports.getAllGroups = async () => {
   try {
-    const [rows] = await dbConn.query(`
+    // Get groups with member count
+    const [groups] = await dbConn.query(`
       SELECT 
         g.id,
         g.name,
-        COUNT(ug.userId) as memberCount
+        COUNT(DISTINCT ug.userId) as memberCount
       FROM \`Groups\` g
       LEFT JOIN UserGroup ug ON g.id = ug.groupId
       GROUP BY g.id, g.name
       ORDER BY g.name ASC
     `);
-    return rows;
+
+    // Each group, get its members
+    for (let group of groups) {
+      const [members] = await dbConn.query(`
+        SELECT 
+          u.firstName,
+          u.lastName
+        FROM Users u
+        INNER JOIN UserGroup ug ON u.id = ug.userId
+        WHERE ug.groupId = ?
+        ORDER BY u.firstName, u.lastName
+      `, [group.id]);
+
+      console.log(`Group ${group.name} members:`, members); 
+      group.members = members || [];
+    }
+
+    console.log("All groups with members:", groups); 
+    return groups;
   } catch (error) {
-    console.error("Error fetching groups:", error);
+    console.error("Error fetching groups with members:", error);
     return [];
   }
 };
-
 
 exports.createNewGroup = async (group) => {
   const { name } = group;
@@ -51,7 +68,7 @@ exports.createNewGroup = async (group) => {
 
 
 
-// Method to assign users to groups later
+// assign users to groups 
 exports.assignUserToGroup = async (userId, groupId) => {
   try {
     const userGroupQuery = `

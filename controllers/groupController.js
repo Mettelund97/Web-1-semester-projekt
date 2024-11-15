@@ -57,6 +57,7 @@ exports.assignUserToGroup = async (req, res) => {
 exports.getAllGroups = async (req, res, next) => {
   try {
     const groups = await groupModel.getAllGroups();
+    console.log('Groups data in controller:', JSON.stringify(groups, null, 2));
     res.locals.groups = groups || [];
     next();
   } catch (error) {
