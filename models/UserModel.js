@@ -1,7 +1,6 @@
 const dbConn = require("../config/db.js");
 const bcrypt = require("bcryptjs");
 
-// getting all users from the database
 exports.getAllUsers = async () => {
   try {
     const [rows] = await dbConn.query(
@@ -19,12 +18,10 @@ exports.getAllUsers = async () => {
   }
 };
 
-// getting a user by it's ID from the database
 exports.getUserById = async (id) => {
   try {
     const [rows] = await dbConn.query("SELECT * FROM Users WHERE id = ?", [id]);
     if (rows.length > 0) {
-      // sends the userdata back
       return rows[0];
     } else {
       console.log("No user found with the specified ID.");
@@ -36,14 +33,13 @@ exports.getUserById = async (id) => {
   }
 };
 
-// database function to check if there already is a user with that email.
 exports.checkUserByEmail = async (email) => {
   try {
     const [rows] = await dbConn.query(
       `SELECT * FROM Users WHERE email = ? LIMIT 1`,
       [email]
     );
-    // if the users email match a existing email in db then go inside the if-statement.
+
     if (rows.length > 0) {
       return rows[0];
     } else {
@@ -78,20 +74,17 @@ exports.checkIfUserCanLogin = async (email, password) => {
   }
 };
 
-// create a single user to the database with group and role
 exports.createNewUser = async (user, groupId) => {
   const { firstName, lastName, email, password, role } = user;
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Step 1: Insert the new user into the Users table
     const userQuery = `
       INSERT INTO Users (firstName, lastName, email, password, roleId)
       VALUES (?, ?, ?, ?, ?)
     `;
 
-    // Execute the query with parameters
     const [result] = await dbConn.query(userQuery, [
       firstName,
       lastName,
@@ -100,10 +93,8 @@ exports.createNewUser = async (user, groupId) => {
       role,
     ]);
 
-    // Get the newly created user's ID
     const userId = result.insertId;
 
-    // Step 2: Insert into the UserGroup table to link user with the group
     const groupQuery = `INSERT INTO UserGroup (userId, groupId) VALUES (?, ?)`;
     await dbConn.query(groupQuery, [userId, groupId]);
 
@@ -117,8 +108,6 @@ exports.createNewUser = async (user, groupId) => {
     return { success: false, message: "Error adding user" };
   }
 };
-
-// todo: Update and delete user missing:
 
 exports.updateUserRole = async (userId, roleId) => {
   try {

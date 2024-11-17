@@ -15,11 +15,10 @@ exports.getUserById = async (req, res, next) => {
   const userId = req.user.id;
   try {
     const user = await userModel.getUserById(userId);
-    //   if user is not found
+
     if (!user) {
       return res.status(404).send(`User with id: ${userId} is not found`);
     }
-    // locals to make the user data available to the views
     res.locals.user = user;
 
     next();
@@ -31,14 +30,10 @@ exports.getUserById = async (req, res, next) => {
 
 exports.createNewUser = async (req, res) => {
   const { firstname, lastname, email, password, role, group } = req.body;
-  // Log the received data for debugging
-  console.log("Received data:", req.body);
 
-  // Convert role and groupId to integers
   const roleId = parseInt(role, 10);
   const groupId = parseInt(group, 10);
 
-  // Validate that the roleId is valid
   if (![1, 2, 3].includes(roleId)) {
     console.log("Invalid role:", roleId);
     return res.status(400).send("Invalid role.");
@@ -54,20 +49,17 @@ exports.createNewUser = async (req, res) => {
     return res.status(400).send("Invalid email: must be a UCL email.");
   }
 
-  // error code 409 for error when creating/updating something.
   const existingUser = await userModel.checkUserByEmail(email);
   if (existingUser) {
     return res.status(409).send("User already exists with that email!");
   }
 
-  // Validate that groupId is a valid number
   if (isNaN(groupId)) {
     console.log("Invalid group ID:", groupId);
     return res.status(400).send("Invalid group.");
   }
 
   try {
-    // Add the user and assign them to the group
     const result = await userModel.createNewUser(
       {
         firstName: firstname,
@@ -80,9 +72,8 @@ exports.createNewUser = async (req, res) => {
     );
 
     if (result.success) {
-      // Redirect to the home page or another appropriate location after success
       console.log("User created successfully with ID:", result.userId);
-      return res.redirect("/"); // Or send a success message if needed
+      return res.redirect("/");
     } else {
       console.log("Error adding user:", result.message);
       return res.status(500).send("Error adding user.");
@@ -93,14 +84,11 @@ exports.createNewUser = async (req, res) => {
   }
 };
 
-// todo: Update and delete user missing:
-
 exports.updateUserRole = async (req, res) => {
   const userId = req.params.id;
   const { roleId } = req.body;
 
   try {
-    // Validate roleId
     if (![1, 2, 3].includes(parseInt(roleId))) {
       return res.status(400).json({
         success: false,

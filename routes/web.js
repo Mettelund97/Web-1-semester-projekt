@@ -1,8 +1,9 @@
 const express = require("express");
 const authController = require("../controllers/authController");
+const loginController = require("../controllers/loginController");
+const logoutController = require("../controllers/logoutController");
 const homeController = require("../controllers/homeController");
 const settingsController = require("../controllers/settingsController");
-const loginController = require("../controllers/loginController");
 const addNewMemberController = require("../controllers/addNewMemberController");
 const groupAdministrationController = require("../controllers/groupAdministrationController");
 const createNewGroupController = require("../controllers/createNewGroupController");
@@ -21,31 +22,33 @@ const router = express.Router();
 
 router.get("/login", loginController.getLogin);
 router.post("/login", loginController.login);
+router.get("/logout", logoutController.logout);
 
-// Alt herunder er beskyttet routes vha: "ensureAuthenticated"
+// Alt herunder er beskyttet routes vha: "protectedRoutes"
 router.get(
   "/",
-  authController.ensureAuthenticated,
+  authController.protectedRoutes,
   userController.getAllUsers,
   homeController.getHome
 );
 
 router.get(
   "/settings",
-  authController.ensureAuthenticated,
+  authController.protectedRoutes,
   userController.getUserById,
   settingsController.getSettings
 );
 
 router.put(
   "/user/:id/role",
-  authController.ensureAuthenticated,
+  authController.protectedRoutes,
   userController.updateUserRole
 );
 
 router.get(
   "/members",
-  authController.ensureAuthenticated,
+  authController.protectedRoutes,
+  authController.authorizeRole(3),
   userController.getAllUsers,
   roleController.getAllRoles,
   membersController.getMembers
@@ -53,7 +56,8 @@ router.get(
 
 router.get(
   "/add-new-member",
-  authController.ensureAuthenticated,
+  authController.protectedRoutes,
+  authController.authorizeRole(1),
   roleController.getAllRoles,
   groupController.getAllGroups,
   addNewMemberController.getAddNewMember
@@ -61,25 +65,26 @@ router.get(
 
 router.post(
   "/add-new-member",
-  authController.ensureAuthenticated,
+  authController.protectedRoutes,
+  authController.authorizeRole(1),
   userController.createNewUser
 );
 
 router.get(
   "/group-administration",
-  authController.ensureAuthenticated,
+  authController.protectedRoutes,
   groupAdministrationController.getGroupAdministration
 );
 
 router.get(
   "/create-new-group",
-  authController.ensureAuthenticated,
+  authController.protectedRoutes,
   createNewGroupController.getCreateNewGroup
 );
 
 router.get(
   "/start-new-project",
-  authController.ensureAuthenticated,
+  authController.protectedRoutes,
   startNewProjectController.getStartNewProject
 );
 

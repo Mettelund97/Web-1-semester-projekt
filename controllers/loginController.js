@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 exports.getLogin = (req, res) => {
   res.render("login", {
     title: "Login",
-    hideSidebar: true, //variable til at bestemme om nav/sidebar skal være synlig eller ej.
+    hideSidebar: true,
   });
 };
 
@@ -15,15 +15,13 @@ exports.login = async (req, res) => {
     const user = await userModel.checkIfUserCanLogin(email, password);
 
     if (user) {
-      // Generate JWT in the controller
       const token = jwt.sign(
         { id: user.id, roleId: user.roleId },
         process.env.JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "4h" }
       );
       res.cookie("authToken", token);
       res.send();
-      // res.json({ token, user });
     } else {
       console.log("Invalid email or password.");
       res.status(401).send("Invalid email or password.");

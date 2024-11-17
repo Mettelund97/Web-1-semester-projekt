@@ -1,8 +1,9 @@
 const jwt = require("jsonwebtoken");
+const userModel = require("../models/UserModel");
 
-exports.ensureAuthenticated = (req, res, next) => {
+exports.protectedRoutes = (req, res, next) => {
   const token = req.cookies.authToken;
-  // console.log(token);
+  console.log(token);
 
   if (!token) {
     return res.redirect("/login");
@@ -11,17 +12,30 @@ exports.ensureAuthenticated = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
-    console.log(decoded);
+    console.log(req.user.roleId);
     next();
   } catch (error) {
     return res.redirect("/login");
   }
 };
 
-// virker ikke
-exports.ensureRole = (role) => (req, res, next) => {
-  if (req.user && req.user.role === role) {
-    return next();
+exports.authorizeRole = (roleId) => async (req, res, next) => {
+  try {
+    if (!req.user || !req.user.id) {
+      console.log("No user information found in request.");
+      return res.redirect("/login");
+    }
+
+    const user = await userModel.getUserById(req.user.id);
+
+    if (user && user.roleId === roleId) {
+      return next();
+    }
+
+    console.log("Access denied, you are not authorized to visit that page.");
+    return res.redirect("/");
+  } catch (error) {
+    console.error("Error checking user role:", error);
+    return res.status(500).send("Internal Server Error");
   }
-  res.status(403).json({ message: "Unauthorized" });
 };
