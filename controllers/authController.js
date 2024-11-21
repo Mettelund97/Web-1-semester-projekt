@@ -3,7 +3,7 @@ const userModel = require("../models/UserModel");
 
 exports.protectedRoutes = (req, res, next) => {
   const token = req.cookies.authToken;
-  console.log(token);
+  // console.log("current logged in user auth-token:", token);
 
   if (!token) {
     return res.redirect("/login");
@@ -12,7 +12,7 @@ exports.protectedRoutes = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
-    console.log(req.user.roleId);
+    // console.log("current logged in user roleId:", req.user.roleId);
     next();
   } catch (error) {
     return res.redirect("/login");
