@@ -20,28 +20,6 @@ exports.getConfig = async (config) => {
   }
 };
 
-// let token = rows[0].value;
-//       if (token) {
-//         const decoded = jwt.decode(token);
-//         console.log(decoded);
-//         if (!decoded || !decoded.exp) {
-//           console.error("Invalid token");
-//           return null;
-//         }
-
-//         // make current time in seconds
-//         const timeNow = Math.floor(Date.now() / 1000);
-//         console.log("time in sec", timeNow);
-//         if (decoded.exp < timeNow) {
-//           console.log("Token has expired.");
-//           return null;
-//         }
-//         if (!token) {
-//           // create a new token?
-//           // todo:
-//           console.error("YOUR JWT-TOKEN IS EXPIRED!");
-//         }
-
 exports.setConfig = async (config, value) => {
   try {
     await dbConn.query(

@@ -12,7 +12,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   });
 
   if (response.ok) {
-    window.location.href = "/"; // route to protected route
+    window.location.href = "/";
   } else {
     alert("Invalid email or password.");
   }
