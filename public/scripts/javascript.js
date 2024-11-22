@@ -126,6 +126,27 @@ function toggleAccordion(element) {
   element.classList.toggle("no-border", !isOpen);
 }
 
+document.getElementById('deleteStackForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  var stackId = document.getElementById('stackId').value;
+
+  axios.delete(`/stacks/${stackId}`)
+    .then(response => {
+      console.log('Stack deleted successfully');
+      // Optionally, you can redirect the user to a different page or update the UI
+    })
+    .catch(error => {
+      console.error('Error deleting stack:', error);
+      if (error.response && error.response.status === 403) {
+        console.error('You do not have permission to delete this stack');
+        // Handle the forbidden error scenario
+      } else {
+        console.error('Failed to delete stack');
+        // Handle other error scenarios
+      }
+    });
+});
 
 
 

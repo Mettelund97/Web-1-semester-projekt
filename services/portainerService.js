@@ -130,6 +130,31 @@ services:
       throw error;
     }
   }
+
+  async deleteStack(stackId) {
+    try {
+      const token = await this.ensureAuthenticated();
+      const response = await axios.delete(
+        `${this.baseUrl}/stacks/${stackId}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      );
+  
+      console.log('Successfully deleted stack:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error deleting stack:', error);
+      if (error.response) {
+        console.error('Response error data:', error.response.data);
+        console.error('Response error status:', error.response.status);
+        console.error('Response error headers:', error.response.headers);
+      }
+      throw error;
+    }
+  }
 }
 
 module.exports = new PortainerService();

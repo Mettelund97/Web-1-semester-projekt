@@ -11,8 +11,10 @@ const userController = require("../controllers/UserController");
 const roleController = require("../controllers/roleController");
 const groupController = require("../controllers/groupController");
 const membersController = require("../controllers/membersController");
-const router = express.Router();
 const stackController = require('../controllers/stackController');
+
+const router = express.Router();
+
 
 // linje 16 skal slettes senere, er der kun for testing
 router.get("/user/:id", userController.getUserById);
@@ -30,6 +32,8 @@ router.get("/login", loginController.getLogin);
 // Update
 router.put("/user/:id/role", userController.updateUserRole);
 
+// Delete
+router.delete('/stacks/:stackId', stackController.deleteStack);
 
 // Member routes
 router.get(

@@ -45,3 +45,29 @@ exports.createNewProject = async (req, res) => {
     });
   }
 };
+
+exports.deleteStack = async (req, res) => {
+  try {
+    const stackId = req.params.stackId;
+    console.log('Deleting stack with ID:', stackId);
+
+    await portainerService.deleteStack(stackId);
+    res.json({
+      success: true,
+      message: 'Stack deleted successfully'
+    });
+  } catch (error) {
+    console.error('Failed to delete stack:', error);
+    if (error.response && error.response.status === 403) {
+      res.status(403).json({
+        success: false,
+        message: 'You do not have permission to delete this stack'
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: error.message || 'Failed to delete stack'
+      });
+    }
+  }
+};
