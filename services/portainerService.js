@@ -108,6 +108,68 @@ services:
     }
   }
 
+  async startStack(stackId) {
+    try {
+      const token = await getConfig("PORTAINERTOKEN");
+      console.log("token in startStackReq:", token);
+      fetch(
+        `https://portainer.kubelab.dk/api/stacks/${stackId}/start?endpointId=${5}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        }
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Response data:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async stopStack(stackId) {
+    try {
+      const token = await getConfig("PORTAINERTOKEN");
+      console.log("token in stopStackReq:", token.value);
+      fetch(
+        `https://portainer.kubelab.dk/api/stacks/${stackId}/stop?endpointId=${5}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        }
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Response data:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async deleteStack(stackId) {
     try {
       const token = await getConfig("PORTAINERTOKEN");
