@@ -10,9 +10,23 @@ exports.getConfig = async (config) => {
     );
 
     if (rows.length > 0) {
-      return rows[0];
+      const token = rows[0].value;
+
+      const decoded = jwt.decode(token);
+      if (decoded && decoded.exp) {
+        const currentTime = Math.floor(Date.now() / 1000);
+        if (decoded.exp > currentTime) {
+          return token;
+        }
+      }
+
+      const newToken = await fetchPortainerJWT();
+      await this.setConfig(config, newToken);
+      return newToken;
     } else {
-      return null;
+      const newToken = await fetchPortainerJWT();
+      await this.setConfig(config, newToken);
+      return newToken;
     }
   } catch (error) {
     console.error("Error finding a token", error);
@@ -23,8 +37,8 @@ exports.getConfig = async (config) => {
 exports.setConfig = async (config, value) => {
   try {
     await dbConn.query(
-      "INSERT INTO Configs (config, value) VALUES (?, ?) ON DUPLICATE KEY UPDATE config = config, value = value",
-      [config, value]
+      "INSERT INTO Configs (config, value) VALUES (?, ?) ON DUPLICATE KEY UPDATE value = ?",
+      [config, value, value]
     );
   } catch (error) {
     console.error("Error creating a token", error);
