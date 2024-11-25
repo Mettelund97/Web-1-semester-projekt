@@ -7,30 +7,46 @@ const settingsController = require("../controllers/settingsController");
 const addNewMemberController = require("../controllers/addNewMemberController");
 const groupAdministrationController = require("../controllers/groupAdministrationController");
 const createNewGroupController = require("../controllers/createNewGroupController");
-const startNewProjectController = require("../controllers/startNewProjectController");
 const userController = require("../controllers/UserController");
 const roleController = require("../controllers/roleController");
 const groupController = require("../controllers/groupController");
 const membersController = require("../controllers/membersController");
+const stackController = require('../controllers/stackController');
+
 const router = express.Router();
-
-// // linje 16 skal slettes senere, er der kun for testing
-// // router.get("/user/:id", userController.getUserById);
-
-// // altid efterfulgt af "/urlen", så start med userController.getAllUsers hvis man skal bruge data fra user osv.
-// // og ikke homeController.getHome først.
 
 router.get("/login", loginController.getLogin);
 router.post("/login", loginController.login);
 router.get("/logout", logoutController.logout);
 
 // Alt herunder er beskyttet routes vha: "protectedRoutes"
-router.get(
-  "/",
-  authController.protectedRoutes,
+
+//Projects
+router.get("/",
+  authController.protectedRoutes, 
   userController.getAllUsers,
+  stackController.getAllStacks, 
   homeController.getHome
 );
+
+router.get(
+  "/start-new-project",
+  authController.protectedRoutes,
+  stackController.getStartNewProject
+);
+
+router.post("/start-new-project",
+  authController.protectedRoutes, 
+  stackController.createNewProject,
+  groupAdministrationController.getGroupAdministration
+);
+
+router.delete('/stacks/:stackId', 
+  authController.protectedRoutes, 
+  stackController.deleteStack
+);
+
+// Settings
 
 router.get(
   "/settings",
@@ -39,12 +55,14 @@ router.get(
   settingsController.getSettings
 );
 
+// Update User
 router.put(
   "/user/:id/role",
   authController.protectedRoutes,
   userController.updateUserRole
 );
 
+// Member routes
 router.get(
   "/members",
   authController.protectedRoutes,
@@ -70,10 +88,16 @@ router.post(
   userController.createNewUser
 );
 
+// Group routes
 router.get(
   "/group-administration",
   authController.protectedRoutes,
+  groupController.getAllGroups,
   groupAdministrationController.getGroupAdministration
+);
+router.post("/group-administration",
+  authController.protectedRoutes, 
+  groupController.createNewGroup
 );
 
 router.get(
@@ -81,11 +105,9 @@ router.get(
   authController.protectedRoutes,
   createNewGroupController.getCreateNewGroup
 );
-
-router.get(
-  "/start-new-project",
-  authController.protectedRoutes,
-  startNewProjectController.getStartNewProject
+router.post("/create-new-group", 
+  authController.protectedRoutes, 
+  groupController.createNewGroup
 );
 
 module.exports = router;

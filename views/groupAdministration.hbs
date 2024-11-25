@@ -29,165 +29,84 @@
         </div>
       </div>
     </div>
-    <div class="container-btn2">
-      <a href="/create-new-group" class="button-link"><img
-          src="/images/plusikon.svg"
-          alt="Icon"
-          class="buttonikon"
-        />Create new group</a>
-    </div>
-
-    <div class="accordion-section">
-      <!-- Accordion Header -->
-      <div class="accordion-block" onclick="toggleAccordion2(this)">
-        <div>
-        <div class="cellcheckbox">
-          <div class="emptybox2"></div>
-            <div>
-              <h4 class="tablep">Group Name</h4>
-              <p class="tablep">22 members</p>
-            </div>
-          </div>
-        </div>
-        <img src="/images/arrowblack.svg" alt="Icon" class="ikon2 arrow-icon2 iconlight" />
-        <img src="/images/arrowwhite.svg" alt="Icon" class="ikon2 arrow-icon2 icondarkmode" />
-      </div>
-      
-      <!-- Accordion Content Row -->
-      <table class="">
-      <tr class="accordion-content2">
-        <th>
-          <div class="cell-content">
-            <h5>Member</h5>
-            <p>Domainname</p>
-          </div>
-        </th>
-        <th>
-          <div class="cell-content">
-            <h5>Service</h5>
-          </div>
-        </th>
-        <th>
-          <div class="cell-content">
-            <h5>Status</h5>
-          </div>
-        </th>
-      </tr>
-      <tr class="accordion-content2">
-        <th>
-          <div class="cell-content">
-            
-            <p class="cell-p">Mette Lund</p>
-            <p class="cell-p">hej.kubelab.dk</p>
-          </div>
-        </th>
-        <th>
-          <div class="cell-content">
-            <p class="cell-p">Wordpress</p>
-          </div>
-        </th>
-        <th>
-          <div class="statusrow">
-            <img src="/images/redstatus.svg" alt="Icon" class="ikon2" />
-            <p class="statusp">OFFLINE</p>
-          </div>
-        </th>
-      </tr>
-      <tr class="accordion-content2">
-        <th>
-          <div class="cell-content">
-            <p class="cell-p">Max Gust</p>
-            <p class="cell-p">hejsa.kubelab.dk</p>
-          </div>
-        </th>
-        <th>
-          <div class="cell-content">
-            <p class="cell-p">Wordpress</p>
-          </div>
-        </th>
-        <th>
-          <div class="statusrow">
-            <img src="/images/greenstatus.svg" alt="Icon" class="ikon2" />
-            <p class="statusp">ONLINE</p>
-          </div>
-        </th>
-      </tr>
-      </table>
-    </div>
-
-    <div class="accordion-section">
-      <!-- Accordion Header -->
-      <div class="accordion-block" onclick="toggleAccordion2(this)">
-        <div class="cellcheckbox">
-          <div class="emptybox2"></div>
-          <div>
-            <h4 class="tablep">Group Name</h4>
-            <p class="tablep">22 members</p>
-          </div>
-        </div>
-        <img src="/images/arrowblack.svg" alt="Icon" class="ikon2 arrow-icon2 iconlight" />
-        <img src="/images/arrowwhite.svg" alt="Icon" class="ikon2 arrow-icon2 icondarkmode" />
-      </div>
     
-      <!-- Accordion Content Row -->
-      <table class="">
-        <tr class="accordion-content2">
-          <th>
-            <div class="cell-content">
-              <h5>Member</h5>
-              <p>Domainname</p>
+    <div class="container-btn2">
+      <a href="/create-new-group" class="button-link">
+        <img src="/images/plusikon.svg" alt="Icon" class="buttonikon" />
+        Create new group
+      </a>
+    </div>
+
+    <div class="accordion-section">
+      {{#each groups}}
+        <div class="accordion-block" data-group-id="{{this.id}}" onclick="toggleAccordion2(this)">
+          <div>
+            <div class="cellcheckbox">
+              <div class="emptybox2"></div>
+              <div>
+                <h4 class="tablep">{{this.name}}</h4>
+                <p class="tablep">{{this.memberCount}} members</p>
+              </div>
             </div>
-          </th>
-          <th>
-            <div class="cell-content">
-              <h5>Service</h5>
-            </div>
-          </th>
-          <th>
-            <div class="cell-content">
-              <h5>Status</h5>
-            </div>
-          </th>
-        </tr>
-        <tr class="accordion-content2">
-          <th>
-            <div class="cell-content">
-              <p class="cell-p">Mette Lund</p>
-              <p class="cell-p">hej.kubelab.dk</p>
-            </div>
-          </th>
-          <th>
-            <div class="cell-content">
-              <p class="cell-p">Wordpress</p>
-            </div>
-          </th>
-          <th>
-            <div class="statusrow">
-              <img src="/images/redstatus.svg" alt="Icon" class="ikon2" />
-              <p class="statusp">OFFLINE</p>
-            </div>
-          </th>
-        </tr>
-        <tr class="accordion-content2">
-          <th>
-            <div class="cell-content">
-              <p class="cell-p">Max Gust</p>
-              <p class="cell-p">hejsa.kubelab.dk</p>
-            </div>
-          </th>
-          <th>
-            <div class="cell-content">
-              <p class="cell-p">Wordpress</p>
-            </div>
-          </th>
-          <th>
-            <div class="statusrow">
-              <img src="/images/greenstatus.svg" alt="Icon" class="ikon2" />
-              <p class="statusp">ONLINE</p>
-            </div>
-          </th>
-        </tr>
-      </table>
+          </div>
+          <img src="/images/arrowblack.svg" alt="Icon" class="ikon2 arrow-icon2 iconlight" />
+          <img src="/images/arrowwhite.svg" alt="Icon" class="ikon2 arrow-icon2 icondarkmode" />
+        </div>
+
+        <table class="accordion-content2" style="display: none;">
+          <tr>
+            <th>
+              <div class="cell-content">
+                <h5>Member</h5>
+                <p>Domainname</p>
+              </div>
+            </th>
+            <th>
+              <div class="cell-content">
+                <h5>Service</h5>
+              </div>
+            </th>
+            <th>
+              <div class="cell-content">
+                <h5>Status</h5>
+              </div>
+            </th>
+          </tr>
+          {{#each this.members}}
+            <tr class="accordion-content2">
+              <td>
+                <div class="cell-content">
+                  <p class="cell-p">{{this.firstName}} {{this.lastName}}</p>
+                  <p class="cell-p">hej.kubelab.dk</p>
+                </div>
+              </td>
+              <td>
+                <div class="cell-content">
+                  <p class="cell-p">Wordpress</p>
+                </div>
+              </td>
+              <td>
+                <div class="statusrow">
+                  <img src="/images/redstatus.svg" alt="Icon" class="ikon2" />
+                  <p class="statusp">OFFLINE</p>
+                </div>
+              </td>
+            </tr>
+          {{else}}
+            <tr>
+              <td colspan="3">
+                <div class="cell-content">
+                  <p class="cell-p">No members in this group</p>
+                </div>
+              </td>
+            </tr>
+          {{/each}}
+        </table>
+      {{else}}
+        <div class="no-groups-message">
+          <p>No groups found. Click "Create new group" to add one.</p>
+        </div>
+      {{/each}}
     </div>
   </section>
 </section>

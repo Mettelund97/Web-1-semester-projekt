@@ -925,6 +925,7 @@ th {
 .accordion-content2 {
   display: none;
   background-color: var(--container-element);
+  transition: all 0.3s ease-out;
   /* Initially hidden */
 }
 
@@ -958,11 +959,11 @@ th {
   transition: transform 0.3s ease;
 }
 
-.accordion-block.open {
+.accordion-block.active {
   background-color: var(--container-clicked);
 }
 
-.accordion-block.open .arrow-icon2 {
+.accordion-block.active .arrow-icon2 {
   transform: rotate(180deg);
   /* Rotates arrow when open */
 }

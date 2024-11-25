@@ -168,24 +168,25 @@ function toggleAccordion(element) {
   element.classList.toggle("no-border", !isOpen);
 }
 
-/*Group management */
-function toggleAccordion2(element) {
-  const accordionRows = element.nextElementSibling.querySelectorAll('.accordion-content2');
-  
-  // Check if the accordion is currently open (by checking the display of the first row)
-  const isOpen = accordionRows[0].style.display === "table-row";
-  
-  // Toggle display for all rows with the class "accordion-content2"
-  accordionRows.forEach(row => {
-    row.style.display = isOpen ? "none" : "table-row";
-  });
+document.getElementById('deleteStackForm').addEventListener('submit', function(event) {
+  event.preventDefault();
 
-  // Toggle the "open" class on the accordion block
-  if (isOpen) {
-    element.classList.remove('open'); // Remove "open" class when collapsed
-    element.querySelector('.arrow-icon2').style.transform = "rotate(0deg)";
-  } else {
-    element.classList.add('open'); // Add "open" class when expanded
-    element.querySelector('.arrow-icon2').style.transform = "rotate(180deg)";
-  }
-}
+  var stackId = document.getElementById('stackId').value;
+
+  axios.delete(`/stacks/${stackId}`)
+    .then(response => {
+      console.log('Stack deleted successfully');
+      // Optionally, you can redirect the user to a different page or update the UI
+    })
+    .catch(error => {
+      console.error('Error deleting stack:', error);
+      if (error.response && error.response.status === 403) {
+        console.error('You do not have permission to delete this stack');
+        // Handle the forbidden error scenario
+      } else {
+        console.error('Failed to delete stack');
+        // Handle other error scenarios
+      }
+    });
+});
+
