@@ -37,7 +37,7 @@ class PortainerService {
   async getStacks() {
     try {
       const token = await this.ensureAuthenticated();
-      const response = await axios.get(`${this.baseUrl}/endpoints/${this.endpointId}/stacks`, {
+      const response = await axios.get(`${this.baseUrl}/stacks`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -135,7 +135,7 @@ services:
     try {
       const token = await this.ensureAuthenticated();
       const response = await axios.delete(
-        `${this.baseUrl}/stacks/${stackId}`,
+        `${this.baseUrl}/stacks/${stackId}?endpointId=${this.endpointId}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`
