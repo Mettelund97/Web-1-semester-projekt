@@ -1,5 +1,6 @@
 const portainerService = require('../services/portainerService.js');
 
+
 exports.getAllStacks = async (req, res, next) => {
   try {
     console.log('Fetching stacks...');
@@ -48,10 +49,10 @@ exports.createNewProject = async (req, res) => {
 
 exports.deleteStack = async (req, res) => {
   try {
-    const stackId = req.params.stackId;
+    const stackId = req.params.id;
     console.log('Deleting stack with ID:', stackId);
 
-    await portainerService.deleteStack(stackId);
+    await portainerService.deleteStack(id);
     res.json({
       success: true,
       message: 'Stack deleted successfully'

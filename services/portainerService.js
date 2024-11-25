@@ -56,7 +56,6 @@ class PortainerService {
       const token = await this.ensureAuthenticated();
       const websiteId = Math.random().toString(36).substring(7);
   
-      
       const stackFileContent = String.raw`version: '3.8'
 networks:
   traefik-proxy:
@@ -131,14 +130,15 @@ services:
     }
   }
 
-  async deleteStack(stackId) {
+  async deleteStack(id) {
     try {
       const token = await this.ensureAuthenticated();
       const response = await axios.delete(
-        `${this.baseUrl}/stacks/${stackId}?endpointId=${this.endpointId}`,
+        `${this.baseUrl}/stacks/${id}?endpointId=${this.endpointId}`,
         {
           headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
           }
         }
       );

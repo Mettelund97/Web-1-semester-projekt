@@ -13,6 +13,7 @@ const groupController = require("../controllers/groupController");
 const membersController = require("../controllers/membersController");
 const stackController = require('../controllers/stackController');
 
+
 const router = express.Router();
 
 router.get("/login", loginController.getLogin);
@@ -41,7 +42,7 @@ router.post("/start-new-project",
   groupAdministrationController.getGroupAdministration
 );
 
-router.delete('/stacks/:stackId', 
+router.delete('/stacks/:id', 
   authController.protectedRoutes, 
   stackController.deleteStack
 );

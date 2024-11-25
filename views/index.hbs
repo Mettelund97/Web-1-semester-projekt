@@ -68,7 +68,7 @@
         </tr>
 
         {{#each stacks}}
-          <tr class="accordion-header" onclick="toggleAccordion(this)">
+          <tr class="accordion-header" onclick="toggleAccordion(this)" data-stack-id="{{id}}">
             <td>
               <div class="cellcheckbox">
                 <div class="emptybox"></div>
@@ -126,8 +126,6 @@
               <p class="tablecontentp">Group name</p>
             </div>
           </td>
-          <td></td>
-          <td></td>
         </tr>
         <tr class="accordion-content accordion-buttonrow">
           <td class="td2">
@@ -153,7 +151,9 @@
                   />
                 </svg>
               </div>
-              <button class="delete-button">
+              <button class="delete-button" 
+                      onclick="deleteStack('{{id}}')" 
+                      data-stack-id="{{id}}">
                 <span>Delete project</span>
               </button>
             </div>
