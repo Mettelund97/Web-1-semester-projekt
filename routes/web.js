@@ -48,7 +48,7 @@ router.put(
 router.get(
   "/members",
   authController.protectedRoutes,
-  authController.authorizeRole(3),
+  authController.authorizeRole(1),
   userController.getAllUsers,
   roleController.getAllRoles,
   membersController.getMembers
