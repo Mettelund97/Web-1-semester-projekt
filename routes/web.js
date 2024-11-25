@@ -7,7 +7,6 @@ const settingsController = require("../controllers/settingsController");
 const addNewMemberController = require("../controllers/addNewMemberController");
 const groupAdministrationController = require("../controllers/groupAdministrationController");
 const createNewGroupController = require("../controllers/createNewGroupController");
-/* const startNewProjectController = require("../controllers/startNewProjectController"); */
 const userController = require("../controllers/UserController");
 const roleController = require("../controllers/roleController");
 const groupController = require("../controllers/groupController");
