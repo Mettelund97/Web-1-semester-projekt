@@ -1,14 +1,16 @@
 const { getConfig } = require("../../models/configModel");
 
+const jwtToken = await getConfig("PORTAINERTOKEN");
+const endpointId = 5; //Skal altid være denne værdi
+const stackId = 1;
+const swarmId = "v1pkdou24tzjtncewxhvpmjms"; //Skal altid være denne værdi
+const subDomainWp = "testtest"; //Skal være unikt
+const subDomainPma = "testtest-pma"; //Skal være unikt
+const websideId = Math.random().toString(36).substring(7); //Unik for CHANGEME01
+const pmaId = Math.random().toString(36).substring(7); //Unik for CHANGEME02
+
 // endpoint for post stack:
 router.get("/add-stack", async () => {
-  const jwtToken = await getConfig("PORTAINERTOKEN");
-  const swarmId = "v1pkdou24tzjtncewxhvpmjms"; //Skal altid være denne værdi
-  const endpointId = 5; //Skal altid være denne værdi
-  const subDomainWp = "testtest"; //Skal være unikt
-  const subDomainPma = "testtest-pma"; //Skal være unikt
-  const websideId = Math.random().toString(36).substring(7); //Unik for CHANGEME01
-  const pmaId = Math.random().toString(36).substring(7); //Unik for CHANGEME02
   // const body `networks:\n  traefik-proxy:\n    external: true\n  wp-network:\n    driver: overlay\nservices:\n  wordpress:\n    image: wordpress:latest\n    environment:\n      WORDPRESS_DB_HOST: db\n      WORDPRESS_DB_USER: wpuser\n      WORDPRESS_DB_PASSWORD: wppassword\n      WORDPRESS_DB_NAME: wpdatabase\n    networks:\n      - traefik-proxy\n      - wp-network\n    deploy:\n      labels:\n        - traefik.enable=true\n        - traefik.http.routers.${websideId}.rule=Host(\`${subDomainWp}.kubelab.dk\`)\n        - traefik.http.routers.${websideId}.entrypoints=web,websecure\n        - traefik.http.routers.${websideId}.tls.certresolver=letsencrypt\n        - traefik.http.services.${websideId}.loadbalancer.server.port=80\n  db:\n    image: mariadb:latest\n    environment:\n      MYSQL_ROOT_PASSWORD: rootpassword\n      MYSQL_DATABASE: wpdatabase\n      MYSQL_USER: wpuser\n      MYSQL_PASSWORD: wppassword\n    networks:\n      - wp-network\n  phpmyadmin:\n    image: phpmyadmin:latest\n    environment:\n      PMA_HOST: db\n      PMA_USER: wpuser\n      PMA_PASSWORD: wppassword\n    networks:\n      - traefik-proxy\n      - wp-network\n    deploy:\n      labels:\n        - traefik.enable=true\n        - traefik.http.routers.${pmaId}.rule=Host(\`${subDomainPma}.kubelab.dk\`)\n        - traefik.http.routers.${pmaId}.entrypoints=web,websecure\n        - traefik.http.routers.${pmaId}.tls.certresolver=letsencrypt\n        - traefik.http.services.${pmaId}.loadbalancer.server.port=80`;
   //   const body = `
   // networks:
@@ -108,3 +110,29 @@ fetch("https://portainer.kubelab.dk/api/auth", {
   .catch((error) => {
     console.error("Error:", error);
   });
+
+router.get("/", async () => {
+  fetch(
+    `https://portainer.kubelab.dk/api/stacks/${stackId}/start?endpointId=${endpointId}`,
+    {
+      method: "POST",
+      body: body,
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    }
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Response data:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+});
