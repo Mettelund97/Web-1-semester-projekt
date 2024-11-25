@@ -1,62 +1,39 @@
-const axios = require('axios');
+const axios = require("axios");
+const { getConfig } = require("../models/configModel");
 
 class PortainerService {
   constructor() {
-    this.baseUrl = 'https://portainer.kubelab.dk/api';
-    this.authToken = null;
+    this.baseUrl = "https://portainer.kubelab.dk/api";
     this.endpointId = 5;
-    this.swarmId = 'v1pkdou24tzjtncewxhvpmjms';
-  }
-
-  async login() {
-    try {
-      const response = await axios.post(`${this.baseUrl}/auth`, {
-        username: 'ABMM',
-        password: 'Ladida.12'
-      });
-
-      console.log('Login successful, received token');
-      this.authToken = response.data.jwt;
-      return true;
-    } catch (error) {
-      console.error('Authentication error:', error.response?.data || error.message);
-      return false;
-    }
-  }
-
-  async ensureAuthenticated() {
-    if (!this.authToken) {
-      const success = await this.login();
-      if (!success) {
-        throw new Error('Failed to authenticate with Portainer');
-      }
-    }
-    return this.authToken;
+    this.swarmId = "v1pkdou24tzjtncewxhvpmjms";
   }
 
   async getStacks() {
+    const token = await getConfig("PORTAINERTOKEN");
+
     try {
-      const token = await this.ensureAuthenticated();
       const response = await axios.get(`${this.baseUrl}/stacks`, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
-      console.log('Successfully fetched stacks:', response.data);
+      console.log("Successfully fetched stacks:", response.data);
       return response.data;
     } catch (error) {
-      console.error('Error fetching stacks:', error.response?.data || error.message);
+      console.error(
+        "Error fetching stacks:",
+        error.response?.data || error.message
+      );
       return [];
     }
   }
 
   async createStack(projectName, subDomain) {
     try {
-      const token = await this.ensureAuthenticated();
+      const token = await getConfig("PORTAINERTOKEN");
       const websiteId = Math.random().toString(36).substring(7);
-  
-      
+
       const stackFileContent = String.raw`version: '3.8'
 networks:
   traefik-proxy:
@@ -94,38 +71,38 @@ services:
       placement:
         constraints:
           - node.role == worker`;
-  
-      
-      console.log('Sending stack configuration:', stackFileContent);
-  
+
+      console.log("Sending stack configuration:", stackFileContent);
+
       const requestBody = {
         Name: projectName,
         SwarmID: this.swarmId,
-        StackFileContent: stackFileContent
+        StackFileContent: stackFileContent,
       };
-  
-      
-      console.log('Sending request body:', JSON.stringify(requestBody, null, 2));
-  
+
+      console.log(
+        "Sending request body:",
+        JSON.stringify(requestBody, null, 2)
+      );
+
       const response = await axios.post(
-        `${this.baseUrl}/stacks/create/swarm/string?endpointId=${this.endpointId}`, 
+        `${this.baseUrl}/stacks/create/swarm/string?endpointId=${this.endpointId}`,
         requestBody,
         {
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
       );
-  
-      console.log('Stack created successfully:', response.data);
+
+      console.log("Stack created successfully:", response.data);
       return response.data;
     } catch (error) {
-      
       if (error.response) {
-        console.error('Response error data:', error.response.data);
-        console.error('Response error status:', error.response.status);
-        console.error('Response error headers:', error.response.headers);
+        console.error("Response error data:", error.response.data);
+        console.error("Response error status:", error.response.status);
+        console.error("Response error headers:", error.response.headers);
       }
       throw error;
     }
@@ -133,24 +110,24 @@ services:
 
   async deleteStack(stackId) {
     try {
-      const token = await this.ensureAuthenticated();
+      const token = await getConfig("PORTAINERTOKEN");
       const response = await axios.delete(
         `${this.baseUrl}/stacks/${stackId}?endpointId=${this.endpointId}`,
         {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
-  
-      console.log('Successfully deleted stack:', response.data);
+
+      console.log("Successfully deleted stack:", response.data);
       return response.data;
     } catch (error) {
-      console.error('Error deleting stack:', error);
+      console.error("Error deleting stack:", error);
       if (error.response) {
-        console.error('Response error data:', error.response.data);
-        console.error('Response error status:', error.response.status);
-        console.error('Response error headers:', error.response.headers);
+        console.error("Response error data:", error.response.data);
+        console.error("Response error status:", error.response.status);
+        console.error("Response error headers:", error.response.headers);
       }
       throw error;
     }

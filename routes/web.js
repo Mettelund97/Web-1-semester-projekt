@@ -1,4 +1,5 @@
 const express = require("express");
+const authService = require("../services/authService");
 const authController = require("../controllers/authController");
 const loginController = require("../controllers/loginController");
 const logoutController = require("../controllers/logoutController");
@@ -11,7 +12,7 @@ const userController = require("../controllers/UserController");
 const roleController = require("../controllers/roleController");
 const groupController = require("../controllers/groupController");
 const membersController = require("../controllers/membersController");
-const stackController = require('../controllers/stackController');
+const stackController = require("../controllers/stackController");
 
 const router = express.Router();
 
@@ -22,27 +23,30 @@ router.get("/logout", logoutController.logout);
 // Alt herunder er beskyttet routes vha: "protectedRoutes"
 
 //Projects
-router.get("/",
-  authController.protectedRoutes, 
+router.get(
+  "/",
+  authService.protectedRoutes,
   userController.getAllUsers,
-  stackController.getAllStacks, 
+  stackController.getAllStacks,
   homeController.getHome
 );
 
 router.get(
   "/start-new-project",
-  authController.protectedRoutes,
+  authService.protectedRoutes,
   stackController.getStartNewProject
 );
 
-router.post("/start-new-project",
-  authController.protectedRoutes, 
+router.post(
+  "/start-new-project",
+  authService.protectedRoutes,
   stackController.createNewProject,
   groupAdministrationController.getGroupAdministration
 );
 
-router.delete('/stacks/:stackId', 
-  authController.protectedRoutes, 
+router.delete(
+  "/stacks/:stackId",
+  authService.protectedRoutes,
   stackController.deleteStack
 );
 
@@ -50,7 +54,7 @@ router.delete('/stacks/:stackId',
 
 router.get(
   "/settings",
-  authController.protectedRoutes,
+  authService.protectedRoutes,
   userController.getUserById,
   settingsController.getSettings
 );
@@ -58,15 +62,15 @@ router.get(
 // Update User
 router.put(
   "/user/:id/role",
-  authController.protectedRoutes,
+  authService.protectedRoutes,
   userController.updateUserRole
 );
 
 // Member routes
 router.get(
   "/members",
-  authController.protectedRoutes,
-  authController.authorizeRole(1),
+  authService.protectedRoutes,
+  authService.authorizeRole(1),
   userController.getAllUsers,
   roleController.getAllRoles,
   membersController.getMembers
@@ -74,8 +78,8 @@ router.get(
 
 router.get(
   "/add-new-member",
-  authController.protectedRoutes,
-  authController.authorizeRole(1),
+  authService.protectedRoutes,
+  authService.authorizeRole(1),
   roleController.getAllRoles,
   groupController.getAllGroups,
   addNewMemberController.getAddNewMember
@@ -83,30 +87,32 @@ router.get(
 
 router.post(
   "/add-new-member",
-  authController.protectedRoutes,
-  authController.authorizeRole(1),
+  authService.protectedRoutes,
+  authService.authorizeRole(1),
   userController.createNewUser
 );
 
 // Group routes
 router.get(
   "/group-administration",
-  authController.protectedRoutes,
+  authService.protectedRoutes,
   groupController.getAllGroups,
   groupAdministrationController.getGroupAdministration
 );
-router.post("/group-administration",
-  authController.protectedRoutes, 
+router.post(
+  "/group-administration",
+  authService.protectedRoutes,
   groupController.createNewGroup
 );
 
 router.get(
   "/create-new-group",
-  authController.protectedRoutes,
+  authService.protectedRoutes,
   createNewGroupController.getCreateNewGroup
 );
-router.post("/create-new-group", 
-  authController.protectedRoutes, 
+router.post(
+  "/create-new-group",
+  authService.protectedRoutes,
   groupController.createNewGroup
 );
 
