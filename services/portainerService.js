@@ -171,13 +171,13 @@ services:
   async stopStack(stackId) {
     try {
       const token = await getConfig("PORTAINERTOKEN");
-      console.log("token in stopStackReq:", token.value);
+      console.log("token in startStackReq:", token);
       fetch(
         `https://portainer.kubelab.dk/api/stacks/${stackId}/stop?endpointId=${5}`,
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${token.value}`,
+            Authorization: `Bearer ${token}`,
             "Content-type": "application/json; charset=UTF-8",
           },
         }

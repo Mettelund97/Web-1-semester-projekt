@@ -95,11 +95,18 @@
             <td>
               <div class="actiontablecell">
                 {{#if status}}
+                <div class="start-stop-btn" data-stack-id="{{id}}" data-action="stop">
                   <img src="/images/pauseikon.svg" alt="Stop" class="ikon2 iconlight" />
                   <img src="/images/pauseikonwhite.svg" alt="Stop" class="ikon2 icondarkmode" />
+                  {{!-- <button class="start-stop-btn stop" data-stack-id="{{id}}">Stop</button> --}}
+               </div>
                 {{else}}
+                <div class="start-stop-btn" data-stack-id="{{id}}" data-action="start">
                   <img src="/images/playikon.svg" alt="Start" class="ikon2 iconlight" />
                   <img src="/images/playiconwhite.svg" alt="Start" class="ikon2 icondarkmode" />
+                  {{!-- <button class="start-stop-btn start" data-stack-id="{{id}}">Start</button> --}}
+                </div>
+                  
                 {{/if}}
                 <img src="/images/arrowblack.svg" alt="Icon" class="ikon2 arrow-icon iconlight" />
                 <img src="/images/arrowwhite.svg" alt="Icon" class="ikon2 arrow-icon icondarkmode" />
