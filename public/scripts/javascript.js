@@ -8,7 +8,6 @@
 //     burgerMenu.classList.toggle("active");
 //   });
 // }
-
 document.addEventListener('DOMContentLoaded', () => {
     const root = document.documentElement; // This refers to the <html> element
     const isDark = localStorage.getItem('dark-theme') === 'true'; // Get the theme preference
@@ -74,6 +73,49 @@ function updateIcons(isDark) {
       icon.classList.toggle('active', isDark); // Add 'active' class to dark icons
   });
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    const menuItems = document.querySelectorAll('.menu-item');
+    
+    const sectionPaths = {
+        '/': ['/', '/start-new-project'],
+        '/group-administration': ['/group-administration','/create-new-group'],
+        '/members': ['/members', '/add-new-member'],
+        '/settings': ['/settings'],
+    };
+
+    function isPathInSection(currentPath, sectionPath) {
+        if (sectionPath === '/' && currentPath === '/') {
+            return true;
+        }
+
+        const validPaths = sectionPaths[sectionPath] || [sectionPath];
+        return validPaths.some(path => 
+            currentPath === path || currentPath.startsWith(`${path}/`)
+        );
+    }
+
+    const currentPath = window.location.pathname;
+    menuItems.forEach(item => {
+        const href = item.getAttribute('href');
+        if (isPathInSection(currentPath, href)) {
+            item.classList.add('active');
+        }
+    });
+
+    function clearActiveClassMenu() {
+        menuItems.forEach(item => {
+            item.classList.remove('active');
+        });
+    }
+
+    menuItems.forEach(item => {
+        item.addEventListener('click', function(event) {
+            clearActiveClassMenu();
+            this.classList.add('active');
+        });
+    });
+});
 
 const toggleInput = document.getElementById('toggle2');
   
@@ -148,18 +190,3 @@ document.getElementById('deleteStackForm').addEventListener('submit', function(e
     });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Mode end//

@@ -1,7 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const exphbs = require("express-handlebars");
 const webRoutes = require("./routes/web");
 const path = require("path");
+const cookieParser = require("cookie-parser");
 
 // Init Express
 const app = express();
@@ -14,6 +16,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json()); // For JSON data
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Static files middleware
 app.use(express.static(path.join(__dirname, "public")));
@@ -39,9 +42,12 @@ app.set("view engine", "hbs");
 // Routes
 app.use("/", webRoutes);
 
-// Middelware with error msg
-app.use((req, res, next) => {
-  res.status(404).send("Page not found");
+// Middleware for 404 error with custom Handlebars template
+app.use((req, res) => {
+  res.status(404).render("404", {
+    title: "Page Not Found",
+    hideSidebar: true,
+  });
 });
 
 // Initialize server

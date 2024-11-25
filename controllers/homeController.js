@@ -1,14 +1,7 @@
-/* 
-  exports.getHome = (req, res) => {
-  res.render("index", {
-    title: "Kubelab Dashboard",
-  });
-};
-
-*/
-
+const configModel = require("../models/configModel");
 
 exports.getHome = (req, res) => {
+  console.log("portainer-jwt:", await configModel.getConfig("PORTAINERTOKEN"));
   res.render("index", {
     title: "Kubelab Dashboard",
     users: res.locals.users,

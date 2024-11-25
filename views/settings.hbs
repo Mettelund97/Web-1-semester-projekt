@@ -11,7 +11,8 @@
     </div>
     <div class="logininfo">
       <h3 class="loginheading">Logged in profile:</h3>
-      <p>magu234@edu.ucl.dk</p>
+      <p>{{user.firstName}} {{user.lastName}}</p>
+      <p>{{user.email}}</p>
     </div>
     <div class="logininfo">
       <h3 class="loginheading">Group:</h3>
@@ -29,13 +30,21 @@
       <div class="toggle-container">
         <input type="checkbox" id="toggle" class="toggle-input" />
         <label for="toggle" class="toggle-label">
-          <img src="/images/mooniconpurple.svg" alt="Edit Icon" class="toggle-icon iconlight" />
-          <img src="/images/mooniconwhite.svg" alt="Edit Icon" class="toggle-icon icondarkmode" />
+          <img
+            src="/images/mooniconpurple.svg"
+            alt="Edit Icon"
+            class="toggle-icon iconlight"
+          />
+          <img
+            src="/images/mooniconwhite.svg"
+            alt="Edit Icon"
+            class="toggle-icon icondarkmode"
+          />
         </label>
       </div>
       <div class="modesparagraphs">
-      <p class="iconlight modep">Light mode is on</p>
-      <p class="icondarkmode modep">Dark mode is on</p>
+        <p class="iconlight modep">Light mode is on</p>
+        <p class="icondarkmode modep">Dark mode is on</p>
       </div>
     </div>
 

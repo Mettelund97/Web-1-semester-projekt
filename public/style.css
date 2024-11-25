@@ -72,6 +72,7 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 body::before {
@@ -88,6 +89,10 @@ body::before {
   background-attachment: fixed;
   opacity: 0.04;
   z-index: -1;
+}
+
+a {
+  text-decoration: none;
 }
 
 h1,
@@ -418,10 +423,60 @@ th {
   margin-bottom: 1rem;
 }
 
-.filtericon {
-  margin-left: 10px;
+/* filter icon */
+
+/* From Uiverse.io by vinodjangid07 */ 
+.setting-btn {
+  width: 40px;
+  height: 40px;
+  margin-left: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: var(--container-element);
+  border-radius: 8px;
   cursor: pointer;
+  border: none;
+  box-shadow: 0px 0px 0px 2px rgb(212, 209, 255);
 }
+
+.bar {
+  width: 50%;
+  height: 2px;
+  background-color: var(--color-paragraph);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 2px;
+}
+.bar::before {
+  content: "";
+  width: 2px;
+  height: 2px;
+  background-color: var(--color-paragraph);
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid var(--color-paragraph);
+  transition: all 0.3s;
+  box-shadow: 0px 0px 5px var(--btn-text);
+}
+
+.bar1::before {
+  transform: translateX(-4px);
+}
+.bar2::before {
+  transform: translateX(4px);
+}
+.setting-btn:hover .bar1::before {
+  transform: translateX(4px);
+}
+.setting-btn:hover .bar2::before {
+  transform: translateX(-4px);
+}
+
 
 .iconlight {
   display: inline-block;
@@ -446,6 +501,9 @@ th {
   height: 20px;
   margin-right: 10px;
 }
+
+/*filter icon end */
+
 
 .search-filter-wrapper {
   display: flex;
@@ -648,21 +706,6 @@ th {
   transform: rotate(180deg);
 }
 
-.td2 {
-  padding-bottom: 20px !important;
-  padding-top: 0px !important;
-}
-
-.td2:first-child {
-  text-align: left;
-  /* Align the first td to the left */
-}
-
-.td2:last-child {
-  text-align: right;
-  /* Align the last td to the right */
-}
-
 .ikon2 {
   display: inline-block;
   vertical-align: bottom;
@@ -708,41 +751,98 @@ th {
   border-radius: 4px;
 }
 
-.btn2-icon-delete {
+/*btn trash */
+
+.delete-button-container {
+  margin-top: 1rem;
+  display: flex;
+  justify-items: center;
+  cursor: pointer;
+  overflow: visible;
+  border-radius: 4px;
+}
+
+.delete-icon-wrapper {
   background-color: #9f3f52;
   width: 3rem;
   height: 3rem;
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  -webkit-border-top-left-radius: 4px;
-  -webkit-border-bottom-left-radius: 4px;
-  -moz-border-radius-topleft: 4px;
-  -moz-border-radius-bottomleft: 4px;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
-.btn2 img {
-  height: 1.5rem;
+.delete-icon {
   width: 1.5rem;
+  height: 1.5rem;
 }
 
-.btn2-delete {
+.delete-icon-lid {
+  transform-origin: 20px 6px; /* Adjust the rotation point */
+  transition: transform 0.3s ease;
+}
+
+.delete-button {
+  position: relative;
   font-weight: bold;
   background-color: #e6e8f4;
   border: none;
   width: 8rem;
   height: 3rem;
   color: #080f25;
-  -webkit-border-top-right-radius: 4px;
-  -webkit-border-bottom-right-radius: 4px;
-  -moz-border-radius-topright: 4px;
-  -moz-border-radius-bottomright: 4px;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
 }
+
+.delete-button span {
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+.delete-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #9f3f52;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+/* Hover effects */
+.delete-button-container:hover .delete-icon-wrapper {
+  background-color: #9f3f52;
+}
+
+.delete-button-container:hover .delete-icon-lid {
+  transform: rotate(45deg);
+}
+
+.delete-button-container:hover .delete-button::before {
+  transform: translateX(0);
+}
+
+.delete-button-container:hover .delete-button span {
+  color: white;
+}
+
+/*btn trash end */
+
+
+.btn2 img {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+
 .btn2-icon-restart {
   background-color: #6c72ff;
   width: 3rem;
@@ -757,11 +857,13 @@ th {
   -moz-border-radius-bottomleft: 4px;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
+  cursor: pointer;
 }
 
 .btn2-restart {
   font-weight: bold;
-  background-color: #e6e8f4;
+  background: linear-gradient(to left, #e6e8f4 50%, #6c72ff 50%) right;
+  background-size: 200% 100%;
   border: none;
   width: 8rem;
   height: 3rem;
@@ -772,7 +874,31 @@ th {
   -moz-border-radius-bottomright: 4px;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
+
+.btn-icon2 {
+  transition: all 0.6s ease-in-out
+}
+
+.container-btn2:hover .btn2-restart {
+  background-position: left;
+  color: #e6e8f4;
+}
+
+.container-btn2:hover .btn-icon2 {
+  transform: rotate(360deg);
+}
+
+.tablecontenth {
+  font-size: 14px;
+}
+
+.tablecontentp {
+  font-size: 12px;
+}
+
 
 .line {
   width: 100%;
@@ -1179,6 +1305,7 @@ select:focus {
 
 /* Media query for tablets */
 @media (min-width: 768px) {
+
   .sidebar {
     display: none;
   }
@@ -1267,14 +1394,26 @@ select:focus {
     padding-left: 12px;
     border-left: 3px solid var(--btn-container);
   }
+
+  .sidebar ul li a.active {
+    background-color: var(--hover-navbar);
+    padding-left: 12px;
+    border-left: 3px solid var(--btn-container);
+  }
+
   .content {
     margin-left: 350px;
     padding: 20px;
     width: calc(100% - 400px);
     height: 100%;
-
-    overflow-y: auto;
+    overflow:auto; 
     margin-top: 0px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .content::-webkit-scrollbar {
+    display: none;
   }
 
   .breadcrumb {
