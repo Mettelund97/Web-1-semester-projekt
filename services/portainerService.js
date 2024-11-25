@@ -8,6 +8,35 @@ class PortainerService {
     this.swarmId = "v1pkdou24tzjtncewxhvpmjms";
   }
 
+  async portainerAuthLogin() {
+    try {
+      const response = await fetch("https://portainer.kubelab.dk/api/auth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: "ABMM",
+          password: "Ladida.12",
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data && data.jwt) {
+        return data.jwt;
+      } else {
+        throw new Error("JWT token not found in response.");
+      }
+    } catch (error) {
+      console.error("Error fetching Portainer JWT:", error);
+      throw error;
+    }
+  }
+
   async getStacks() {
     const token = await getConfig("PORTAINERTOKEN");
 

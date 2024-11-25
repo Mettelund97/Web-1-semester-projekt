@@ -1,6 +1,7 @@
 const userModel = require("../models/UserModel");
-const configModel = require("../models/configModel");
+const { getConfig, setConfig } = require("../models/configModel");
 const jwt = require("jsonwebtoken");
+const portainerService = require("../services/portainerService");
 
 exports.getLogin = (req, res) => {
   res.render("login", {
@@ -23,58 +24,16 @@ exports.login = async (req, res) => {
       );
       res.cookie("authToken", token);
 
-      // when login is accpcted, then get the jwttoken to portainer.
-      fetch("https://portainer.kubelab.dk/api/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: "ABMM",
-          password: "Ladida.12",
-        }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          const portainerJWTToken = data.jwt;
+      let portainerJWTToken = await getConfig("PORTAINERTOKEN");
 
-          if (portainerJWTToken) {
-            configModel.setConfig("PORTAINERTOKEN", portainerJWTToken);
-            // console.log(configModel.getConfig("PORTAINERTOKEN"));
-          } else {
-            console.error("JWT token not found in response.");
-          }
+      if (!portainerJWTToken) {
+        portainerJWTToken = await portainerService.portainerAuthLogin();
+        await setConfig("PORTAINERTOKEN", portainerJWTToken);
+      }
 
-          const decoded = jwt.decode(portainerJWTToken);
-          console.log("decoded", decoded);
-          console.log("jwt", portainerJWTToken);
-          if (!decoded || !decoded.exp) {
-            console.error("Invalid token");
-            return null;
-          }
+      console.log("Portainer JWT token:", portainerJWTToken);
 
-          const timeNow = Math.floor(Date.now() / 1000);
-          if (decoded.exp < timeNow) {
-            console.log("Token has expired.");
-            return null;
-          }
-
-          if (!portainerJWTToken) {
-            // setting new jwt token, when curret is expired.
-            configModel.setConfig("PORTAINERTOKEN", portainerJWTToken);
-            console.error("YOUR JWT-TOKEN IS EXPIRED!");
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-
-      res.send();
+      res.send({ message: "Login successful!" });
     } else {
       console.log("Invalid email or password.");
       res.status(401).send("Invalid email or password.");
