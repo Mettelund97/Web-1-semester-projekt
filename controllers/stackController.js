@@ -1,41 +1,47 @@
 const portainerService = require('../services/portainerService.js');
 const StackModel = require('../models/stackModel.js');
 const dayjs = require('dayjs');
+require('dayjs/locale/da');
+dayjs.locale('da');
 
 exports.getAllStacks = async (req, res, next) => {
   try {
     console.log('Fetching stacks...');
-    // Get stacks from both Portainer and database
     const [portainerStacks, dbStacks] = await Promise.all([
       portainerService.getStacks(),
       StackModel.getAllStacks()
     ]);
 
-    // Map Portainer stacks and combine with DB data
     res.locals.stacks = portainerStacks.map(portainerStack => {
       const dbStack = dbStacks.find(db => db.title === portainerStack.Name);
       
-      // Format creator name
+      // Debug log to see the raw creation date
+      console.log('Stack creation date raw value:', portainerStack.CreationDate);
+      
       const creator = dbStack && dbStack.firstName && dbStack.lastName 
         ? `${dbStack.firstName} ${dbStack.lastName}`
         : 'Unknown';
 
-      // Format dates
       const formatDate = (date) => {
-        return date ? new Date(date).toLocaleString('da-DK', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-        }) : 'Never';
+        if (!date) return 'Never';
+        
+        const timestamp = typeof date === 'number' 
+          ? date * 1000 
+          : new Date(date).getTime();
+          
+        return dayjs(timestamp).format('D. MMMM YYYY - HH:mm');
       };
+
+      // Get creation date from database if available, otherwise use Portainer date
+      const creationDate = dbStack?.createdAt 
+        ? formatDate(dbStack.createdAt)
+        : formatDate(portainerStack.CreationDate);
 
       return {
         id: portainerStack.Id,
         name: portainerStack.Name,
         status: portainerStack.Status === 1,
-        creationDate: formatDate(portainerStack.CreationDate),
+        creationDate,
         environmentName: portainerStack.EndpointId,
         entryPoint: `${portainerStack.Name}.kubelab.dk`,
         creator,
@@ -54,27 +60,20 @@ exports.getAllStacks = async (req, res, next) => {
   }
 };
 
-exports.getStartNewProject = (req, res) => {
-  res.render("startNewProject", {
-    title: "Start new project"
-  });
-};
-
 exports.createNewProject = async (req, res) => {
   try {
     const { projectname, subdomainname } = req.body;
     console.log('Creating new project:', { projectname, subdomainname });
 
-    // Create the stack in Portainer
     const portainerStack = await portainerService.createStack(projectname, subdomainname);
 
-    // Save stack information to database with proper userId
     const stackData = {
       title: projectname,
       subdomain: `${subdomainname}.kubelab.dk`,
-      status: true, 
-      template: 'wordpress', 
-      userId: req.user.id 
+      status: true,
+      template: 'wordpress',
+      userId: req.user.id,
+      createdAt: new Date()
     };
 
     console.log('Saving stack to database with data:', stackData);
@@ -89,6 +88,13 @@ exports.createNewProject = async (req, res) => {
     });
   }
 };
+
+exports.getStartNewProject = (req, res) => {
+  res.render("startNewProject", {
+    title: "Start new project"
+  });
+};
+
 
 exports.deleteStack = async (req, res) => {
   try {

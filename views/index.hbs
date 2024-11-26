@@ -109,24 +109,24 @@
           </tr>
 
           <tr class="accordion-content">
-          <td colspan="3">
+            <td colspan="3">
               <div class="cell-content">
-                <h5>Entry Point</h5>
+                <h5>Domain</h5>
                 <p><a href="https://{{entryPoint}}" target="_blank">{{entryPoint}}</a></p>
+              </div>
+            <td>
+              <div class="cell-content">
+                <h5 class="tablecontenth">Created by</h5>
+                <p class="tablecontentp">{{creator}}</p>
               </div>
             </td>
           <td>
-            <div class="cell-content">
-              <h5 class="tablecontenth">Created by</h5>
-              <p class="tablecontentp">{{creator}}</p>
-            </div>
-          </td>
-          <td>
-            <div class="cell-content">
-              <h5 class="tablecontenth">Group</h5>
-              <p class="tablecontentp">Group name</p>
-            </div>
-          </td>
+            <td>
+              <div class="cell-content">
+                <h5 class="tablecontenth">Group</h5>
+                <p class="tablecontentp">{{groupName}}</p>
+              </div>
+           </td>
           <td>
             <div class="cell-content">
               <h5 class="tablecontenth">Last Activity</h5>
@@ -137,6 +137,7 @@
                   Stopped: {{lastStopped}}
                 {{/if}}
               </p>
+            </div>
           </td>
           <td></td>
         </tr>
