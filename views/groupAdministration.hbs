@@ -16,8 +16,11 @@
             <input type="text" placeholder="Search.." />
           </div>
           <div>
-            <img class="filtericon iconlight" src="/images/Filtericonblack.svg" alt="Filter Icon" />
-            <img class="filtericon icondarkmode" src="/images/Filtericon.svg" alt="Filter Icon" />
+            <button class="setting-btn dark light">
+              <span class="bar bar1 dark light"></span>
+              <span class="bar bar2 dark light"></span>
+              <span class="bar bar1 dark light"></span>
+            </button>
           </div>
         </div>
         <div class="toggle-container2">
@@ -39,6 +42,7 @@
 
     <div class="accordion-section">
       {{#each groups}}
+      <div class="group-row">
         <div class="accordion-block" data-group-id="{{this.id}}" onclick="toggleAccordion2(this)">
           <div>
             <div class="cellcheckbox">
@@ -52,60 +56,66 @@
           <img src="/images/arrowblack.svg" alt="Icon" class="ikon2 arrow-icon2 iconlight" />
           <img src="/images/arrowwhite.svg" alt="Icon" class="ikon2 arrow-icon2 icondarkmode" />
         </div>
-
-        <table class="accordion-content2" style="display: none;">
-          <tr>
-            <th>
-              <div class="cell-content">
-                <h5>Member</h5>
-                <p>Domainname</p>
+    
+        <div class="accordion-content2">
+          <div class="group-grid-header">
+            <div class="group-grid-row">
+              <div class="group-grid-cell header">
+                <div class="cell-content">
+                  <h5>Member</h5>
+                  <p>Domainname</p>
+                </div>
               </div>
-            </th>
-            <th>
-              <div class="cell-content">
-                <h5>Service</h5>
+              <div class="group-grid-cell header">
+                <div class="cell-content">
+                  <h5>Service</h5>
+                </div>
               </div>
-            </th>
-            <th>
-              <div class="cell-content">
-                <h5>Status</h5>
+              <div class="group-grid-cell header">
+                <div class="cell-content">
+                  <h5>Status</h5>
+                </div>
               </div>
-            </th>
-          </tr>
-          {{#each this.members}}
-            <tr class="accordion-content2">
-              <td>
+            </div>
+          </div>
+    
+          <div class="group-grid-body">
+            {{#each this.members}}
+            <div class="group-grid-row">
+              <div class="group-grid-cell">
                 <div class="cell-content">
                   <p class="cell-p">{{this.firstName}} {{this.lastName}}</p>
                   <p class="cell-p">hej.kubelab.dk</p>
                 </div>
-              </td>
-              <td>
+              </div>
+              <div class="group-grid-cell">
                 <div class="cell-content">
                   <p class="cell-p">Wordpress</p>
                 </div>
-              </td>
-              <td>
+              </div>
+              <div class="group-grid-cell">
                 <div class="statusrow">
                   <img src="/images/redstatus.svg" alt="Icon" class="ikon2" />
                   <p class="statusp">OFFLINE</p>
                 </div>
-              </td>
-            </tr>
-          {{else}}
-            <tr>
-              <td colspan="3">
+              </div>
+            </div>
+            {{else}}
+            <div class="group-grid-row empty-state">
+              <div class="group-grid-cell">
                 <div class="cell-content">
                   <p class="cell-p">No members in this group</p>
                 </div>
-              </td>
-            </tr>
-          {{/each}}
-        </table>
-      {{else}}
-        <div class="no-groups-message">
-          <p>No groups found. Click "Create new group" to add one.</p>
+              </div>
+            </div>
+            {{/each}}
+          </div>
         </div>
+      </div>
+      {{else}}
+      <div class="no-groups-message">
+        <p>No groups found. Click "Create new group" to add one.</p>
+      </div>
       {{/each}}
     </div>
   </section>
