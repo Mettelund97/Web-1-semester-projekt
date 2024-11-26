@@ -20,3 +20,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+
+async function deleteStack(stackId) {
+  if (!confirm('Are you sure you want to delete this project?')) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`/stacks/${stackId}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message || 'Failed to delete stack');
+    }
+
+    // Refresh the page to show updated stack list
+    window.location.reload();
+  } catch (error) {
+    alert(error.message);
+    console.error('Error deleting stack:', error);
+  }
+}
