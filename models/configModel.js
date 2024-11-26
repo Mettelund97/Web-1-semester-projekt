@@ -1,6 +1,7 @@
-const db = require("../config/db.js");
 const dbConn = require("../config/db.js");
 const jwt = require("jsonwebtoken");
+// const { portainerAuthLogin } = require("../services/portainerService.js");
+const portainerService = require("../services/portainerService");
 
 exports.getConfig = async (config) => {
   try {
@@ -19,13 +20,14 @@ exports.getConfig = async (config) => {
           return token;
         }
       }
-
-      const newToken = await fetchPortainerJWT();
-      await this.setConfig(config, newToken);
+      // const newToken = await portainerAuthLogin();
+      const newToken = await portainerService.portainerAuthLogin();
+      await exports.setConfig(config, newToken);
       return newToken;
     } else {
-      const newToken = await fetchPortainerJWT();
-      await this.setConfig(config, newToken);
+      // const newToken = await portainerAuthLogin();
+      const newToken = await portainerService.portainerAuthLogin();
+      await exports.setConfig(config, newToken);
       return newToken;
     }
   } catch (error) {

@@ -20,9 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         const result = await response.json();
-        alert(result.message);
+        alert(result.message, "Wait 5 sec");
 
-        location.reload();
+        // location.reload();
+        setTimeout(location.reload.bind(location), 5000);
       } else {
         const result = await response.json();
         alert(result.error || `Failed to ${action} the stack.`);

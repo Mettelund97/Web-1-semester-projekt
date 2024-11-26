@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { getConfig } = require("../models/configModel");
+const configModel = require("../models/configModel");
 
 class PortainerService {
   constructor() {
@@ -38,9 +38,8 @@ class PortainerService {
   }
 
   async getStacks() {
-    const token = await getConfig("PORTAINERTOKEN");
-
     try {
+      const token = await configModel.getConfig("PORTAINERTOKEN");
       const response = await axios.get(`${this.baseUrl}/stacks`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -139,10 +138,9 @@ services:
 
   async startStack(stackId) {
     try {
-      const token = await getConfig("PORTAINERTOKEN");
-      console.log("token in startStackReq:", token);
+      const token = await configModel.getConfig("PORTAINERTOKEN");
       fetch(
-        `https://portainer.kubelab.dk/api/stacks/${stackId}/start?endpointId=${5}`,
+        `https://portainer.kubelab.dk/api/stacks/${stackId}/start?endpointId=${this.endpointId}`,
         {
           method: "POST",
           headers: {
@@ -170,10 +168,9 @@ services:
 
   async stopStack(stackId) {
     try {
-      const token = await getConfig("PORTAINERTOKEN");
-      console.log("token in startStackReq:", token);
+      const token = await configModel.getConfig("PORTAINERTOKEN");
       fetch(
-        `https://portainer.kubelab.dk/api/stacks/${stackId}/stop?endpointId=${5}`,
+        `https://portainer.kubelab.dk/api/stacks/${stackId}/stop?endpointId=${this.endpointId}`,
         {
           method: "POST",
           headers: {
