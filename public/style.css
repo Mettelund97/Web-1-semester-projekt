@@ -610,6 +610,9 @@ Projects Grid Styles
   position: relative;
   z-index: 2;
   transition: color 0.3s ease;
+  font-size: 14px;
+  font-family: var(--font-family);
+  font-weight: 600;
 }
 
 .delete-button::before {
@@ -682,6 +685,9 @@ Projects Grid Styles
   border-bottom-right-radius: 4px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .btn-icon2 {
