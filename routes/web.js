@@ -44,6 +44,7 @@ router.post(
   groupAdministrationController.getGroupAdministration
 );
 
+
 router.delete(
   "/stacks/:stackId",
   authService.protectedRoutes,

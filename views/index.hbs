@@ -50,6 +50,14 @@
       </div>
     </div>
 
+    {{#each stacks}}
+      <!-- Existing fields -->
+      <td>{{creator}}</td>
+      <td>{{lastStarted}}</td>
+      <td>{{lastStopped}}</td>
+      <td>{{template}}</td>
+    {{/each}}
+
     <div class="dashboard-content">
       <table>
         <tr class="tablerow">
@@ -69,7 +77,7 @@
               </div>
             </td>
             <td class="mobileonly">
-              <p>WordPress</p>
+              <p>{{template}}</p>
             </td>
             <td class="mobileonly">
               <p>{{creationDate}}</p>
@@ -109,8 +117,8 @@
             </td>
           <td>
             <div class="cell-content">
-              <h5 class="tablecontenth">Created</h5>
-              <p class="tablecontentp">15 Oktober 2024 - 15:15:15</p>
+              <h5 class="tablecontenth">Created by</h5>
+              <p class="tablecontentp">{{creator}}</p>
             </div>
           </td>
           <td>
@@ -119,7 +127,17 @@
               <p class="tablecontentp">Group name</p>
             </div>
           </td>
-          <td></td>
+          <td>
+            <div class="cell-content">
+              <h5 class="tablecontenth">Last Activity</h5>
+              <p class="tablecontentp">
+                {{#if status}}
+                  Started: {{lastStarted}}
+                {{else}}
+                  Stopped: {{lastStopped}}
+                {{/if}}
+              </p>
+          </td>
           <td></td>
         </tr>
         <tr class="accordion-content accordion-buttonrow">

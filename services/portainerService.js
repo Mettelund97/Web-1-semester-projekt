@@ -145,7 +145,9 @@ services:
 
   async deleteStack(stackId) {
     try {
-      const token = await getConfig("PORTAINERTOKEN");
+      // const token = await getConfig("PORTAINERTOKEN");
+      const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXNlcm5hbWUiOiJhYm1tIiwicm9sZSI6Miwic2NvcGUiOiJkZWZhdWx0IiwiZm9yY2VDaGFuZ2VQYXNzd29yZCI6ZmFsc2UsImV4cCI6MTczMjY0MDY5NiwiaWF0IjoxNzMyNjExODk2LCJqdGkiOiI3YzIyNmVjYS02NTZkLTRmNGUtYWE4Mi1hNTkyNTI2MDQ4NmYifQ.Mn82uXwfQa1HHC6VJS4FV3MYHnQ_xQ3ny_stGGhv9k4";
       const response = await axios.delete(
         `${this.baseUrl}/stacks/${stackId}?endpointId=${this.endpointId}`,
         {
