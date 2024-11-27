@@ -52,6 +52,14 @@
       </div>
     </div>
 
+    {{#each stacks}}
+      <!-- Existing fields -->
+      <td>{{creator}}</td>
+      <td>{{lastStarted}}</td>
+      <td>{{lastStopped}}</td>
+      <td>{{template}}</td>
+    {{/each}}
+
     <div class="dashboard-content">
       <div class="grid-header">
         <div class="grid-row">
