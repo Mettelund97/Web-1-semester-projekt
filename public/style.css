@@ -8,7 +8,7 @@
   --color-body-bg: #e6e8f4;
   --color-heading: #080f25;
   --color-paragraph: #080f25;
-  --color-breadcrumbs: #7eadff;
+  --color-breadcrumbs: #6291ff;
   --color-breadcrumbs-hover: #007bff;
 
   --container-element: #f9f9f9;
@@ -17,6 +17,9 @@
   --btn-container: #654ce5;
   --btn-container-hover: #4937a3;
   --btn-text: #ffffff;
+  --select-background: #d7daea;
+  --select-border: #e2e8f0;
+  --select-border-focus: #4299e1;
 
   --hover-navbar: #e6e8f4;
   --hover-navbar-stroke: #654ce5;
@@ -26,6 +29,7 @@
   /* --logo-link-hover-color: #f39c12; */
   --logo-link-hover-color: #654ce5;
 }
+
 
 :root.dark {
   --color-nav-bg: #0e1836;
@@ -41,6 +45,9 @@
   --btn-container: #6c72ff;
   --btn-container-hover: #6368f1;
   --btn-text: #fafafb;
+  --select-background: #1a202c;
+  --select-border: #4a5568;
+  --select-border-focus: #007bff;
 
   --hover-navbar: #212c4d;
   --hover-navbar-stroke: #6c72ff;
@@ -73,6 +80,10 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+}
+
+main {
+  padding: 0 10px;
 }
 
 body::before {
@@ -110,24 +121,30 @@ h1 {
 h2 {
   line-height: 2;
   font-weight: 600;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
 }
 
 h3 {
   line-height: 1.5;
   font-weight: 500;
-  font-size: 1.15rem;
+  font-size: 1rem;
 }
 
 p {
   line-height: 1.2;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--color-paragraph);
 }
 
 img {
   display: block;
   max-width: 100%;
+}
+
+.content {
+  height: calc(100% - 67px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Mobile menu */
@@ -307,7 +324,7 @@ img {
 .breadcrumb {
   list-style: none;
   padding: 0;
-  margin: 0.6rem 1rem;
+  margin: 0.6rem 0rem;
   display: flex;
 }
 
@@ -376,23 +393,27 @@ Projects Grid Styles
   background-color: var(--container-element);
 }
 
+.grid-header h3 {
+ 
+}
+
 .grid-body {
   width: 100%;
 }
 
 .grid-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   width: 100%;
 }
 
 .grid-cell {
-  padding: 2rem;
+  padding: 1.5rem 1.2rem;
 }
 
 .grid-cell.header {
-  padding: 2rem;
+  padding: 1.5rem 1.2rem;
 }
 
 /* Project Row Styles */
@@ -423,13 +444,12 @@ Projects Grid Styles
 }
 
 .tablep {
-  font-size: 1.03rem;
+  font-size: 0.9rem;
 }
 
 
 /* Details Row Styles */
 .details-row {
-  padding: 1rem;
   background-color: var(--container-element);
 }
 
@@ -442,19 +462,14 @@ Projects Grid Styles
 .button-row {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   background-color: var(--container-element);
 }
 
-.button-row .grid-cell:last-child {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .cell-content h5 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.8rem;
   line-height: 1.5rem;
   margin-bottom: 5px;
 }
@@ -462,7 +477,7 @@ Projects Grid Styles
 .cell-content,
 .entrypoint, .tablecontentp {
   color: var(--color-paragraph);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .mobileonly {
@@ -553,6 +568,14 @@ Projects Grid Styles
 
 .container-btn2 {
   margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  justify-items: center;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+.container-btn3 {
   width: 100%;
   display: flex;
   justify-items: center;
@@ -694,23 +717,20 @@ Projects Grid Styles
   transition: all 0.6s ease-in-out
 }
 
-.container-btn2:hover .btn2-restart {
+.container-btn3:hover .btn2-restart {
   background-position: left;
   color: #e6e8f4;
 }
 
-.container-btn2:hover .btn-icon2 {
+.container-btn3:hover .btn-icon2 {
   transform: rotate(360deg);
 }
 
 
-/* filter icon */
-
-/* From Uiverse.io by vinodjangid07 */ 
 .setting-btn {
-  width: 40px;
-  height: 40px;
-  margin-left: 8px;
+  width: 35px;
+  height: 35px;
+  margin-left: 2px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -804,8 +824,8 @@ Projects Grid Styles
 }
 
 .toggle-label2 {
-  width: 80px;
-  height: 40px;
+  width: 60px;
+  height: 30px;
   background-color: #ccc;
   border-radius: 30px;
   position: relative;
@@ -815,8 +835,8 @@ Projects Grid Styles
 
 .toggle-label2::before {
   content: "";
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   background-color: var(--container-element);
   border-radius: 50%;
   position: absolute;
@@ -832,16 +852,16 @@ Projects Grid Styles
 }
 
 .toggle-input2:checked + .toggle-label2 .toggle-icon2 {
-  transform: translateX(45px);
+  transform: translateX(33px);
 }
 
 .toggle-input2:checked + .toggle-label2::before {
-  left: 42px;
+  left: 30px;
 }
 
 .toggle-icon2 {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   position: relative;
   z-index: 1;
   left: 6px;
@@ -849,90 +869,15 @@ Projects Grid Styles
   transition: transform 0.3s ease;
 }
 
-.toggle-container {
-  display: flex;
-  align-items: center;
-  margin-top: 40px;
-}
-
-.toggle-input {
-  display: none;
-}
-
-.toggle-label {
-  width: 80px;
-  height: 40px;
-  background-color: #ccc;
-  border-radius: 30px;
-  position: relative;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.toggle-label::before {
-  content: "";
-  width: 40px;
-  height: 40px;
-  background-color: var(--container-element);
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 0px;
-  transform: translateY(-50%);
-  transition: left 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.toggle-input:checked + .toggle-label {
-  background-color: var(--btn-container);
-}
-
-.toggle-input:checked + .toggle-label .toggle-icon {
-  transform: translateX(42px);
-}
-
-.toggle-input:checked + .toggle-label::before {
-  left: 42px;
-}
-
-.toggle-icon {
-  width: 20px;
-  height: 20px;
-  position: relative;
-  z-index: 1;
-  left: 10px;
-  top: 10px;
-  transition: transform 0.3s ease;
-}
-
-.darklightmode {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-}
-
-.modep {
-  margin-left: 20px;
-  white-space: nowrap;
-  /* Prevents wrapping to the next line */
-}
-
-.modesparagraphs {
-  margin-top: 40px;
-  display: flex;
-  align-items: center;
-  /* Vertically centers the items */
-}
-
 /* Search bar */
 .searchBar {
   flex-grow: 1;
   margin-right: 10px;
-  max-width: 600px;
+  max-width: 200px;
 }
 
 .searchBar input[type="text"] {
-  padding: 1rem;
+  padding: 0.9rem;
   border: var(--container-element);
   border-radius: 5px;
   font-size: 1rem;
@@ -1049,11 +994,6 @@ Projects Grid Styles
   display: block;
 }
 
-.statusp {
-  font-weight: 400;
-  font-size: 14px;
-}
-
 .cell-p {
   font-weight: 400 !important;
   margin-bottom: 5px;
@@ -1068,38 +1008,6 @@ Projects Grid Styles
 }
 
 /* start new project page */
-
-.custom-select {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
-
-select {
-  width: 50%;
-  padding: 15px;
-  border-radius: 5px;
-  background-color: var(--container-element);
-  margin-bottom: 20px;
-  border: none;
-  font-size: 16px;
-  color: var(--color-paragraph);
-  appearance: none;
-  /* Remove default arrow */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  cursor: pointer;
-}
-
-select:hover {
-  border-color: var(--color-paragraph);
-}
-
-select:focus {
-  outline: none;
-  border-color: var(--container-element);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
 
 .sectionhead {
   margin-bottom: 2rem;
@@ -1189,6 +1097,84 @@ select:focus {
   justify-content: space-between;
 }
 
+.toggle-container {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.toggle-input {
+  display: none;
+}
+
+.toggle-label {
+  width: 80px;
+  height: 40px;
+  background-color: #ccc;
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-label::before {
+  content: "";
+  width: 40px;
+  height: 40px;
+  background-color: var(--container-element);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  transform: translateY(-50%);
+  transition: left 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-input:checked+.toggle-label {
+  background-color: var(--btn-container);
+}
+
+.toggle-input:checked+.toggle-label .toggle-icon {
+  transform: translateX(44px);
+}
+
+.toggle-input:checked+.toggle-label::before {
+  left: 42px;
+}
+
+.toggle-icon {
+  width: 22px;
+  height: 22px;
+  position: relative;
+  z-index: 1;
+  left: 8px;
+  top: 8px;
+  transition: transform 0.3s ease;
+}
+
+.darklightmode {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.modep {
+  margin-left: 20px;
+  white-space: nowrap;
+  /* Prevents wrapping to the next line */
+}
+
+.sectionhead-layout {
+  margin-top: 30px;
+}
+
+.modesparagraphs {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+
 /* add member page */
 .sectionhead2 {
   margin-top: 10px;
@@ -1248,7 +1234,6 @@ select:focus {
 .role-cell {
   position: relative;
   min-width: 220px;
-  padding: 8px 12px !important;
 }
 
 /* Display element styles */
@@ -1263,9 +1248,9 @@ select:focus {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 6px 8px;
   border-radius: 6px;
   transition: background-color 0.2s ease;
+  color: var(--color-paragraph);
 }
 
 .role-display-element:hover {
@@ -1274,7 +1259,8 @@ select:focus {
 
 .role-display-element span {
   font-weight: 500;
-  color: #2c3e50;
+  color: var(--color-paragraph);
+  text-transform: capitalize;
 }
 
 .edit-role-btn {
@@ -1300,7 +1286,6 @@ select:focus {
   display: none;
   flex-direction: column;
   gap: 8px;
-  padding: 6px 8px;
   border-radius: 6px;
   background-color: var(--container-element);
 }
@@ -1308,13 +1293,15 @@ select:focus {
 .role-cell select {
   padding: 8px 12px;
   border-radius: 6px;
-  border: 1.5px solid #e2e8f0;
-  background-color: white;
-  font-size: 0.95em;
-  color: #2c3e50;
+  border: 1.5px solid var(--select-border);
+  background-color: var(--select-background);
+  color: var(--color-paragraph);
   min-width: 140px;
+  max-width: 150px;
+  font-size: 0.95em;
   transition: all 0.2s ease;
   cursor: pointer;
+  text-transform: capitalize;
 }
 
 .role-cell select:hover {
@@ -1322,7 +1309,7 @@ select:focus {
 }
 
 .role-cell select:focus {
-  border-color: #3182ce;
+  border-color: var(--select-border-focus);
   box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
   outline: none;
 }
@@ -1351,30 +1338,9 @@ select:focus {
   transform: translateY(0);
 }
 
-/* Dark mode compatibility */
-.dark .role-display-element span {
-  color: var(--color-paragraph);
-}
-
-.dark .role-cell select {
-  background-color: #1a202c;
-  border-color: #4a5568;
-  color: #e2e8f0;
-}
-
-.dark .role-cell select:hover {
-  border-color: #718096;
-}
-
-.dark .role-cell select:focus {
-  border-color: #4299e1;
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
-}
-
 .button-group {
   display: none;  
   gap: 8px;
-  margin-left: 8px;
   transition: display 0.3s ease;
 }
 
@@ -1402,6 +1368,37 @@ select:focus {
 }
 
 /* add member page file uploader */
+.add-member-select {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.add-m-select {
+  width: 50%;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: var(--container-element);
+  margin-bottom: 20px;
+  border: none;
+  font-size: 16px;
+  color: var(--color-paragraph);
+  appearance: none;
+  /* Remove default arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+.add-m-select:hover {
+  border-color: var(--color-paragraph);
+}
+
+.add-m-select:focus {
+  outline: none;
+  border-color: var(--container-element);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
 
 #drop-area {
   width: 400px;
@@ -1437,23 +1434,156 @@ select:focus {
     width: 500px;
   }
 
+  main {
+    padding: 0;
+  }
+
+  .breadcrumb {
+    list-style: none;
+    padding: 0;
+    margin: 0.6rem 1rem;
+    display: flex;
+  }
+
   .mobile {
     display: none;
   }
 
+  h3 {
+    line-height: 1.5;
+    font-weight: 500;
+    font-size: 1.15rem;
+  }
+
+  p {
+    line-height: 1.2;
+    font-size: 1rem;
+    color: var(--color-paragraph);
+  }
+/* my projects */
   .mobileonly {
     display: table-cell;
   }
 
-  th {
-    padding: 1.5rem;
-    width: 20%;
+  .tablep {
+    font-size: 1.03rem;
   }
 
-  td {
-    padding: 2rem;
-    width: 20% !important;
+  .statusp {
+    font-weight: 400;
+    font-size: 14px;
   }
+
+  .grid-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    width: 100%;
+  }
+
+  .details-row,
+  .button-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    background-color: var(--container-element);
+  }
+
+  .button-row .grid-cell:last-child {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .container-btn3:last-child {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .grid-cell {
+    padding: 2rem;
+  }
+
+  .grid-cell.header {
+    padding: 2rem;
+  }
+
+  .cell-content h5 {
+    font-size: 1rem;
+  }
+
+  .cell-content,
+  .entrypoint,
+  .tablecontentp {
+    font-size: 0.9rem;
+  }
+
+  .setting-btn {
+    width: 40px;
+    height: 40px;
+    margin-left: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background-color: var(--container-element);
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0px 0px 0px 2px rgb(212, 209, 255);
+  }
+
+  .searchBar {
+    flex-grow: 1;
+    margin-right: 10px;
+    max-width: 600px;
+  }
+
+  .toggle-label2 {
+    width: 80px;
+    height: 40px;
+    background-color: #ccc;
+    border-radius: 30px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .toggle-label2::before {
+    content: "";
+    width: 40px;
+    height: 40px;
+    background-color: var(--container-element);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: -1px;
+    transform: translateY(-50%);
+    transition: left 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .toggle-input2:checked+.toggle-label2 .toggle-icon2 {
+    transform: translateX(45px);
+  }
+
+  .toggle-input2:checked+.toggle-label2::before {
+    left: 42px;
+  }
+
+  .toggle-icon2 {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    z-index: 1;
+    left: 6px;
+    top: 8px;
+    transition: transform 0.3s ease;
+  }
+  
+
+  /* Sidebar */
 
   .sidebar {
     width: 310px;

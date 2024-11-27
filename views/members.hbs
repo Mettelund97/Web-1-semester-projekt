@@ -12,7 +12,7 @@
     <div class="parent-container">
       <div class="actionsrow">
         <div class="search-filter-wrapper">
-          <div class="searchBar">
+          <div class="searchBar2">
             <input type="text" placeholder="Search.." />
           </div>
           <div>
@@ -58,7 +58,7 @@
           <h3>Status</h3>
         </div>
         <div class="grid-col">
-          <h3>Action</h3>
+          <h3>Template</h3>
         </div>
       </div>
     
@@ -105,89 +105,10 @@
           </div>
         </div>
         <div class="grid-col">
-          <div class="actiontablecell">
-            <img src="/images/playikon.svg" alt="Icon" class="ikon2 iconlight" />
-            <img src="/images/playiconwhite.svg" alt="Icon" class="ikon2 icondarkmode" />
-          </div>
+            <p class="tablep">Wordpress</p>
         </div>
       </div>
       {{/each}}
     </div>
   </section>
 </section>
-{{!-- Add this at the bottom of your members.hbs, before the closing </section> tag --}}
-
-
-
-<script>
-// Role editing functions
-function showRoleEdit(userId) {
-    const displayElement = document.getElementById(`role-display-${userId}`);
-    const editElement = document.getElementById(`role-edit-${userId}`);
-    const buttonGroup = document.getElementById(`button-group-${userId}`);
-    
-    if (displayElement && editElement) {
-        displayElement.style.display = 'none';
-        editElement.style.display = 'flex';
-        // Hide buttons initially
-        if (buttonGroup) {
-            buttonGroup.style.display = 'none';
-        }
-    }
-}
-
-function handleRoleChange(userId, currentRoleId) {
-    const select = document.getElementById(`role-select-${userId}`);
-    const buttonGroup = document.getElementById(`button-group-${userId}`);
-    
-    // Only show buttons if selected role is different from current role
-    if (buttonGroup) {
-        buttonGroup.style.display = select.value !== currentRoleId ? 'flex' : 'none';
-    }
-}
-
-function cancelEdit(userId) {
-    const displayElement = document.getElementById(`role-display-${userId}`);
-    const editElement = document.getElementById(`role-edit-${userId}`);
-    const select = document.getElementById(`role-select-${userId}`);
-    const buttonGroup = document.getElementById(`button-group-${userId}`);
-    
-    if (displayElement && editElement) {
-        displayElement.style.display = 'flex';
-        editElement.style.display = 'none';
-        // Reset select to original value
-        if (select) {
-            select.value = currentRoleId;
-        }
-        // Hide buttons
-        if (buttonGroup) {
-            buttonGroup.style.display = 'none';
-        }
-    }
-}
-
-function updateRole(userId) {
-    const select = document.getElementById(`role-select-${userId}`);
-    const newRoleId = select.value;
-
-    fetch(`/user/${userId}/role`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ roleId: newRoleId })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            location.reload();
-        } else {
-            alert('Error updating role: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error updating role');
-    });
-}
-</script>

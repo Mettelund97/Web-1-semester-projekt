@@ -48,8 +48,8 @@
         />
       </div>
 
-      <div class="custom-select">
-        <select id="role" name="role" required>
+      <div class="add-member-select">
+        <select id="role" name="role" class="add-m-select" required>
           <option value="">Choose member role</option>
           {{#each roles}}
             <option value="{{this.id}}">{{this.type}}</option>
@@ -57,8 +57,8 @@
         </select>
       </div>
 
-      <div class="custom-select">
-        <select id="group" name="group" required>
+      <div class="add-member-select">
+        <select id="group" name="group" class="add-m-select" required>
           <option value="">Choose group</option>
           {{#each groups}}
             <option value="{{this.id}}">{{this.name}}</option>
