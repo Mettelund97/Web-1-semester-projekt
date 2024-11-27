@@ -51,15 +51,6 @@
           Create new project</a>
       </div>
     </div>
-
-    {{#each stacks}}
-      <!-- Existing fields -->
-      <td>{{creator}}</td>
-      <td>{{lastStarted}}</td>
-      <td>{{lastStopped}}</td>
-      <td>{{template}}</td>
-    {{/each}}
-
     <div class="dashboard-content">
       <div class="grid-header">
         <div class="grid-row">
@@ -95,7 +86,7 @@
                 </div>
               </div>
               <div class="grid-cell mobileonly">
-                <p class="tablep">WordPress</p>
+                <p class="tablep">{{template}}</p>
               </div>
               <div class="grid-cell mobileonly">
                 <p class="tablep">{{creationDate}}</p>
@@ -173,7 +164,7 @@
               <div class="grid-row details-row">
                 <div class="grid-cell" colspan="3">
                   <div class="cell-content">
-                    <h5>Entry Point</h5>
+                    <h5>Domain</h5>
                     <p><a
                         href="https://{{entryPoint}}"
                         class="entrypoint"
@@ -183,14 +174,14 @@
                 </div>
                 <div class="grid-cell">
                   <div class="cell-content">
-                    <h5 class="tablecontenth">Created</h5>
-                    <p class="tablecontentp">15 Oktober 2024 - 15:15:15</p>
+                    <h5 class="tablecontenth">Creator</h5>
+                    <p class="tablecontentp">{{creator}}</p>
                   </div>
                 </div>
                 <div class="grid-cell">
                   <div class="cell-content">
                     <h5 class="tablecontenth">Group</h5>
-                    <p class="tablecontentp">Group name</p>
+                    <p class="tablecontentp">{{groupName}}</p>
                   </div>
                 </div>
               </div>
