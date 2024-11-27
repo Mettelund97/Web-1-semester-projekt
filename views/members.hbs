@@ -16,8 +16,11 @@
             <input type="text" placeholder="Search.." />
           </div>
           <div>
-            <img class="filtericon iconlight" src="/images/Filtericonblack.svg" alt="Filter Icon" />
-            <img class="filtericon icondarkmode" src="/images/Filtericon.svg" alt="Filter Icon" />
+            <button class="setting-btn dark light">
+              <span class="bar bar1 dark light"></span>
+              <span class="bar bar2 dark light"></span>
+              <span class="bar bar1 dark light"></span>
+            </button>
           </div>
         </div>
         <div class="toggle-container2">
@@ -39,66 +42,76 @@
       </div>
     </div>
 
-    <div class="dashboard-content">
-      <table>
-        <tr class="tablerow">
-          <th class="tablehead"><h3>Name</h3></th>
-          <th class="tablehead"><h3>Email</h3></th>
-          <th class="tablehead"><h3>Role</h3></th>
-          <th class="tablehead"><h3>Status</h3></th>
-          <th class="tablehead"><h3>Action</h3></th>
-        </tr>
-        {{#each users}}
-          <tr class="accordion-header" data-user-id="{{this.id}}">
-            <td>
-              <div class="cellcheckbox">
-                <div class="emptybox"></div>
-                <p class="tablep">{{this.firstName}} {{this.lastName}}</p>
+    <div class="members-grid">
+      <!-- Grid Header -->
+      <div class="members-grid-header">
+        <div class="grid-col">
+          <h3>Name</h3>
+        </div>
+        <div class="grid-col">
+          <h3>Email</h3>
+        </div>
+        <div class="grid-col">
+          <h3>Role</h3>
+        </div>
+        <div class="grid-col">
+          <h3>Status</h3>
+        </div>
+        <div class="grid-col">
+          <h3>Action</h3>
+        </div>
+      </div>
+    
+      <!-- Grid Body -->
+      {{#each users}}
+      <div class="members-grid-row">
+        <div class="grid-col">
+          <div class="name-cell">
+            <div class="emptybox"></div>
+            <p>{{this.firstName}} {{this.lastName}}</p>
+          </div>
+        </div>
+        <div class="grid-col">
+          <p>{{this.email}}</p>
+        </div>
+        <div class="grid-col role-cell">
+          <div class="role-stack">
+            <div id="role-display-{{this.id}}" class="role-display-element">
+              <span>{{this.roleName}}</span>
+              <button class="edit-role-btn" onclick="showRoleEdit('{{this.id}}')">
+                <img src="/images/editiconblack.svg" alt="Edit" class="ikon2 iconlight" />
+                <img src="/images/editicon.svg" alt="Edit" class="ikon2 icondarkmode" />
+              </button>
+            </div>
+            <div id="role-edit-{{this.id}}" class="role-edit" style="display: none;">
+              <select id="role-select-{{this.id}}" onchange="handleRoleChange('{{this.id}}', '{{this.RoleId}}')">
+                {{#each ../roles}}
+                <option value="{{this.id}}" {{#if (eq this.id ../RoleId)}}selected{{/if}}>
+                  {{this.type}}
+                </option>
+                {{/each}}
+              </select>
+              <div id="button-group-{{this.id}}" class="button-group" style="display: none;">
+                <button onclick="updateRole('{{this.id}}')" class="confirm-btn">Confirm</button>
+                <button onclick="cancelEdit('{{this.id}}')" class="cancel-btn">Cancel</button>
               </div>
-            </td>
-            <td>
-              <p>{{this.email}}</p>
-            </td>
-            <td class="role-cell">
-                <div id="role-display-{{this.id}}" class="role-display-element">
-                    <span>{{this.roleName}}</span>
-                    <button class="edit-role-btn" onclick="showRoleEdit('{{this.id}}')">
-                        <img src="/images/editiconblack.svg" alt="Edit" class="ikon2 iconlight"/>
-                        <img src="/images/editicon.svg" alt="Edit" class="ikon2 icondarkmode"/>
-                    </button>
-                </div>
-                <div id="role-edit-{{this.id}}" class="role-edit" style="display: none;">
-                    <select id="role-select-{{this.id}}" onchange="handleRoleChange('{{this.id}}', '{{this.RoleId}}')">
-                        {{#each ../roles}}
-                            <option value="{{this.id}}" {{#if (eq this.id ../RoleId)}}selected{{/if}}>
-                                {{this.type}}
-                            </option>
-                        {{/each}}
-                    </select>
-                    <div id="button-group-{{this.id}}" class="button-group" style="display: none;">
-                        <button onclick="updateRole('{{this.id}}')" class="confirm-btn">Confirm</button>
-                        <button onclick="cancelEdit('{{this.id}}')" class="cancel-btn">Cancel</button>
-                    </div>
-                </div>
-            </td>
-            <td>
-              <div class="statusrow">
-                <img src="/images/greenstatus.svg" alt="Icon" class="ikon2" />
-                <p class="statusp">ONLINE</p>
-              </div>
-            </td>
-            </td>
-            <td>
-              <div class="actiontablecell">
-                <img src="/images/playikon.svg" alt="Icon" class="ikon2 iconlight" />
-                <img src="/images/playiconwhite.svg" alt="Icon" class="ikon2 icondarkmode" />
-                <img src="/images/arrowblack.svg" alt="Icon" class="ikon2 arrow-icon iconlight" />
-                <img src="/images/arrowwhite.svg" alt="Icon" class="ikon2 arrow-icon icondarkmode" />
-              </div>
-            </td>
-          </tr>
-        {{/each}}
-      </table>
+            </div>
+          </div>
+        </div>
+        <div class="grid-col">
+          <div class="statusrow">
+            <img src="/images/greenstatus.svg" alt="Icon" class="ikon2" />
+            <p class="statusp">ONLINE</p>
+          </div>
+        </div>
+        <div class="grid-col">
+          <div class="actiontablecell">
+            <img src="/images/playikon.svg" alt="Icon" class="ikon2 iconlight" />
+            <img src="/images/playiconwhite.svg" alt="Icon" class="ikon2 icondarkmode" />
+          </div>
+        </div>
+      </div>
+      {{/each}}
     </div>
   </section>
 </section>
