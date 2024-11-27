@@ -44,6 +44,9 @@ router.post(
   groupAdministrationController.getGroupAdministration
 );
 
+router.post("/stacks/:stackId/start", stackController.startStack);
+router.post("/stacks/:stackId/stop", stackController.stopStack);
+
 router.delete(
   "/stacks/:stackId",
   authService.protectedRoutes,
