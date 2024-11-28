@@ -1,6 +1,5 @@
 const userModel = require("../models/UserModel");
-// const { getConfig, setConfig } = require("../models/configModel");
-const configModel = require("../models/configModel");
+const { getConfig, setConfig } = require("../models/configModel");
 const jwt = require("jsonwebtoken");
 const portainerService = require("../services/portainerService");
 
@@ -25,13 +24,11 @@ exports.login = async (req, res) => {
       );
       res.cookie("authToken", token);
 
-      let portainerJWTToken = await configModel.getConfig("PORTAINERTOKEN");
-      // let portainerJWTToken = await getConfig("PORTAINERTOKEN");
+      let portainerJWTToken = await getConfig("PORTAINERTOKEN");
 
       if (!portainerJWTToken) {
         portainerJWTToken = await portainerService.portainerAuthLogin();
-        await configModel.setConfig("PORTAINERTOKEN", portainerJWTToken);
-        // await setConfig("PORTAINERTOKEN", portainerJWTToken);
+        await setConfig("PORTAINERTOKEN", portainerJWTToken);
       }
 
       console.log("Portainer JWT token:", portainerJWTToken);

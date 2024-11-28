@@ -1,4 +1,4 @@
-exports.getSettings = async (req, res) => {
+exports.getSettings = (req, res) => {
   res.render("settings", {
     title: "Settings",
   });

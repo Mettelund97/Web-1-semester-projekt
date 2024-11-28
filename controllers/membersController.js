@@ -1,4 +1,4 @@
-exports.getMembers = async (req, res) => {
+exports.getMembers = (req, res) => {
   res.render("members", {
     title: "Members",
   });
