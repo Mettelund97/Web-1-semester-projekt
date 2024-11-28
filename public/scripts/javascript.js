@@ -74,6 +74,19 @@ function updateIcons(isDark) {
   });
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+  const burgerMenu = document.getElementById("burger-menu");
+  if (burgerMenu) {
+    burgerMenu.addEventListener("click", function () {
+      const navLinks = document.getElementById("nav-links");
+      if (navLinks) {
+        navLinks.classList.toggle("active");
+        this.classList.toggle("active");
+      }
+    });
+  }
+});
+
 document.addEventListener("DOMContentLoaded", function() {
     const menuItems = document.querySelectorAll('.menu-item');
     
@@ -128,15 +141,6 @@ const toggleInput = document.getElementById('toggle2');
   }
 
 toggleInput.addEventListener('change', toggleActiveClass);
-
-
-
-document.getElementById("burger-menu").addEventListener("click", function () {
-  const navLinks = document.getElementById("nav-links");
-  navLinks.classList.toggle("active");
-  const burger = document.getElementById("burger-menu");
-  burger.classList.toggle("active");
-});
 
 document.getElementById("myButton").addEventListener("click", function () {});
 

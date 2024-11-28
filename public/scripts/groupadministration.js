@@ -1,20 +1,12 @@
 /*Group management */
 function toggleAccordion2(element) {
   const content = element.nextElementSibling;
-  const currentlyActive = document.querySelector('.accordion-block.active');
   const isCurrentlyOpen = element.classList.contains('active');
-  
 
-  if (currentlyActive && currentlyActive !== element) {
-    currentlyActive.classList.remove('active');
-    currentlyActive.nextElementSibling.style.display = 'none';
-    currentlyActive.querySelector('.arrow-icon2').style.transform = "rotate(0deg)";
-  }
-  
-
+  // Toggle active class for the clicked element
   element.classList.toggle('active');
   
- 
+  // Toggle content and rotate arrow based on new state
   if (!isCurrentlyOpen) {
     content.style.display = 'table';
     element.querySelector('.arrow-icon2').style.transform = "rotate(180deg)";
