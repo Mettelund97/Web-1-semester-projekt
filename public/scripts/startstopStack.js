@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+/*document.addEventListener("DOMContentLoaded", () => {
   async function handleStartStopAction(event) {
     const button = event.currentTarget;
     const stackId = button.dataset.stackId;
@@ -39,3 +39,4 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", handleStartStopAction);
   });
 });
+*/

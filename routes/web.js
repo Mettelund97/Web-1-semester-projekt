@@ -53,6 +53,12 @@ router.delete(
   stackController.deleteStack
 );
 
+router.post(
+  "/stacks/bulk/:action",
+  authService.protectedRoutes,
+  stackController.bulkAction
+);
+
 // Settings
 
 router.get(

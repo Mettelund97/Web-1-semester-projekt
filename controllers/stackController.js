@@ -158,3 +158,44 @@ exports.stopStack = async (req, res) => {
     res.status(500).json({ error: "Failed to stop stack" });
   }
 };
+
+exports.bulkAction = async (req, res) => {
+  try {
+    const { stackIds, action } = req.body;
+    
+    if (!stackIds || !Array.isArray(stackIds) || !action) {
+      return res.status(400).json({ message: 'Invalid request' });
+    }
+
+    const actions = {
+      delete: async (id) => await portainerService.deleteStack(id),
+      start: async (id) => await portainerService.startStack(id),
+      stop: async (id) => await portainerService.stopStack(id)
+    };
+
+    if (!actions[action]) {
+      return res.status(400).json({ message: 'Invalid action' });
+    }
+
+    // Process all stacks in sequence
+    for (const stackId of stackIds) {
+      await actions[action](stackId);
+      
+      // If it's a delete action, also remove from our database
+      if (action === 'delete') {
+        await StackModel.deleteStack(stackId);
+      }
+    }
+
+    res.json({ 
+      success: true, 
+      message: `Successfully performed ${action} on selected stacks` 
+    });
+  } catch (error) {
+    console.error(`Failed to perform bulk ${action}:`, error);
+    res.status(500).json({
+      success: false,
+      message: error.message || `Failed to perform bulk ${action}`
+    });
+  }
+};

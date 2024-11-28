@@ -26,17 +26,18 @@
         <div class="toggle-container2">
           <input type="checkbox" id="toggle2" class="toggle-input2" />
           <label for="toggle2" class="toggle-label2">
-            <img
-              src="/images/editiconblack.svg"
-              alt="Edit Icon"
-              class="toggle-icon2 iconlight"
-            />
-            <img
-              src="/images/editicon.svg"
-              alt="Edit Icon"
-              class="toggle-icon2 icondarkmode"
-            />
+            <img src="/images/editiconblack.svg" alt="Edit Icon" class="toggle-icon2 iconlight" />
+            <img src="/images/editicon.svg" alt="Edit Icon" class="toggle-icon2 icondarkmode" />
           </label>
+          <div id="multiActionDropdown" class="multi-action-dropdown">
+            <select id="bulkActions" class="bulk-action-select">
+              <option value="">Bulk Actions</option>
+              <option value="delete">Delete Selected</option>
+              <option value="start">Start Selected</option>
+              <option value="stop">Stop Selected</option>
+            </select>
+            <button id="applyBulkAction" class="button-link">Apply</button>
+          </div>
         </div>
       </div>
     </div>
@@ -81,7 +82,7 @@
             >
               <div class="grid-cell">
                 <div class="cellcheckbox">
-                  <div class="emptybox"></div>
+                  <input type="checkbox" class="stack-checkbox emptybox" data-stack-id="{{id}}" style="display: none;" />
                   <p class="tablep">{{name}}</p>
                 </div>
               </div>
