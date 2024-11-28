@@ -48,8 +48,6 @@ exports.getAllStacks = async (req, res, next) => {
         environmentName: portainerStack.EndpointId,
         entryPoint: `${portainerStack.Name}.kubelab.dk`,
         creator,
-        lastStarted: formatDate(dbStack?.lastStarted),
-        lastStopped: formatDate(dbStack?.lastStopped),
         template: dbStack?.template || "wordpress",
       };
     });

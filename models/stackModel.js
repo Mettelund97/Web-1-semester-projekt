@@ -3,7 +3,7 @@ const dbConn = require("../config/db.js");
 class StackModel {
   static async createStack(stackData) {
     try {
-      const { title, subdomain, status, template, userId } = stackData;
+      const { title, subdomain, status, template, userId, portainerStackId } = stackData;
       
       const query = `
         INSERT INTO Stacks (
@@ -12,9 +12,10 @@ class StackModel {
           status,
           template,
           userId,
+          portainerStackId,
           createdAt,
-          lastStarted
-        ) VALUES (?, ?, ?, ?, ?, NOW(), NOW())
+          syncStatus
+        ) VALUES (?, ?, ?, ?, ?, ?, NOW(), 'synced')
       `;
       
       const [result] = await dbConn.query(query, [
@@ -22,7 +23,8 @@ class StackModel {
         subdomain,
         status,
         template,
-        userId
+        userId,
+        portainerStackId
       ]);
       
       return {
@@ -36,6 +38,70 @@ class StackModel {
     }
   }
 
+  static async updateStack(stackData) {
+    try {
+      const {
+        id,
+        status,
+        lastSynced,
+        portainerStackId
+      } = stackData;
+      
+      const query = `
+        UPDATE Stacks 
+        SET 
+          status = ?,
+          lastSynced = ?,
+          portainerStackId = ?,
+          syncStatus = 'synced'
+        WHERE id = ?
+      `;
+      
+      const [result] = await dbConn.query(query, [
+        status,
+        lastSynced,
+        portainerStackId,
+        id
+      ]);
+
+      return result.affectedRows > 0;
+    } catch (error) {
+      console.error('Error updating stack in database:', error);
+      throw error;
+    }
+  }
+
+  static async updateSyncStatus(id, syncStatus, syncMessage = null) {
+    try {
+      const query = `
+        UPDATE Stacks 
+        SET syncStatus = ?, 
+            syncMessage = ?,
+            lastSynced = NOW()
+        WHERE id = ?
+      `;
+      
+      const [result] = await dbConn.query(query, [syncStatus, syncMessage, id]);
+      return result.affectedRows > 0;
+    } catch (error) {
+      console.error('Error updating sync status:', error);
+      throw error;
+    }
+  }
+
+  static async findByPortainerStackId(portainerStackId) {
+    try {
+      const [rows] = await dbConn.query(
+        'SELECT * FROM Stacks WHERE portainerStackId = ?',
+        [portainerStackId]
+      );
+      return rows[0] || null;
+    } catch (error) {
+      console.error('Error finding stack by Portainer ID:', error);
+      throw error;
+    }
+  }
+  
   static async getAllStacks() {
     try {
       const query = `
@@ -66,24 +132,6 @@ class StackModel {
       return rows[0] || null;
     } catch (error) {
       console.error('Error fetching stack from database:', error);
-      throw error;
-    }
-  }
-
-  static async updateStackStatus(id, status) {
-    try {
-      const query = `
-        UPDATE Stacks 
-        SET 
-          status = ?,
-          ${status ? 'lastStarted = NOW()' : 'lastStopped = NOW()'}
-        WHERE id = ?
-      `;
-      
-      const [result] = await dbConn.query(query, [status, id]);
-      return result.affectedRows > 0;
-    } catch (error) {
-      console.error('Error updating stack status in database:', error);
       throw error;
     }
   }
