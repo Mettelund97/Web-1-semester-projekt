@@ -4,10 +4,10 @@ const configModel = require('../models/configModel');
 
 class StackSyncService {
   constructor() {
-    this.syncInterval = 30000; // 30 seconds
+    this.syncInterval = 30000;
     this.isRunning = false;
     this.retryAttempts = 3;
-    this.retryDelay = 5000; // 5 seconds
+    this.retryDelay = 5000;
   }
 
   async retryOperation(operation, attempts = this.retryAttempts) {
@@ -35,27 +35,25 @@ class StackSyncService {
         title: portainerStack.Name,
         subdomain: `${portainerStack.Name}.kubelab.dk`,
         status: portainerStack.Status === 1,
-        template: 'wordpress',
+        template: dbStack?.template || 'wordpress',
         portainerStackId: portainerStack.Id,
-        lastSynced: new Date()
+        lastSynced: new Date(),
+        userId: dbStack?.userId,
+        groupId: dbStack?.groupId
       };
 
       if (dbStack) {
-        // Only update if there are changes
-        if (
-          dbStack.status !== stackData.status ||
-          dbStack.portainerStackId !== stackData.portainerStackId
-        ) {
+        // Only update if there are changes to status or portainerStackId
+        if (dbStack.status !== stackData.status || 
+            dbStack.portainerStackId !== stackData.portainerStackId) {
           await StackModel.updateStack({
             ...stackData,
             id: dbStack.id
           });
-        } else {
-          // Just update the sync status
-          await StackModel.updateSyncStatus(dbStack.id, 'synced');
         }
+        await StackModel.updateSyncStatus(dbStack.id, 'synced');
       } else {
-        // Create new stack
+
         const result = await StackModel.createStack(stackData);
         await StackModel.updateSyncStatus(result.id, 'synced');
       }
@@ -80,23 +78,19 @@ class StackSyncService {
       try {
         console.log('Starting stack synchronization...');
         
-        // Fetch stacks from both sources
         const [portainerStacks, dbStacks] = await Promise.all([
           this.retryOperation(() => this.fetchPortainerStacks()),
-          StackModel.getAllStacks()
+          StackModel.getAllStacks() 
         ]);
 
-        // Track processed stacks
         const processedDbStackIds = new Set();
 
-        // Update or create stacks
         for (const portainerStack of portainerStacks) {
-          const dbStack = dbStacks.find(s => s.portainerStackId === portainerStack.Id);
+          const dbStack = dbStacks.find(s => s.portainerStackId === portainerStack.Id || s.title === portainerStack.Name);
           await this.syncStack(portainerStack, dbStack);
           if (dbStack) processedDbStackIds.add(dbStack.id);
         }
 
-        // Handle deleted stacks
         const deletedStackIds = dbStacks
           .filter(s => !processedDbStackIds.has(s.id))
           .map(s => s.id);
@@ -114,10 +108,8 @@ class StackSyncService {
       }
     };
 
-    // Initial sync
     await syncStacks();
 
-    // Set up periodic sync
     this.syncInterval = setInterval(syncStacks, this.syncInterval);
   }
 
