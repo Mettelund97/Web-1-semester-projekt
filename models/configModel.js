@@ -3,15 +3,15 @@ const jwt = require("jsonwebtoken");
 // const { portainerAuthLogin } = require("../services/portainerService.js");
 const portainerService = require("../services/portainerService");
 
-exports.getConfig = async (config) => {
+exports.getConfig = async (configKey) => {
   try {
     const [rows] = await dbConn.query(
-      "SELECT value FROM Configs WHERE config = ? LIMIT 1",
-      [config]
+      "SELECT configValue FROM Configs WHERE configKey = ? LIMIT 1",
+      [configKey]
     );
 
     if (rows.length > 0) {
-      const token = rows[0].value;
+      const token = rows[0].configValue;
 
       const decoded = jwt.decode(token);
       if (decoded && decoded.exp) {
@@ -22,12 +22,12 @@ exports.getConfig = async (config) => {
       }
       // const newToken = await portainerAuthLogin();
       const newToken = await portainerService.portainerAuthLogin();
-      await exports.setConfig(config, newToken);
+      await exports.setConfig(configKey, newToken);
       return newToken;
     } else {
       // const newToken = await portainerAuthLogin();
       const newToken = await portainerService.portainerAuthLogin();
-      await exports.setConfig(config, newToken);
+      await exports.setConfig(configKey, newToken);
       return newToken;
     }
   } catch (error) {
@@ -36,11 +36,11 @@ exports.getConfig = async (config) => {
   }
 };
 
-exports.setConfig = async (config, value) => {
+exports.setConfig = async (configKey, configValue) => {
   try {
     await dbConn.query(
-      "INSERT INTO Configs (config, value) VALUES (?, ?) ON DUPLICATE KEY UPDATE value = ?",
-      [config, value, value]
+      "INSERT INTO Configs (configKey, configValue) VALUES (?, ?) ON DUPLICATE KEY UPDATE configValue = ?",
+      [configKey, configValue, configValue]
     );
   } catch (error) {
     console.error("Error creating a token", error);

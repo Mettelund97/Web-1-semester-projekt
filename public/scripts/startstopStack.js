@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         const result = await response.json();
-        alert(result.message, "Wait 5 sec");
+        alert(result.message + ". Now wait 5 sec...");
 
         // location.reload();
         setTimeout(location.reload.bind(location), 5000);

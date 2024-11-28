@@ -1,5 +1,6 @@
 const portainerService = require("../services/portainerService.js");
 const StackModel = require("../models/stackModel.js");
+const templateModel = require("../models/templateModel");
 const dayjs = require("dayjs");
 require("dayjs/locale/da");
 dayjs.locale("da");
@@ -62,6 +63,59 @@ exports.getAllStacks = async (req, res, next) => {
     next();
   }
 };
+
+// exports.createNewProject = async (req, res) => {
+//   try {
+//     const { projectname, subdomainname, template: templateId } = req.body;
+//     console.log("Creating new project:", {
+//       projectname,
+//       subdomainname,
+//       templateId,
+//     });
+
+//     const template = await templateModel.getTemplateById(templateId);
+//     if (!template) {
+//       throw new Error("Selected template not found");
+//     }
+
+//     const websiteId = Math.random().toString(36).substring(7);
+//     const replacedService = template.service
+//       .replace(/CHANGEME/g, websiteId)
+//       .replace(/SUBDOMAIN/g, subdomainname);
+
+//     // If necessary, clean up any excess escaping:
+//     const cleanService = replacedService
+//       .replace(/\\n/g, "\n")
+//       .replace(/\\"/g, '"');
+
+//     // Pass the updated service to the portainer service
+//     const portainerStack = await portainerService.createStack(
+//       projectname,
+//       subdomainname,
+//       cleanService
+//     );
+
+//     const stackData = {
+//       title: projectname,
+//       subdomain: `${subdomainname}.kubelab.dk`,
+//       status: true,
+//       templateId: templateId,
+//       userId: req.user.id,
+//       createdAt: new Date(),
+//     };
+
+//     console.log("Saving stack to database with data:", stackData);
+//     await StackModel.createStack(stackData);
+
+//     res.redirect("/");
+//   } catch (error) {
+//     console.error("Failed to create project:", error);
+//     res.status(500).json({
+//       success: false,
+//       message: error.message || "Failed to create project",
+//     });
+//   }
+// };
 
 exports.createNewProject = async (req, res) => {
   try {

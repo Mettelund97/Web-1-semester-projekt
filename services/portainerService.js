@@ -46,7 +46,7 @@ class PortainerService {
         },
       });
 
-      console.log("Successfully fetched stacks:", response.data);
+      // console.log("Successfully fetched stacks:", response.data);
       return response.data;
     } catch (error) {
       console.error(
@@ -57,12 +57,52 @@ class PortainerService {
     }
   }
 
+  // async createStack(projectName, subDomain, stackFileContent) {
+  //   try {
+  //     const token = await configModel.getConfig("PORTAINERTOKEN");
+  //     console.log("Sending stack configuration:", stackFileContent);
+
+  //     const requestBody = {
+  //       Name: projectName,
+  //       SwarmID: this.swarmId,
+  //       StackFileContent: stackFileContent, // Use the replaced service content
+  //     };
+
+  //     console.log(
+  //       "Sending request body:",
+  //       JSON.stringify(requestBody, null, 2)
+  //     );
+
+  //     const response = await axios.post(
+  //       `${this.baseUrl}/stacks/create/swarm/string?endpointId=${this.endpointId}`,
+  //       requestBody,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+
+  //     console.log("Stack created successfully:", response.data);
+  //     return response.data;
+  //   } catch (error) {
+  //     if (error.response) {
+  //       console.error("Response error data:", error.response.data);
+  //       console.error("Response error status:", error.response.status);
+  //       console.error("Response error headers:", error.response.headers);
+  //     }
+  //     throw error;
+  //   }
+  // }
+
   async createStack(projectName, subDomain) {
     try {
       const token = await configModel.getConfig("PORTAINERTOKEN");
       const websiteId = Math.random().toString(36).substring(7);
 
-      const stackFileContent = String.raw`version: '3.8'
+      const stackFileContent = String.raw`
+version: '3.8'
 networks:
   traefik-proxy:
     external: true

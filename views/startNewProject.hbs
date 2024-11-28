@@ -24,7 +24,6 @@
             id="projectname"
             name="projectname"
             placeholder="Project name*"
-            
             minlength="3"
             required
           />
@@ -35,12 +34,29 @@
             id="subdomainname"
             name="subdomainname"
             placeholder="Subdomain name* (must end with .kubelab.dk)"
-            
             pattern="^[a-zA-Z0-9-]+\.kubelab\.dk$"
             title="Use only letters, numbers, and hyphens, ending with .kubelab.dk"
             required
           />
         </div>
+        <div class="custom-select">
+          <select id="template" name="template" required>
+            <option value="">Choose template / service</option>
+            {{#each templates}}
+              <option value="{{this.id}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        {{!-- <div class="custom-select">
+          <select id="template" name="templateId" required>
+            <option value="">Choose template / service</option>
+            {{#each templates}}
+              <option value="{{this.id}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div> --}}
+
       </div>
       <div class="container-btn2">
         <button type="submit" class="button-link" id="submitBtn">
@@ -90,4 +106,3 @@
     -->
   </section>
 </section>
-
