@@ -1,5 +1,6 @@
 const portainerService = require("../services/portainerService.js");
 const StackModel = require("../models/stackModel.js");
+const dbConn = require("../config/db.js");
 const dayjs = require("dayjs");
 require("dayjs/locale/da");
 dayjs.locale("da");
@@ -15,27 +16,18 @@ exports.getAllStacks = async (req, res, next) => {
     res.locals.stacks = portainerStacks.map((portainerStack) => {
       const dbStack = dbStacks.find((db) => db.title === portainerStack.Name);
 
-      // Debug log to see the raw creation date
-      console.log(
-        "Stack creation date raw value:",
-        portainerStack.CreationDate
-      );
+      const creator = dbStack && dbStack.firstName && dbStack.lastName
+        ? `${dbStack.firstName} ${dbStack.lastName}`
+        : "Unknown";
 
-      const creator =
-        dbStack && dbStack.firstName && dbStack.lastName
-          ? `${dbStack.firstName} ${dbStack.lastName}`
-          : "Unknown";
+      const groupName = dbStack?.groupName || "No Group";
 
       const formatDate = (date) => {
         if (!date) return "Never";
-
-        const timestamp =
-          typeof date === "number" ? date * 1000 : new Date(date).getTime();
-
+        const timestamp = typeof date === "number" ? date * 1000 : new Date(date).getTime();
         return dayjs(timestamp).format("D. MMMM YYYY - HH:mm");
       };
 
-      // Get creation date from database if available, otherwise use Portainer date
       const creationDate = dbStack?.createdAt
         ? formatDate(dbStack.createdAt)
         : formatDate(portainerStack.CreationDate);
@@ -48,8 +40,7 @@ exports.getAllStacks = async (req, res, next) => {
         environmentName: portainerStack.EndpointId,
         entryPoint: `${portainerStack.Name}.kubelab.dk`,
         creator,
-        lastStarted: formatDate(dbStack?.lastStarted),
-        lastStopped: formatDate(dbStack?.lastStopped),
+        groupName,
         template: dbStack?.template || "wordpress",
       };
     });
@@ -68,6 +59,17 @@ exports.createNewProject = async (req, res) => {
     const { projectname, subdomainname } = req.body;
     console.log("Creating new project:", { projectname, subdomainname });
 
+    const [userGroups] = await dbConn.query(
+      `SELECT g.id as groupId, g.name as groupName 
+       FROM UserGroup ug 
+       JOIN \`Groups\` g ON ug.groupId = g.id 
+       WHERE ug.userId = ?`, 
+      [req.user.id]
+    );
+
+    const groupId = userGroups.length > 0 ? userGroups[0].groupId : null;
+    console.log("User's group:", userGroups.length > 0 ? userGroups[0] : "No group found");
+
     const portainerStack = await portainerService.createStack(
       projectname,
       subdomainname
@@ -75,10 +77,12 @@ exports.createNewProject = async (req, res) => {
 
     const stackData = {
       title: projectname,
-      subdomain: `${subdomainname}.kubelab.dk`,
+      subdomain: `${subdomainname}`,
       status: true,
       template: "wordpress",
       userId: req.user.id,
+      groupId: groupId,
+      portainerStackId: portainerStack.Id,
       createdAt: new Date(),
     };
 
@@ -106,10 +110,7 @@ exports.deleteStack = async (req, res) => {
     const stackId = req.params.stackId;
     console.log("Deleting stack with ID:", stackId);
 
-    // Delete from Portainer
     await portainerService.deleteStack(stackId);
-
-    // Delete from database
     await StackModel.deleteStack(stackId);
 
     res.json({
@@ -138,7 +139,6 @@ exports.startStack = async (req, res) => {
     console.log("Starting stack with ID:", stackId);
 
     await portainerService.startStack(stackId);
-
     res.status(200).json({ message: "Stack started successfully" });
   } catch (error) {
     console.error("Error starting stack:", error);
@@ -152,7 +152,6 @@ exports.stopStack = async (req, res) => {
     console.log("Stopping stack with ID:", stackId);
 
     await portainerService.stopStack(stackId);
-
     res.status(200).json({ message: "Stack stopped successfully" });
   } catch (error) {
     console.error("Error stopping stack:", error);
