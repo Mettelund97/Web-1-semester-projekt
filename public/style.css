@@ -340,10 +340,10 @@ input {
   width: 16px;
   height: 16px;
   margin-right: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #ddd !important;
   border-radius: 3px;
   /* Rounded corners */
-  background-color: #fff;
+  background-color: #fff !important;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
 }
@@ -1306,14 +1306,14 @@ Projects Grid Styles
 .members-grid-header {
   display: grid;
   grid-template-columns: 25% 40% 25%;
-  padding: 1rem;
+  padding: 0.5rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .members-grid-row {
   display: grid;
   grid-template-columns: 25% 40% 25%;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   transition: background-color 0.2s ease;
 }
