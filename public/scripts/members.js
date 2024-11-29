@@ -6,20 +6,9 @@ function showRoleEdit(userId) {
     if (displayElement && editElement) {
         displayElement.style.display = 'none';
         editElement.style.display = 'flex';
-        // Hide buttons initially
         if (buttonGroup) {
-            buttonGroup.style.display = 'none';
+            buttonGroup.style.display = 'flex';
         }
-    }
-}
-
-function handleRoleChange(userId, currentRoleId) {
-    const select = document.getElementById(`role-select-${userId}`);
-    const buttonGroup = document.getElementById(`button-group-${userId}`);
-    
-    // Only show buttons if selected role is different from current role
-    if (buttonGroup) {
-        buttonGroup.style.display = select.value !== currentRoleId ? 'flex' : 'none';
     }
 }
 
