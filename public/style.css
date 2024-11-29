@@ -334,9 +334,33 @@ input {
   margin-bottom: 20px;
 }
 
-.remember-me input {
+.remember-me input[type="checkbox"] {
+  appearance: none;
+  /* Reset default checkbox styles */
+  width: 16px;
+  height: 16px;
   margin-right: 10px;
-  /* Space between checkbox and label */
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  /* Rounded corners */
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.remember-me input[type="checkbox"]:checked {
+  background-color: #007BFF;
+  /* Checkbox fill color */
+  border-color: #007BFF;
+}
+
+.remember-me input[type="checkbox"]:checked::after {
+  content: "✓";
+  display: block;
+  color: #080f25;
+  font-size: 12px;
+  text-align: center;
+  line-height: 16px;
 }
 
 .input-field {
@@ -347,7 +371,9 @@ input {
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ddd;
+  background-color: #f9f9f9 !important;
+  color: #080f25 !important;
+  border: 1px solid #ddd !important;
   border-radius: 5px;
   outline: none;
   transition: border-color 0.3s;
@@ -459,7 +485,7 @@ Projects Grid Styles
 
 .grid-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 40% 30% 30%;
   align-items: center;
   width: 100%;
 }
@@ -518,7 +544,7 @@ Projects Grid Styles
 .button-row {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 40% 30% 30%;
   align-items: center;
   background-color: var(--container-element);
 }
@@ -630,6 +656,14 @@ Projects Grid Styles
 }
 
 .container-btn3 {
+  width: 100%;
+  display: flex;
+  justify-items: center;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+.container-btn4 {
   width: 100%;
   display: flex;
   justify-items: center;
@@ -1676,7 +1710,7 @@ Projects Grid Styles
     height: 20px !important;
     position: relative;
     z-index: 1;
-    left: 6px;
+    left: 8px;
     top: 8px;
     transition: transform 0.3s ease;
   }
@@ -1705,6 +1739,14 @@ Projects Grid Styles
 
   .container-btn2 {
     margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-items: center;
+    font-size: 12px;
+    border-radius: 4px;
+  }
+
+  .container-btn4 {
     width: 100%;
     display: flex;
     justify-items: center;
