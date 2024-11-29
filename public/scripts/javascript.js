@@ -1,13 +1,3 @@
-// const burgerMenu = document.getElementById("burger-menu");
-// if (burgerMenu) {
-//   burgerMenu.addEventListener("click", function () {
-//     const navLinks = document.getElementById("nav-links");
-//     if (navLinks) {
-//       navLinks.classList.toggle("active");
-//     }
-//     burgerMenu.classList.toggle("active");
-//   });
-// }
 document.addEventListener('DOMContentLoaded', () => {
     const root = document.documentElement; // This refers to the <html> element
     const isDark = localStorage.getItem('dark-theme') === 'true'; // Get the theme preference
@@ -25,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Manage icon classes based on theme
     const iconLights = document.querySelectorAll('.iconlight');
-    const iconDarks = document.querySelectorAll('.icondarkmode');
+    const iconDarks = document.querySelectorAll('.icondarkmodenav');
 
     // Function to update icons based on the current theme
     function updateIcons(isDark) {
@@ -63,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Function to manage icon classes
 function updateIcons(isDark) {
   const iconLights = document.querySelectorAll('.iconlight');
-  const iconDarks = document.querySelectorAll('.icondarkmode');
+  const iconDarks = document.querySelectorAll('.icondarkmodenav');
 
   iconLights.forEach(icon => {
       icon.classList.toggle('disabled', isDark); // Add 'disabled' class to light icons
@@ -73,6 +63,19 @@ function updateIcons(isDark) {
       icon.classList.toggle('active', isDark); // Add 'active' class to dark icons
   });
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  const burgerMenu = document.getElementById("burger-menu");
+  if (burgerMenu) {
+    burgerMenu.addEventListener("click", function () {
+      const navLinks = document.getElementById("nav-links");
+      if (navLinks) {
+        navLinks.classList.toggle("active");
+        this.classList.toggle("active");
+      }
+    });
+  }
+});
 
 document.addEventListener("DOMContentLoaded", function() {
     const menuItems = document.querySelectorAll('.menu-item');
@@ -128,15 +131,6 @@ const toggleInput = document.getElementById('toggle2');
   }
 
 toggleInput.addEventListener('change', toggleActiveClass);
-
-
-
-document.getElementById("burger-menu").addEventListener("click", function () {
-  const navLinks = document.getElementById("nav-links");
-  navLinks.classList.toggle("active");
-  const burger = document.getElementById("burger-menu");
-  burger.classList.toggle("active");
-});
 
 document.getElementById("myButton").addEventListener("click", function () {});
 

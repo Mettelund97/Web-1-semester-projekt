@@ -1,7 +1,8 @@
 <section class="content">
   <nav aria-label="Breadcrumb">
     <ol class="breadcrumb">
-      <li aria-current="page">Members > Add new member</li>
+      <li><a href="/members">Members</a></li>
+      <li aria-current="page">Add new member</li>
     </ol>
   </nav>
   <section class="my-projects">
@@ -48,8 +49,8 @@
         />
       </div>
 
-      <div class="custom-select">
-        <select id="role" name="role" required>
+      <div class="add-member-select">
+        <select id="role" name="role" class="add-m-select" required>
           <option value="">Choose member role</option>
           {{#each roles}}
             <option value="{{this.id}}">{{this.type}}</option>
@@ -57,8 +58,8 @@
         </select>
       </div>
 
-      <div class="custom-select">
-        <select id="group" name="group" required>
+      <div class="add-member-select">
+        <select id="group" name="group" class="add-m-select" required>
           <option value="">Choose group</option>
           {{#each groups}}
             <option value="{{this.id}}">{{this.name}}</option>
@@ -67,10 +68,10 @@
       </div>
 
       <div class="button-container">
-        <div class="container-btn2 btn3">
+        <div class="btn3 addmemberbutton">
           <a href="/members" class="button-link">Cancel</a>
         </div>
-        <div class="container-btn2 btn3">
+        <div class="btn3 addmemberbutton">
           <button type="submit" class="button-link">Add New Member</button>
         </div>
       </div>
