@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Manage icon classes based on theme
     const iconLights = document.querySelectorAll('.iconlight');
-    const iconDarks = document.querySelectorAll('.icondarkmodenav');
+    const iconDarks = document.querySelectorAll('.icondarkmodenav, .icondarkmode');
 
     // Function to update icons based on the current theme
     function updateIcons(isDark) {
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Function to manage icon classes
 function updateIcons(isDark) {
   const iconLights = document.querySelectorAll('.iconlight');
-  const iconDarks = document.querySelectorAll('.icondarkmodenav');
+  const iconDarks = document.querySelectorAll('.icondarkmodenav, .icondarkmode');
 
   iconLights.forEach(icon => {
       icon.classList.toggle('disabled', isDark); // Add 'disabled' class to light icons
