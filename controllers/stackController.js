@@ -14,7 +14,13 @@ exports.getAllStacks = async (req, res, next) => {
     ]);
 
     res.locals.stacks = portainerStacks.map((portainerStack) => {
-      const dbStack = dbStacks.find((db) => db.title === portainerStack.Name);
+      // const dbStack = dbStacks.find((db) => db.title === portainerStack.Name);
+      const dbStack = dbStacks.find(
+        (db) => db.title.toLowerCase() === portainerStack.Name.toLowerCase()
+      );
+
+      console.log("Portainer Stacks:", portainerStacks);
+      console.log("DB Stacks:", dbStacks);
 
       // Debug log to see the raw creation date
       console.log(
@@ -26,6 +32,9 @@ exports.getAllStacks = async (req, res, next) => {
         dbStack && dbStack.firstName && dbStack.lastName
           ? `${dbStack.firstName} ${dbStack.lastName}`
           : "Unknown";
+
+      // const entryPoint =
+      //   dbStack && dbStack.subdomain ? `${dbStack.subdomain}` : "Unknown";
 
       const formatDate = (date) => {
         if (!date) return "Never";
@@ -47,11 +56,11 @@ exports.getAllStacks = async (req, res, next) => {
         status: portainerStack.Status === 1,
         creationDate,
         environmentName: portainerStack.EndpointId,
-        entryPoint: `${portainerStack.Name}.kubelab.dk`,
+        entryPoint: `${dbStack?.subdomain}`,
         creator,
         lastStarted: formatDate(dbStack?.lastStarted),
         lastStopped: formatDate(dbStack?.lastStopped),
-        template: dbStack?.template || "wordpress",
+        template: dbStack?.templateName || "No template found!",
       };
     });
 
@@ -64,74 +73,39 @@ exports.getAllStacks = async (req, res, next) => {
   }
 };
 
-// exports.createNewProject = async (req, res) => {
-//   try {
-//     const { projectname, subdomainname, template: templateId } = req.body;
-//     console.log("Creating new project:", {
-//       projectname,
-//       subdomainname,
-//       templateId,
-//     });
-
-//     const template = await templateModel.getTemplateById(templateId);
-//     if (!template) {
-//       throw new Error("Selected template not found");
-//     }
-
-//     const websiteId = Math.random().toString(36).substring(7);
-//     const replacedService = template.service
-//       .replace(/CHANGEME/g, websiteId)
-//       .replace(/SUBDOMAIN/g, subdomainname);
-
-//     // If necessary, clean up any excess escaping:
-//     const cleanService = replacedService
-//       .replace(/\\n/g, "\n")
-//       .replace(/\\"/g, '"');
-
-//     // Pass the updated service to the portainer service
-//     const portainerStack = await portainerService.createStack(
-//       projectname,
-//       subdomainname,
-//       cleanService
-//     );
-
-//     const stackData = {
-//       title: projectname,
-//       subdomain: `${subdomainname}.kubelab.dk`,
-//       status: true,
-//       templateId: templateId,
-//       userId: req.user.id,
-//       createdAt: new Date(),
-//     };
-
-//     console.log("Saving stack to database with data:", stackData);
-//     await StackModel.createStack(stackData);
-
-//     res.redirect("/");
-//   } catch (error) {
-//     console.error("Failed to create project:", error);
-//     res.status(500).json({
-//       success: false,
-//       message: error.message || "Failed to create project",
-//     });
-//   }
-// };
-
+// bawar version:
 exports.createNewProject = async (req, res) => {
   try {
-    const { projectname, subdomainname } = req.body;
-    console.log("Creating new project:", { projectname, subdomainname });
+    const { projectname, subdomainname, template } = req.body;
+    const selectedTemplate = await templateModel.getTemplateById(template);
+
+    if (!selectedTemplate) {
+      throw new Error("Selected template not found");
+    }
+
+    console.log("Creating new project:", {
+      projectname,
+      subdomainname,
+      selectedTemplate,
+    });
+
+    const websiteId = Math.random().toString(36).substring(7);
+
+    const replacedService = selectedTemplate.service
+      .replace(/CHANGEME/g, websiteId)
+      .replace(/SUBDOMAIN/g, subdomainname);
 
     const portainerStack = await portainerService.createStack(
       projectname,
-      subdomainname
+      subdomainname,
+      replacedService
     );
 
     const stackData = {
       title: projectname,
       subdomain: `${subdomainname}.kubelab.dk`,
       status: true,
-      template: "wordpress",
+      template: selectedTemplate.id,
       userId: req.user.id,
       createdAt: new Date(),
     };
@@ -148,6 +122,42 @@ exports.createNewProject = async (req, res) => {
     });
   }
 };
+
+// ahmad version:
+// exports.createNewProject = async (req, res) => {
+//   try {
+//     const { projectname, subdomainname, template } = req.body;
+//     const selectedTemplate = await templateModel.getTemplateById(template);
+
+//     console.log("Creating new project:", { projectname, subdomainname });
+
+//     const portainerStack = await portainerService.createStack(
+//       projectname,
+//       subdomainname,
+//       selectedTemplate.service
+//     );
+
+//     const stackData = {
+//       title: projectname,
+//       subdomain: `${subdomainname}.kubelab.dk`,
+//       status: true,
+//       template: selectedTemplate.id,
+//       userId: req.user.id,
+//       createdAt: new Date(),
+//     };
+
+//     console.log("Saving stack to database with data:", stackData);
+//     await StackModel.createStack(stackData);
+
+//     res.redirect("/");
+//   } catch (error) {
+//     console.error("Failed to create project:", error);
+//     res.status(500).json({
+//       success: false,
+//       message: error.message || "Failed to create project",
+//     });
+//   }
+// };
 
 exports.getStartNewProject = (req, res) => {
   res.render("startNewProject", {

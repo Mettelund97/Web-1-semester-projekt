@@ -10,7 +10,7 @@ class StackModel {
           title,
           subdomain,
           status,
-          template,
+          templateId,
           userId,
           createdAt,
           lastStarted
@@ -36,9 +36,18 @@ class StackModel {
     }
   }
 
+  // nyeste for at få merged - for later.
   // static async createStack(stackData) {
   //   try {
-  //     const { title, subdomain, status, template, userId } = stackData;
+  //     const {
+  //       title,
+  //       subdomain,
+  //       status,
+  //       template,
+  //       userId,
+  //       portainerStackId,
+  //       groupId,
+  //     } = stackData;
 
   //     const query = `
   //       INSERT INTO Stacks (
@@ -47,17 +56,21 @@ class StackModel {
   //         status,
   //         templateId,
   //         userId,
+  //         portainerStackId,
+  //         groupId,
   //         createdAt,
-  //         lastStarted
-  //       ) VALUES (?, ?, ?, ?, ?, NOW(), NOW())
+  //         syncStatus
+  //       ) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), 'synced')
   //     `;
 
   //     const [result] = await dbConn.query(query, [
   //       title,
   //       subdomain,
   //       status,
-  //       templateId,
+  //       template,
   //       userId,
+  //       portainerStackId,
+  //       groupId,
   //     ]);
 
   //     return {
@@ -74,9 +87,10 @@ class StackModel {
   static async getAllStacks() {
     try {
       const query = `
-        SELECT s.*, u.firstName, u.lastName 
+        SELECT s.*, u.firstName, u.lastName, t.name AS templateName
         FROM Stacks s
         LEFT JOIN Users u ON s.userId = u.id
+        LEFT JOIN Templates t ON s.templateId = t.id
         ORDER BY s.createdAt DESC
       `;
 

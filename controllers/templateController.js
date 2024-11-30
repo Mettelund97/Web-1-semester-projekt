@@ -3,7 +3,7 @@ const templateModel = require("../models/templateModel");
 exports.getAllTempaltes = async (req, res, next) => {
   try {
     const templates = await templateModel.getAllTemplates();
-    console.log("all templates from db:", templates);
+    // console.log("all templates from db:", templates);
     res.locals.templates = templates || [];
     next();
   } catch (error) {

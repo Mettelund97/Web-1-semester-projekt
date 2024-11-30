@@ -13,7 +13,7 @@ const roleController = require("../controllers/roleController");
 const groupController = require("../controllers/groupController");
 const membersController = require("../controllers/membersController");
 const stackController = require("../controllers/stackController");
-// const templateController = require("../controllers/templateController");
+const templateController = require("../controllers/templateController");
 
 const router = express.Router();
 
@@ -35,14 +35,14 @@ router.get(
 router.get(
   "/start-new-project",
   authService.protectedRoutes,
-  // templateController.getAllTempaltes,
+  templateController.getAllTempaltes,
   stackController.getStartNewProject
 );
 
 router.post(
   "/start-new-project",
   authService.protectedRoutes,
-  // templateController.getAllTempaltes,
+  templateController.getAllTempaltes,
   stackController.createNewProject,
   groupAdministrationController.getGroupAdministration
 );
