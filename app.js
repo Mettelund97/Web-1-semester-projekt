@@ -4,7 +4,8 @@ const exphbs = require("express-handlebars");
 const webRoutes = require("./routes/web");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-
+const jwt = require("jsonwebtoken");  // Add this line
+const userModel = require("./models/UserModel");  // Add this line
 
 // Init Express
 const app = express();
@@ -14,15 +15,28 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Add this before your routes are used
-
 app.use(express.json()); // For JSON data
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+
+app.use(async (req, res, next) => {
+  if (req.cookies.authToken) {
+    try {
+      const decoded = jwt.verify(req.cookies.authToken, process.env.JWT_SECRET);
+      const user = await userModel.getUserById(decoded.id);
+      res.locals.user = user; // This makes user info available in all views
+    } catch (error) {
+      console.error('Error setting user info:', error);
+    }
+  }
+  next();
+});
+
 // Static files middleware
 app.use(express.static(path.join(__dirname, "public")));
 
-// Set up Handlebars engine
+
 app.engine(
   "hbs",
   exphbs.engine({
@@ -43,7 +57,7 @@ app.set("view engine", "hbs");
 // Routes
 app.use("/", webRoutes);
 
-// Middleware for 404 error with custom Handlebars template
+
 app.use((req, res) => {
   res.status(404).render("404", {
     title: "Page Not Found",
@@ -51,16 +65,13 @@ app.use((req, res) => {
   });
 });
 
-
 const stackSyncService = require("./services/stackSyncService.js");
 stackSyncService.startSync().catch(console.error);
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
   stackSyncService.stopSync();
-  // Other cleanup code...
 });
-
 
 // Initialize server
 app.listen(PORT, () => {
