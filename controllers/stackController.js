@@ -81,10 +81,11 @@ exports.createNewProject = async (req, res) => {
     );
 
     const groupId = userGroups.length > 0 ? userGroups[0].groupId : null;
-    console.log(
-      "User's group:",
-      userGroups.length > 0 ? userGroups[0] : "No group found"
-    );
+
+    // console.log(
+    //   "User's group:",
+    //   userGroups.length > 0 ? userGroups[0] : "No group found"
+    // );
 
     console.log("Creating new project:", {
       projectname,
@@ -104,10 +105,21 @@ exports.createNewProject = async (req, res) => {
       replacedService
     );
 
+    // const stackData = {
+    //   title: projectname,
+    //   subdomain: `${subdomainname}`,
+    //   status: true ? 1 : 0,
+    //   templateId: selectedTemplate.id,
+    //   userId: req.user.id,
+    //   groupId: groupId,
+    //   portainerStackId: portainerStack.Id,
+    //   createdAt: new Date(),
+    // };
+
     const stackData = {
       title: projectname,
-      subdomain: `${subdomainname}`,
-      status: true,
+      subdomain: subdomainname,
+      status: true ? 1 : 0,
       template: selectedTemplate.id,
       userId: req.user.id,
       groupId: groupId,

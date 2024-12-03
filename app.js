@@ -5,7 +5,6 @@ const webRoutes = require("./routes/web");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 
-
 // Init Express
 const app = express();
 
@@ -51,16 +50,14 @@ app.use((req, res) => {
   });
 });
 
-
 const stackSyncService = require("./services/stackSyncService.js");
 stackSyncService.startSync().catch(console.error);
 
 // Graceful shutdown
-process.on('SIGTERM', () => {
+process.on("SIGTERM", () => {
   stackSyncService.stopSync();
   // Other cleanup code...
 });
-
 
 // Initialize server
 app.listen(PORT, () => {

@@ -1,6 +1,6 @@
-const axios = require('axios');
-const StackModel = require('../models/stackModel');
-const configModel = require('../models/configModel');
+const axios = require("axios");
+const StackModel = require("../models/stackModel");
+const configModel = require("../models/configModel");
 
 class StackSyncService {
   constructor() {
@@ -16,53 +16,66 @@ class StackSyncService {
         return await operation();
       } catch (error) {
         if (i === attempts - 1) throw error;
-        await new Promise(resolve => setTimeout(resolve, this.retryDelay));
+        await new Promise((resolve) => setTimeout(resolve, this.retryDelay));
       }
     }
   }
 
   async fetchPortainerStacks() {
     const token = await configModel.getConfig("PORTAINERTOKEN");
-    const response = await axios.get("https://portainer.kubelab.dk/api/stacks", {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    const response = await axios.get(
+      "https://portainer.kubelab.dk/api/stacks",
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
     return response.data;
   }
 
   async syncStack(portainerStack, dbStack) {
     try {
       const stackData = {
+        // title: portainerStack.Name,
+        // subdomain: `${portainerStack.Name}.kubelab.dk`,
+        // status: portainerStack.Status === 1,
+        // template: dbStack?.template || 'wordpress',
+        // portainerStackId: portainerStack.Id,
+        // lastSynced: new Date(),
+        // userId: dbStack?.userId,
+        // groupId: dbStack?.groupId
+
         title: portainerStack.Name,
-        subdomain: `${portainerStack.Name}.kubelab.dk`,
+        subdomain: `${dbStack?.subdomain}`,
         status: portainerStack.Status === 1,
-        template: dbStack?.template || 'wordpress',
+        template: dbStack?.templateId || null,
         portainerStackId: portainerStack.Id,
         lastSynced: new Date(),
         userId: dbStack?.userId,
-        groupId: dbStack?.groupId
+        groupId: dbStack?.groupId,
       };
 
       if (dbStack) {
         // Only update if there are changes to status or portainerStackId
-        if (dbStack.status !== stackData.status || 
-            dbStack.portainerStackId !== stackData.portainerStackId) {
+        if (
+          dbStack.status !== stackData.status ||
+          dbStack.portainerStackId !== stackData.portainerStackId
+        ) {
           await StackModel.updateStack({
             ...stackData,
-            id: dbStack.id
+            id: dbStack.id,
           });
         }
-        await StackModel.updateSyncStatus(dbStack.id, 'synced');
+        await StackModel.updateSyncStatus(dbStack.id, "synced");
       } else {
-
         const result = await StackModel.createStack(stackData);
-        await StackModel.updateSyncStatus(result.id, 'synced');
+        await StackModel.updateSyncStatus(result.id, "synced");
       }
     } catch (error) {
       const stackId = dbStack ? dbStack.id : null;
       if (stackId) {
         await StackModel.updateSyncStatus(
           stackId,
-          'error',
+          "error",
           `Sync failed: ${error.message}`
         );
       }
@@ -73,27 +86,31 @@ class StackSyncService {
   async startSync() {
     if (this.isRunning) return;
     this.isRunning = true;
-    
+
     const syncStacks = async () => {
       try {
-        console.log('Starting stack synchronization...');
-        
+        console.log("Starting stack synchronization...");
+
         const [portainerStacks, dbStacks] = await Promise.all([
           this.retryOperation(() => this.fetchPortainerStacks()),
-          StackModel.getAllStacks() 
+          StackModel.getAllStacks(),
         ]);
 
         const processedDbStackIds = new Set();
 
         for (const portainerStack of portainerStacks) {
-          const dbStack = dbStacks.find(s => s.portainerStackId === portainerStack.Id || s.title === portainerStack.Name);
+          const dbStack = dbStacks.find(
+            (s) =>
+              s.portainerStackId === portainerStack.Id ||
+              s.title === portainerStack.Name
+          );
           await this.syncStack(portainerStack, dbStack);
           if (dbStack) processedDbStackIds.add(dbStack.id);
         }
 
         const deletedStackIds = dbStacks
-          .filter(s => !processedDbStackIds.has(s.id))
-          .map(s => s.id);
+          .filter((s) => !processedDbStackIds.has(s.id))
+          .map((s) => s.id);
 
         if (deletedStackIds.length > 0) {
           for (const id of deletedStackIds) {
@@ -102,9 +119,9 @@ class StackSyncService {
           console.log(`Cleaned up ${deletedStackIds.length} deleted stacks`);
         }
 
-        console.log('Stack synchronization completed successfully');
+        console.log("Stack synchronization completed successfully");
       } catch (error) {
-        console.error('Stack synchronization failed:', error);
+        console.error("Stack synchronization failed:", error);
       }
     };
 
@@ -117,7 +134,7 @@ class StackSyncService {
     if (this.syncInterval) {
       clearInterval(this.syncInterval);
       this.isRunning = false;
-      console.log('Stack synchronization stopped');
+      console.log("Stack synchronization stopped");
     }
   }
 }

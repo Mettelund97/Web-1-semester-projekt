@@ -7,34 +7,34 @@ class StackModel {
         title,
         subdomain,
         status,
-        template,
         userId,
         portainerStackId,
         groupId,
+        template,
       } = stackData;
 
       const query = `
-       INSERT INTO Stacks (
+        INSERT INTO Stacks (
           title,
           subdomain,
           status,
-          templateId,
           userId,
           portainerStackId,
-          groupId,
           createdAt,
-          syncStatus
-       ) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), 'synced')
+          syncStatus,
+          groupId,
+          templateId
+        ) VALUES (?, ?, ?, ?, ?, NOW(), 'synced', ?, ?)
       `;
 
       const [result] = await dbConn.query(query, [
         title,
         subdomain,
-        status,
-        template,
+        status ? 1 : 0,
         userId,
         portainerStackId,
         groupId,
+        template,
       ]);
 
       return {
@@ -169,17 +169,20 @@ class StackModel {
   static async getAllStacks() {
     try {
       const query = `
-        SELECT s.*, 
-               u.firstName, 
-               u.lastName, 
-               g.name as groupName,
-               g.id as groupId
-        FROM Stacks s
-        LEFT JOIN Users u ON s.userId = u.id
-        LEFT JOIN UserGroup ug ON u.id = ug.userId
-        LEFT JOIN \`Groups\` g ON ug.groupId = g.id
-        ORDER BY s.createdAt DESC
-      `;
+      SELECT 
+        s.*, 
+        u.firstName, 
+        u.lastName, 
+        g.name AS groupName, 
+        g.id AS groupId, 
+        t.name AS templateName
+      FROM Stacks s
+      LEFT JOIN Users u ON s.userId = u.id
+      LEFT JOIN UserGroup ug ON u.id = ug.userId
+      LEFT JOIN \`Groups\` g ON ug.groupId = g.id
+      LEFT JOIN Templates t ON s.templateId = t.id
+      ORDER BY s.createdAt DESC
+    `;
 
       const [rows] = await dbConn.query(query);
       return rows;
