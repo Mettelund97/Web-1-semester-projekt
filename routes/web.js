@@ -35,14 +35,14 @@ router.get(
 router.get(
   "/start-new-project",
   authService.protectedRoutes,
-  templateController.getAllTempaltes,
+  templateController.getAllTemplates,
   stackController.getStartNewProject
 );
 
 router.post(
   "/start-new-project",
   authService.protectedRoutes,
-  templateController.getAllTempaltes,
+  templateController.getAllTemplates,
   stackController.createNewProject,
   groupAdministrationController.getGroupAdministration
 );

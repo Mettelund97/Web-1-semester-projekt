@@ -28,7 +28,7 @@
             required
           />
         </div>
-        <div class="input-field2">
+        {{! <div class="input-field2">
           <input
             type="text"
             id="subdomainname"
@@ -38,24 +38,36 @@
             title="Use only letters, numbers, and hyphens, ending with .kubelab.dk"
             required
           />
-        </div>
-        <div class="custom-select">
+        </div> }}
+
+        {{!-- <div class="custom-select">
           <select id="template" name="template" required>
             <option value="">Choose template / service</option>
             {{#each templates}}
               <option value="{{this.id}}">{{this.name}}</option>
             {{/each}}
           </select>
-        </div>
+        </div> --}}
 
-        {{!-- <div class="custom-select">
-          <select id="template" name="templateId" required>
+        <div class="custom-select">
+          <select
+            id="template"
+            name="template"
+            required
+            onchange="updateService(this)"
+          >
             <option value="">Choose template / service</option>
             {{#each templates}}
-              <option value="{{this.id}}">{{this.name}}</option>
+              <option
+                value="{{this.id}}"
+                data-service="{{this.service}}"
+              >{{this.name}}</option>
             {{/each}}
           </select>
-        </div> --}}
+        </div>
+        <div id="subdomains" class="input-field2">
+          {{! <textarea id="service" readonly></textarea> }}
+        </div>
 
       </div>
       <div class="container-btn2">

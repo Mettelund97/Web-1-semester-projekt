@@ -3,18 +3,28 @@ const dbConn = require("../config/db.js");
 class StackModel {
   static async createStack(stackData) {
     try {
-      const { title, subdomain, status, template, userId } = stackData;
+      const {
+        title,
+        subdomain,
+        status,
+        template,
+        userId,
+        portainerStackId,
+        groupId,
+      } = stackData;
 
       const query = `
-        INSERT INTO Stacks (
+       INSERT INTO Stacks (
           title,
           subdomain,
           status,
           templateId,
           userId,
+          portainerStackId,
+          groupId,
           createdAt,
-          lastStarted
-        ) VALUES (?, ?, ?, ?, ?, NOW(), NOW())
+          syncStatus
+       ) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), 'synced')
       `;
 
       const [result] = await dbConn.query(query, [
@@ -23,6 +33,8 @@ class StackModel {
         status,
         template,
         userId,
+        portainerStackId,
+        groupId,
       ]);
 
       return {

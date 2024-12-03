@@ -96,11 +96,9 @@ class PortainerService {
   //   }
   // }
 
-  async createStack(projectName, subDomain, file) {
+  async createStack(projectName, file) {
     try {
       const token = await configModel.getConfig("PORTAINERTOKEN");
-      const websiteId = Math.random().toString(36).substring(7);
-
       const stackFileContent = file;
       //       const stackFileContent = String.raw`
       // version: '3.8'
