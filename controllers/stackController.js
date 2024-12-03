@@ -6,6 +6,12 @@ const dayjs = require("dayjs");
 require("dayjs/locale/da");
 dayjs.locale("da");
 
+exports.getStartNewProject = (req, res) => {
+  res.render("startNewProject", {
+    title: "Start new project",
+  });
+};
+
 exports.getAllStacks = async (req, res, next) => {
   try {
     const [portainerStacks, dbStacks] = await Promise.all([
@@ -122,21 +128,12 @@ exports.createNewProject = async (req, res) => {
   }
 };
 
-exports.getStartNewProject = (req, res) => {
-  res.render("startNewProject", {
-    title: "Start new project",
-  });
-};
-
 exports.deleteStack = async (req, res) => {
   try {
     const stackId = req.params.stackId;
     console.log("Deleting stack with ID:", stackId);
 
-    // Delete from Portainer
     await portainerService.deleteStack(stackId);
-
-    // Delete from database
     await StackModel.deleteStack(stackId);
 
     res.json({
@@ -165,7 +162,6 @@ exports.startStack = async (req, res) => {
     console.log("Starting stack with ID:", stackId);
 
     await portainerService.startStack(stackId);
-
     res.status(200).json({ message: "Stack started successfully" });
   } catch (error) {
     console.error("Error starting stack:", error);
@@ -179,7 +175,6 @@ exports.stopStack = async (req, res) => {
     console.log("Stopping stack with ID:", stackId);
 
     await portainerService.stopStack(stackId);
-
     res.status(200).json({ message: "Stack stopped successfully" });
   } catch (error) {
     console.error("Error stopping stack:", error);

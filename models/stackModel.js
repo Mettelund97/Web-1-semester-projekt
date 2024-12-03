@@ -107,6 +107,65 @@ class StackModel {
     }
   }
 
+  static async updateStack(stackData) {
+    try {
+      const { id, status, lastSynced, portainerStackId } = stackData;
+
+      const query = `
+        UPDATE Stacks 
+        SET 
+          status = ?,
+          lastSynced = ?,
+          portainerStackId = ?,
+          syncStatus = 'synced'
+        WHERE id = ?
+      `;
+
+      const [result] = await dbConn.query(query, [
+        status,
+        lastSynced,
+        portainerStackId,
+        id,
+      ]);
+
+      return result.affectedRows > 0;
+    } catch (error) {
+      console.error("Error updating stack in database:", error);
+      throw error;
+    }
+  }
+
+  static async updateSyncStatus(id, syncStatus, syncMessage = null) {
+    try {
+      const query = `
+        UPDATE Stacks 
+        SET syncStatus = ?, 
+            syncMessage = ?,
+            lastSynced = NOW()
+        WHERE id = ?
+      `;
+
+      const [result] = await dbConn.query(query, [syncStatus, syncMessage, id]);
+      return result.affectedRows > 0;
+    } catch (error) {
+      console.error("Error updating sync status:", error);
+      throw error;
+    }
+  }
+
+  static async findByPortainerStackId(portainerStackId) {
+    try {
+      const [rows] = await dbConn.query(
+        "SELECT * FROM Stacks WHERE portainerStackId = ?",
+        [portainerStackId]
+      );
+      return rows[0] || null;
+    } catch (error) {
+      console.error("Error finding stack by Portainer ID:", error);
+      throw error;
+    }
+  }
+
   static async getAllStacks() {
     try {
       const query = `

@@ -1,13 +1,3 @@
-// const burgerMenu = document.getElementById("burger-menu");
-// if (burgerMenu) {
-//   burgerMenu.addEventListener("click", function () {
-//     const navLinks = document.getElementById("nav-links");
-//     if (navLinks) {
-//       navLinks.classList.toggle("active");
-//     }
-//     burgerMenu.classList.toggle("active");
-//   });
-// }
 document.addEventListener('DOMContentLoaded', () => {
     const root = document.documentElement; // This refers to the <html> element
     const isDark = localStorage.getItem('dark-theme') === 'true'; // Get the theme preference
@@ -25,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Manage icon classes based on theme
     const iconLights = document.querySelectorAll('.iconlight');
-    const iconDarks = document.querySelectorAll('.icondarkmode');
+    const iconDarks = document.querySelectorAll('.icondarkmodenav, .icondarkmode');
 
     // Function to update icons based on the current theme
     function updateIcons(isDark) {
@@ -63,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Function to manage icon classes
 function updateIcons(isDark) {
   const iconLights = document.querySelectorAll('.iconlight');
-  const iconDarks = document.querySelectorAll('.icondarkmode');
+  const iconDarks = document.querySelectorAll('.icondarkmodenav, .icondarkmode');
 
   iconLights.forEach(icon => {
       icon.classList.toggle('disabled', isDark); // Add 'disabled' class to light icons
@@ -73,6 +63,19 @@ function updateIcons(isDark) {
       icon.classList.toggle('active', isDark); // Add 'active' class to dark icons
   });
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  const burgerMenu = document.getElementById("burger-menu");
+  if (burgerMenu) {
+    burgerMenu.addEventListener("click", function () {
+      const navLinks = document.getElementById("nav-links");
+      if (navLinks) {
+        navLinks.classList.toggle("active");
+        this.classList.toggle("active");
+      }
+    });
+  }
+});
 
 document.addEventListener("DOMContentLoaded", function() {
     const menuItems = document.querySelectorAll('.menu-item');
@@ -118,30 +121,35 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 const toggleInput = document.getElementById('toggle2');
-  
- function toggleActiveClass() {
+
+function toggleActiveClass() {
   const emptyBoxes = document.querySelectorAll('.emptybox, .emptybox2');
     
   emptyBoxes.forEach(box => {
-      box.classList.toggle('active');
-    });
-  }
+    box.classList.toggle('active');
+  });
+}
 
-toggleInput.addEventListener('change', toggleActiveClass);
+if (toggleInput) {
+  toggleInput.addEventListener('change', toggleActiveClass);
+}
 
-
-
-document.getElementById("burger-menu").addEventListener("click", function () {
-  const navLinks = document.getElementById("nav-links");
-  navLinks.classList.toggle("active");
-  const burger = document.getElementById("burger-menu");
-  burger.classList.toggle("active");
+document.addEventListener('DOMContentLoaded', () => {
+    const myButton = document.getElementById("myButton");
+    if (myButton) {
+        myButton.addEventListener("click", function () {
+            // Your button functionality here
+        });
+    }
 });
 
-document.getElementById("myButton").addEventListener("click", function () {});
-
-document.getElementById("main-Button").addEventListener("click", function () {
-  window.location.href = "/create-new-project";
+document.addEventListener('DOMContentLoaded', () => {
+    const mainButton = document.getElementById("main-Button");
+    if (mainButton) {
+        mainButton.addEventListener("click", function () {
+            window.location.href = "/create-new-project";
+        });
+    }
 });
 
 /* Projects */ 
@@ -168,25 +176,33 @@ function toggleAccordion(element) {
   element.classList.toggle("no-border", !isOpen);
 }
 
-document.getElementById('deleteStackForm').addEventListener('submit', function(event) {
-  event.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+    const deleteForm = document.getElementById('deleteStackForm');
+    if (deleteForm) {
+        deleteForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const stackIdElement = document.getElementById('stackId');
+            if (!stackIdElement) {
+                console.error('Stack ID element not found');
+                return;
+            }
 
-  var stackId = document.getElementById('stackId').value;
+            const stackId = stackIdElement.value;
+            
+            axios.delete(`/stacks/${stackId}`)
+                .then(response => {
+                    console.log('Stack deleted successfully');
 
-  axios.delete(`/stacks/${stackId}`)
-    .then(response => {
-      console.log('Stack deleted successfully');
-      // Optionally, you can redirect the user to a different page or update the UI
-    })
-    .catch(error => {
-      console.error('Error deleting stack:', error);
-      if (error.response && error.response.status === 403) {
-        console.error('You do not have permission to delete this stack');
-        // Handle the forbidden error scenario
-      } else {
-        console.error('Failed to delete stack');
-        // Handle other error scenarios
-      }
-    });
+                })
+                .catch(error => {
+                    console.error('Error deleting stack:', error);
+                    if (error.response?.status === 403) {
+                        console.error('You do not have permission to delete this stack');
+                    } else {
+                        console.error('Failed to delete stack');
+                    }
+                });
+        });
+    }
 });
-

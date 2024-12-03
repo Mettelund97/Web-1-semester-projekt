@@ -54,11 +54,11 @@
         <div class="grid-col">
           <h3>Role</h3>
         </div>
-        <div class="grid-col">
+        <div class="grid-col mobileonly">
           <h3>Status</h3>
         </div>
-        <div class="grid-col">
-          <h3>Action</h3>
+        <div class="grid-col mobileonly">
+          <h3>Template</h3>
         </div>
       </div>
     
@@ -79,12 +79,12 @@
             <div id="role-display-{{this.id}}" class="role-display-element">
               <span>{{this.roleName}}</span>
               <button class="edit-role-btn" onclick="showRoleEdit('{{this.id}}')">
-                <img src="/images/editiconblack.svg" alt="Edit" class="ikon2 iconlight" />
-                <img src="/images/editicon.svg" alt="Edit" class="ikon2 icondarkmode" />
+                <img src="/images/editiconblack.svg" alt="Edit" class="ikon3 iconlight" />
+                <img src="/images/editicon.svg" alt="Edit" class="ikon3 icondarkmode" />
               </button>
             </div>
             <div id="role-edit-{{this.id}}" class="role-edit" style="display: none;">
-              <select id="role-select-{{this.id}}" onchange="handleRoleChange('{{this.id}}', '{{this.RoleId}}')">
+              <select id="role-select-{{this.id}}">
                 {{#each ../roles}}
                 <option value="{{this.id}}" {{#if (eq this.id ../RoleId)}}selected{{/if}}>
                   {{this.type}}
@@ -98,96 +98,17 @@
             </div>
           </div>
         </div>
-        <div class="grid-col">
+        <div class="grid-col mobileonly">
           <div class="statusrow">
             <img src="/images/greenstatus.svg" alt="Icon" class="ikon2" />
             <p class="statusp">ONLINE</p>
           </div>
         </div>
-        <div class="grid-col">
-          <div class="actiontablecell">
-            <img src="/images/playikon.svg" alt="Icon" class="ikon2 iconlight" />
-            <img src="/images/playiconwhite.svg" alt="Icon" class="ikon2 icondarkmode" />
-          </div>
+        <div class="grid-col mobileonly">
+            <p class="tablep">Wordpress</p>
         </div>
       </div>
       {{/each}}
     </div>
   </section>
 </section>
-{{!-- Add this at the bottom of your members.hbs, before the closing </section> tag --}}
-
-
-
-<script>
-// Role editing functions
-function showRoleEdit(userId) {
-    const displayElement = document.getElementById(`role-display-${userId}`);
-    const editElement = document.getElementById(`role-edit-${userId}`);
-    const buttonGroup = document.getElementById(`button-group-${userId}`);
-    
-    if (displayElement && editElement) {
-        displayElement.style.display = 'none';
-        editElement.style.display = 'flex';
-        // Hide buttons initially
-        if (buttonGroup) {
-            buttonGroup.style.display = 'none';
-        }
-    }
-}
-
-function handleRoleChange(userId, currentRoleId) {
-    const select = document.getElementById(`role-select-${userId}`);
-    const buttonGroup = document.getElementById(`button-group-${userId}`);
-    
-    // Only show buttons if selected role is different from current role
-    if (buttonGroup) {
-        buttonGroup.style.display = select.value !== currentRoleId ? 'flex' : 'none';
-    }
-}
-
-function cancelEdit(userId) {
-    const displayElement = document.getElementById(`role-display-${userId}`);
-    const editElement = document.getElementById(`role-edit-${userId}`);
-    const select = document.getElementById(`role-select-${userId}`);
-    const buttonGroup = document.getElementById(`button-group-${userId}`);
-    
-    if (displayElement && editElement) {
-        displayElement.style.display = 'flex';
-        editElement.style.display = 'none';
-        // Reset select to original value
-        if (select) {
-            select.value = currentRoleId;
-        }
-        // Hide buttons
-        if (buttonGroup) {
-            buttonGroup.style.display = 'none';
-        }
-    }
-}
-
-function updateRole(userId) {
-    const select = document.getElementById(`role-select-${userId}`);
-    const newRoleId = select.value;
-
-    fetch(`/user/${userId}/role`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ roleId: newRoleId })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            location.reload();
-        } else {
-            alert('Error updating role: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error updating role');
-    });
-}
-</script>
