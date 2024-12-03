@@ -1,5 +1,5 @@
 const axios = require("axios");
-const templateModel = require("../../models/templateModel");
+// const templateModel = require("../../models/templateModel");
 
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("newProjectForm");
@@ -45,22 +45,19 @@ async function deleteStack(stackId) {
   }
 }
 
-function updateService(selectElement) {
-  const selectedOption = selectElement.options[selectElement.selectedIndex];
-  const service = selectedOption.getAttribute("data-service");
-  const subdomains = document.getElementById("subdomains");
+function validateSubdomains() {
+  const input = document.querySelector("#subdomainname");
+  let isValid = true;
 
-  subdomains.replaceChildren();
+  const pattern = new RegExp(input.getAttribute("pattern"));
 
-  service.match(/SUBDOMAIN\d*/g).map((match) => {
-    const input = document.createElement("input");
-    input.placeholder = match;
-    input.name = match;
-    input.title =
-      "Use only letters, numbers, and hyphens, ending with .kubelab.dk";
-    input.pattern = "^[a-zA-Z0-9-]+.kubelab.dk$";
-    input.required = true;
+  if (!pattern.test(input.value)) {
+    isValid = false;
+    input.setCustomValidity("The subdomain must end with .kubelab.dk");
+    alert("The Subdomain must end with .kubelab.dk");
+  } else {
+    input.setCustomValidity("");
+  }
 
-    subdomains.appendChild(input);
-  });
+  return isValid;
 }

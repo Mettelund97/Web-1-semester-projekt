@@ -167,7 +167,7 @@ class PortainerService {
       return response.data;
     } catch (error) {
       if (error.response) {
-        console.error("Response error data:", error.response.data);
+        // console.error("Response error data:", error.response.data);
         console.error("Response error status:", error.response.status);
         console.error("Response error headers:", error.response.headers);
       }

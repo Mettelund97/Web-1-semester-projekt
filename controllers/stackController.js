@@ -8,14 +8,12 @@ dayjs.locale("da");
 
 exports.getAllStacks = async (req, res, next) => {
   try {
-    console.log("Fetching stacks...");
     const [portainerStacks, dbStacks] = await Promise.all([
       portainerService.getStacks(),
       StackModel.getAllStacks(),
     ]);
 
     res.locals.stacks = portainerStacks.map((portainerStack) => {
-      // const dbStack = dbStacks.find((db) => db.title === portainerStack.Name);
       const dbStack = dbStacks.find(
         (db) => db.title.toLowerCase() === portainerStack.Name.toLowerCase()
       );
@@ -51,7 +49,6 @@ exports.getAllStacks = async (req, res, next) => {
       };
     });
 
-    console.log("Processed stacks:", res.locals.stacks);
     next();
   } catch (error) {
     console.error("Error getting stacks:", error);
@@ -62,7 +59,7 @@ exports.getAllStacks = async (req, res, next) => {
 
 exports.createNewProject = async (req, res) => {
   try {
-    const { projectname, template } = req.body;
+    const { projectname, subdomainname, template } = req.body;
     const selectedTemplate = await templateModel.getTemplateById(template);
 
     if (!selectedTemplate) {
@@ -70,9 +67,9 @@ exports.createNewProject = async (req, res) => {
     }
 
     const [userGroups] = await dbConn.query(
-      `SELECT g.id as groupId, g.name as groupName 
-       FROM UserGroup ug 
-       JOIN \`Groups\` g ON ug.groupId = g.id 
+      `SELECT g.id as groupId, g.name as groupName
+       FROM UserGroup ug
+       JOIN \`Groups\` g ON ug.groupId = g.id
        WHERE ug.userId = ?`,
       [req.user.id]
     );
@@ -85,50 +82,25 @@ exports.createNewProject = async (req, res) => {
 
     console.log("Creating new project:", {
       projectname,
+      subdomainname,
       selectedTemplate,
       userGroups,
     });
 
-    // // const replacedService = selectedTemplate.service
-    // //   .replace(/CHANGEME/g, websiteId)
-    // //   .replace(/SUBDOMAIN/g, subdomainname);
-
-    // Object.entries(req.body).map((param) => {
-    //   const key = param[0];
-    //   const value = param[1];
-
-    //   if (key.includes("SUBDOMAIN")) {
-    //     selectedTemplate.service = selectedTemplate.service.replace(key, value);
-    //   }
-    // });
-
     const websiteId = Math.random().toString(36).substring(7);
 
-    // Replace CHANGEME with websiteId in selectedTemplate.service
-    selectedTemplate.service = selectedTemplate.service.replace(
-      /CHANGEME/g,
-      websiteId
-    );
-
-    // Now, continue with the rest of the code
-    Object.entries(req.body).map((param) => {
-      const key = param[0];
-      const value = param[1];
-
-      if (key.includes("SUBDOMAIN")) {
-        selectedTemplate.service = selectedTemplate.service.replace(key, value);
-      }
-    });
+    const replacedService = selectedTemplate.service
+      .replace(/CHANGEME/g, websiteId)
+      .replace(/SUBDOMAIN/g, subdomainname);
 
     const portainerStack = await portainerService.createStack(
       projectname,
-      selectedTemplate.service
+      replacedService
     );
 
     const stackData = {
       title: projectname,
-      // subdomain: `${subdomainname}`,
-      subdomain: "TEST2",
+      subdomain: `${subdomainname}`,
       status: true,
       template: selectedTemplate.id,
       userId: req.user.id,
