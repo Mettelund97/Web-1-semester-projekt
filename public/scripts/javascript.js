@@ -121,21 +121,35 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 const toggleInput = document.getElementById('toggle2');
-  
- function toggleActiveClass() {
+
+function toggleActiveClass() {
   const emptyBoxes = document.querySelectorAll('.emptybox, .emptybox2');
     
   emptyBoxes.forEach(box => {
-      box.classList.toggle('active');
-    });
-  }
+    box.classList.toggle('active');
+  });
+}
 
-toggleInput.addEventListener('change', toggleActiveClass);
+if (toggleInput) {
+  toggleInput.addEventListener('change', toggleActiveClass);
+}
 
-document.getElementById("myButton").addEventListener("click", function () {});
+document.addEventListener('DOMContentLoaded', () => {
+    const myButton = document.getElementById("myButton");
+    if (myButton) {
+        myButton.addEventListener("click", function () {
+            // Your button functionality here
+        });
+    }
+});
 
-document.getElementById("main-Button").addEventListener("click", function () {
-  window.location.href = "/create-new-project";
+document.addEventListener('DOMContentLoaded', () => {
+    const mainButton = document.getElementById("main-Button");
+    if (mainButton) {
+        mainButton.addEventListener("click", function () {
+            window.location.href = "/create-new-project";
+        });
+    }
 });
 
 /* Projects */ 
@@ -162,25 +176,33 @@ function toggleAccordion(element) {
   element.classList.toggle("no-border", !isOpen);
 }
 
-document.getElementById('deleteStackForm').addEventListener('submit', function(event) {
-  event.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+    const deleteForm = document.getElementById('deleteStackForm');
+    if (deleteForm) {
+        deleteForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const stackIdElement = document.getElementById('stackId');
+            if (!stackIdElement) {
+                console.error('Stack ID element not found');
+                return;
+            }
 
-  var stackId = document.getElementById('stackId').value;
+            const stackId = stackIdElement.value;
+            
+            axios.delete(`/stacks/${stackId}`)
+                .then(response => {
+                    console.log('Stack deleted successfully');
 
-  axios.delete(`/stacks/${stackId}`)
-    .then(response => {
-      console.log('Stack deleted successfully');
-      // Optionally, you can redirect the user to a different page or update the UI
-    })
-    .catch(error => {
-      console.error('Error deleting stack:', error);
-      if (error.response && error.response.status === 403) {
-        console.error('You do not have permission to delete this stack');
-        // Handle the forbidden error scenario
-      } else {
-        console.error('Failed to delete stack');
-        // Handle other error scenarios
-      }
-    });
+                })
+                .catch(error => {
+                    console.error('Error deleting stack:', error);
+                    if (error.response?.status === 403) {
+                        console.error('You do not have permission to delete this stack');
+                    } else {
+                        console.error('Failed to delete stack');
+                    }
+                });
+        });
+    }
 });
-

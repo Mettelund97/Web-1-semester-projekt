@@ -84,7 +84,7 @@
               </button>
             </div>
             <div id="role-edit-{{this.id}}" class="role-edit" style="display: none;">
-              <select id="role-select-{{this.id}}" onchange="handleRoleChange('{{this.id}}', '{{this.RoleId}}')">
+              <select id="role-select-{{this.id}}">
                 {{#each ../roles}}
                 <option value="{{this.id}}" {{#if (eq this.id ../RoleId)}}selected{{/if}}>
                   {{this.type}}
