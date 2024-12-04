@@ -34,7 +34,7 @@ exports.login = async (req, res) => {
         // await setConfig("PORTAINERTOKEN", portainerJWTToken);
       }
 
-      console.log("Portainer JWT token:", portainerJWTToken);
+      // console.log("Portainer JWT token:", portainerJWTToken);
 
       res.send({ message: "Login successful!" });
     } else {
