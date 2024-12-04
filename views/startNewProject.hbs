@@ -34,15 +34,24 @@
           />
         </div>
 
-        <div class="input-field2">
+        <div
+          class="input-field2"
+          style="display: flex; align-items: center; gap: 10px;"
+        >
           <input
             type="text"
             id="subdomainname"
             name="subdomainname"
-            placeholder="Subdomain name* (must end with .kubelab.dk)"
-            pattern="^[a-zA-Z0-9-]+\.kubelab\.dk$"
-            title="Use only letters, numbers, and hyphens, ending with .kubelab.dk"
+            placeholder="* Subdomain *"
+            title="Subdomain should not end with .kubelab.dk, the domain name is automatically added"
             required
+          />
+          <input
+            type="text"
+            disabled
+            value=".kubelab.dk"
+            placeholder=".kubelab.dk"
+            style="cursor: not-allowed;"
           />
         </div>
 

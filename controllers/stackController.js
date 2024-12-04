@@ -48,7 +48,7 @@ exports.getAllStacks = async (req, res, next) => {
         status: portainerStack.Status === 1,
         creationDate,
         environmentName: portainerStack.EndpointId,
-        entryPoint: `${dbStack?.subdomain}`,
+        entryPoint: `${dbStack?.subdomain}.kubelab.dk`,
         groupName,
         creator,
         template: dbStack?.templateName || "No template found!",

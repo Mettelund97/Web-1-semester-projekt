@@ -44,20 +44,3 @@ async function deleteStack(stackId) {
     console.error("Error deleting stack:", error);
   }
 }
-
-function validateSubdomains() {
-  const input = document.querySelector("#subdomainname");
-  let isValid = true;
-
-  const pattern = new RegExp(input.getAttribute("pattern"));
-
-  if (!pattern.test(input.value)) {
-    isValid = false;
-    input.setCustomValidity("The subdomain must end with .kubelab.dk");
-    alert("The Subdomain must end with .kubelab.dk");
-  } else {
-    input.setCustomValidity("");
-  }
-
-  return isValid;
-}
