@@ -8,10 +8,12 @@
       </div>
       <ul class="nav-links" id="nav-links">
         <li><a href="/">Projects</a></li>
-        <li><a href="/group-administration">Group administration</a></li>
-        <li><a href="/members">Members</a></li>
+        {{#unless (eq user.roleId 3)}}
+          <li><a href="/group-administration">Group administration</a></li>
+          <li><a href="/members">Members</a></li>
+        {{/unless}}
         <li><a href="/settings">Settings</a></li>
-        <li><a href="/login">Log out</a></li>
+        <li><a href="/logout">Log out</a></li>
       </ul>
     </nav>
   </div>
@@ -19,7 +21,6 @@
 <div class="sidebar">
   <div class="sidebarlogodiv">
     <h1 class="logo">
-      {{! routing to index }}
       <a href="/">
         Kubelab
       </a>
@@ -29,54 +30,40 @@
     <li>
       <a href="/" class="menu-item">
         <img src="/images/dashboardikon.svg" alt="Icon" class="iconlight" />
-        <img
-          src="/images/dashboardikonwhite.svg"
-          alt="Icon"
-          class="icondarkmodenav"
-        />Projects
+        <img src="/images/dashboardikonwhite.svg" class="icondarkmodenav"/>
+        Projects
       </a>
     </li>
-    <li>
-      <a href="/group-administration" class="menu-item">
-        <img src="/images/gruppeadminikon.svg" alt="Icon" class="iconlight" />
-        <img
-          src="/images/gruppeadminikonwhite.svg"
-          alt="Icon"
-          class="icondarkmodenav"
-        />Group Management
-      </a>
-    </li>
-    <li>
-      <a href="/members" class="menu-item">
-        <img
-          src="/images/addmemberikonblack.svg"
-          alt="Icon"
-          class="iconlight"
-        />
-        <img
-          src="/images/addmemberikonwhite.svg"
-          alt="Icon"
-          class="icondarkmodenav"
-        />Members
-      </a>
-    </li>
+    {{#unless (eq user.roleId 3)}}
+      <li>
+        <a href="/group-administration" class="menu-item">
+          <img src="/images/gruppeadminikon.svg" alt="Icon" class="iconlight" />
+          <img src="/images/gruppeadminikonwhite.svg" alt="Icon" class="icondarkmodenav"/>
+          Group Management
+        </a>
+      </li>
+      <li>
+        <a href="/members" class="menu-item">
+          <img src="/images/addmemberikonblack.svg" alt="Icon" class="iconlight"/>
+          <img src="/images/addmemberikonwhite.svg" alt="Icon" class="icondarkmodenav"/>
+          Members
+        </a>
+      </li>
+    {{/unless}}
   </ul>
   <ul class="bottom-section">
     <li>
       <a href="/settings" class="menu-item">
         <img src="/images/settingsikon.svg" alt="Icon" class="iconlight" />
-        <img
-          src="/images/settingsikonwhite.svg"
-          alt="Icon"
-          class="icondarkmodenav"
-        />Settings
+        <img src="/images/settingsikonwhite.svg" alt="Icon" class="icondarkmodenav"/>
+        Settings
       </a>
     </li>
     <li>
-      <a href="/login">
+      <a href="/logout">
         <img src="/images/logoutikon.svg" alt="Icon" class="iconlight" />
-        <img src="/images/logoutikon2.svg" alt="Icon" class="icondarkmodenav" />Log
-        out
+        <img src="/images/logoutikon2.svg" alt="Icon" class="icondarkmodenav" />
+        Log out
       </a>
     </li>
   </ul>
