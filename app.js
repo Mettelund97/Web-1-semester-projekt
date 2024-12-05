@@ -4,8 +4,8 @@ const exphbs = require("express-handlebars");
 const webRoutes = require("./routes/web");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const jwt = require("jsonwebtoken");  // Add this line
-const userModel = require("./models/UserModel");  // Add this line
+const jwt = require("jsonwebtoken"); // Add this line
+const userModel = require("./models/UserModel"); // Add this line
 
 // Init Express
 const app = express();
@@ -19,7 +19,6 @@ app.use(express.json()); // For JSON data
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-
 app.use(async (req, res, next) => {
   if (req.cookies.authToken) {
     try {
@@ -27,7 +26,7 @@ app.use(async (req, res, next) => {
       const user = await userModel.getUserById(decoded.id);
       res.locals.user = user; // This makes user info available in all views
     } catch (error) {
-      console.error('Error setting user info:', error);
+      console.error("Error setting user info:", error);
     }
   }
   next();
@@ -35,7 +34,6 @@ app.use(async (req, res, next) => {
 
 // Static files middleware
 app.use(express.static(path.join(__dirname, "public")));
-
 
 app.engine(
   "hbs",
@@ -57,7 +55,6 @@ app.set("view engine", "hbs");
 // Routes
 app.use("/", webRoutes);
 
-
 app.use((req, res) => {
   res.status(404).render("404", {
     title: "Page Not Found",
@@ -69,7 +66,7 @@ const stackSyncService = require("./services/stackSyncService.js");
 stackSyncService.startSync().catch(console.error);
 
 // Graceful shutdown
-process.on('SIGTERM', () => {
+process.on("SIGTERM", () => {
   stackSyncService.stopSync();
 });
 

@@ -1,45 +1,46 @@
-const axios = require('axios'); 
+const axios = require("axios");
+// const templateModel = require("../../models/templateModel");
 
-document.addEventListener('DOMContentLoaded', function() {
-  const form = document.getElementById('newProjectForm');
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("newProjectForm");
   if (!form) return;
 
-  form.addEventListener('submit', async function(e) {
+  form.addEventListener("submit", async function (e) {
     e.preventDefault();
-    
+
     const formData = {
-      projectname: document.getElementById('projectname').value,
-      subdomainname: document.getElementById('subdomainname').value
+      projectname: document.getElementById("projectname").value,
+      subdomainname: document.getElementById("subdomainname").value,
     };
 
     try {
-      await axios.post('/start-new-project', formData);
-      window.location.href = '/';
+      await axios.post("/start-new-project", formData);
+      window.location.href = "/";
     } catch (error) {
-      console.error('Error creating project:', error);
+      console.error("Error creating project:", error);
     }
   });
 });
 
 async function deleteStack(stackId) {
-  if (!confirm('Are you sure you want to delete this project?')) {
+  if (!confirm("Are you sure you want to delete this project?")) {
     return;
   }
 
   try {
     const response = await fetch(`/stacks/${stackId}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
 
     if (!response.ok) {
       const data = await response.json();
-      throw new Error(data.message || 'Failed to delete stack');
+      throw new Error(data.message || "Failed to delete stack");
     }
 
     // Refresh the page to show updated stack list
     window.location.reload();
   } catch (error) {
     alert(error.message);
-    console.error('Error deleting stack:', error);
+    console.error("Error deleting stack:", error);
   }
 }

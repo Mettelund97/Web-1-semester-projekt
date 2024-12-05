@@ -1,30 +1,40 @@
 const portainerService = require("../services/portainerService.js");
 const StackModel = require("../models/stackModel.js");
 const dbConn = require("../config/db.js");
+const templateModel = require("../models/templateModel");
 const dayjs = require("dayjs");
 require("dayjs/locale/da");
 dayjs.locale("da");
 
+exports.getStartNewProject = (req, res) => {
+  res.render("startNewProject", {
+    title: "Start new project",
+  });
+};
+
 exports.getAllStacks = async (req, res, next) => {
   try {
-    console.log("Fetching stacks...");
     const [portainerStacks, dbStacks] = await Promise.all([
       portainerService.getStacks(),
       StackModel.getAllStacks(),
     ]);
 
     res.locals.stacks = portainerStacks.map((portainerStack) => {
-      const dbStack = dbStacks.find((db) => db.title === portainerStack.Name);
+      const dbStack = dbStacks.find(
+        (db) => db.title.toLowerCase() === portainerStack.Name.toLowerCase()
+      );
 
-      const creator = dbStack && dbStack.firstName && dbStack.lastName
-        ? `${dbStack.firstName} ${dbStack.lastName}`
-        : "Unknown";
+      const creator =
+        dbStack && dbStack.firstName && dbStack.lastName
+          ? `${dbStack.firstName} ${dbStack.lastName}`
+          : "Unknown";
 
       const groupName = dbStack?.groupName || "No Group";
 
       const formatDate = (date) => {
         if (!date) return "Never";
-        const timestamp = typeof date === "number" ? date * 1000 : new Date(date).getTime();
+        const timestamp =
+          typeof date === "number" ? date * 1000 : new Date(date).getTime();
         return dayjs(timestamp).format("D. MMMM YYYY - HH:mm");
       };
 
@@ -38,14 +48,13 @@ exports.getAllStacks = async (req, res, next) => {
         status: portainerStack.Status === 1,
         creationDate,
         environmentName: portainerStack.EndpointId,
-        entryPoint: `${portainerStack.Name}.kubelab.dk`,
-        creator,
+        entryPoint: `${dbStack?.subdomain}.kubelab.dk`,
         groupName,
-        template: dbStack?.template || "wordpress",
+        creator,
+        template: dbStack?.templateName || "No template found!",
       };
     });
 
-    console.log("Processed stacks:", res.locals.stacks);
     next();
   } catch (error) {
     console.error("Error getting stacks:", error);
@@ -56,30 +65,62 @@ exports.getAllStacks = async (req, res, next) => {
 
 exports.createNewProject = async (req, res) => {
   try {
-    const { projectname, subdomainname } = req.body;
-    console.log("Creating new project:", { projectname, subdomainname });
+    const { projectname, subdomainname, template } = req.body;
+    const selectedTemplate = await templateModel.getTemplateById(template);
+
+    if (!selectedTemplate) {
+      throw new Error("Selected template not found");
+    }
 
     const [userGroups] = await dbConn.query(
-      `SELECT g.id as groupId, g.name as groupName 
-       FROM UserGroup ug 
-       JOIN \`Groups\` g ON ug.groupId = g.id 
-       WHERE ug.userId = ?`, 
+      `SELECT g.id as groupId, g.name as groupName
+       FROM UserGroup ug
+       JOIN \`Groups\` g ON ug.groupId = g.id
+       WHERE ug.userId = ?`,
       [req.user.id]
     );
 
     const groupId = userGroups.length > 0 ? userGroups[0].groupId : null;
-    console.log("User's group:", userGroups.length > 0 ? userGroups[0] : "No group found");
+
+    // console.log(
+    //   "User's group:",
+    //   userGroups.length > 0 ? userGroups[0] : "No group found"
+    // );
+
+    console.log("Creating new project:", {
+      projectname,
+      subdomainname,
+      selectedTemplate,
+      userGroups,
+    });
+
+    const websiteId = Math.random().toString(36).substring(7);
+
+    const replacedService = selectedTemplate.service
+      .replace(/CHANGEME/g, websiteId)
+      .replace(/SUBDOMAIN/g, subdomainname);
 
     const portainerStack = await portainerService.createStack(
-      projectname,
-      subdomainname
+      projectname.toLowerCase(),
+      replacedService
     );
 
+    // const stackData = {
+    //   title: projectname,
+    //   subdomain: `${subdomainname}`,
+    //   status: true ? 1 : 0,
+    //   templateId: selectedTemplate.id,
+    //   userId: req.user.id,
+    //   groupId: groupId,
+    //   portainerStackId: portainerStack.Id,
+    //   createdAt: new Date(),
+    // };
+
     const stackData = {
-      title: projectname,
-      subdomain: `${subdomainname}`,
-      status: true,
-      template: "wordpress",
+      title: projectname.toLowerCase(),
+      subdomain: subdomainname.toLowerCase(),
+      status: true ? 1 : 0,
+      template: selectedTemplate.id,
       userId: req.user.id,
       groupId: groupId,
       portainerStackId: portainerStack.Id,
@@ -97,12 +138,6 @@ exports.createNewProject = async (req, res) => {
       message: error.message || "Failed to create project",
     });
   }
-};
-
-exports.getStartNewProject = (req, res) => {
-  res.render("startNewProject", {
-    title: "Start new project",
-  });
 };
 
 exports.deleteStack = async (req, res) => {
