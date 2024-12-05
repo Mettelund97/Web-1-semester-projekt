@@ -101,7 +101,7 @@ exports.createNewProject = async (req, res) => {
       .replace(/SUBDOMAIN/g, subdomainname);
 
     const portainerStack = await portainerService.createStack(
-      projectname,
+      projectname.toLowerCase(),
       replacedService
     );
 
@@ -117,8 +117,8 @@ exports.createNewProject = async (req, res) => {
     // };
 
     const stackData = {
-      title: projectname,
-      subdomain: subdomainname,
+      title: projectname.toLowerCase(),
+      subdomain: subdomainname.toLowerCase(),
       status: true ? 1 : 0,
       template: selectedTemplate.id,
       userId: req.user.id,
