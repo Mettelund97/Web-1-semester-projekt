@@ -1,6 +1,5 @@
 const express = require("express");
 const authService = require("../services/authService");
-const authController = require("../controllers/authController");
 const loginController = require("../controllers/loginController");
 const logoutController = require("../controllers/logoutController");
 const homeController = require("../controllers/homeController");
@@ -8,7 +7,7 @@ const settingsController = require("../controllers/settingsController");
 const addNewMemberController = require("../controllers/addNewMemberController");
 const groupAdministrationController = require("../controllers/groupAdministrationController");
 const createNewGroupController = require("../controllers/createNewGroupController");
-const userController = require("../controllers/UserController");
+const userController = require("../controllers/userController");
 const roleController = require("../controllers/roleController");
 const groupController = require("../controllers/groupController");
 const membersController = require("../controllers/membersController");
@@ -69,6 +68,7 @@ router.get(
 // Update User
 router.put(
   "/user/:id/role",
+  authService.authorizeRoles([1]),
   authService.protectedRoutes,
   userController.updateUserRole
 );
@@ -77,7 +77,7 @@ router.put(
 router.get(
   "/members",
   authService.protectedRoutes,
-  authService.authorizeRole([1, 2]),
+  authService.authorizeRoles([1, 2]),
   userController.getAllUsers,
   roleController.getAllRoles,
   membersController.getMembers
@@ -86,7 +86,7 @@ router.get(
 router.get(
   "/add-new-member",
   authService.protectedRoutes,
-  authService.authorizeRole([1, 2]),
+  authService.authorizeRoles([1, 2]),
   roleController.getAllRoles,
   groupController.getAllGroups,
   addNewMemberController.getAddNewMember
@@ -95,7 +95,7 @@ router.get(
 router.post(
   "/add-new-member",
   authService.protectedRoutes,
-  authService.authorizeRole([1, 2]),
+  authService.authorizeRoles([1, 2]),
   userController.createNewUser
 );
 
@@ -103,7 +103,7 @@ router.post(
 router.get(
   "/group-administration",
   authService.protectedRoutes,
-  authService.authorizeRoles([1, 2]), 
+  authService.authorizeRoles([1, 2]),
   groupController.getAllGroups,
   groupAdministrationController.getGroupAdministration
 );
@@ -118,13 +118,14 @@ router.post(
 router.get(
   "/create-new-group",
   authService.protectedRoutes,
-  authService.authorizeRoles([1, 2]), 
+  authService.authorizeRoles([1, 2]),
   createNewGroupController.getCreateNewGroup
 );
 
 router.post(
   "/create-new-group",
   authService.protectedRoutes,
+  authService.authorizeRoles([1, 2]),
   groupController.createNewGroup
 );
 

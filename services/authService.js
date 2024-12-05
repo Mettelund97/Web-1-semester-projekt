@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const userModel = require("../models/UserModel");
+const userModel = require("../models/userModel");
 
 exports.protectedRoutes = (req, res, next) => {
   const token = req.cookies.authToken;
@@ -19,27 +19,6 @@ exports.protectedRoutes = (req, res, next) => {
   }
 };
 
-exports.authorizeRole = (roleId) => async (req, res, next) => {
-  try {
-    if (!req.user || !req.user.id) {
-      console.log("No user information found in request.");
-      return res.redirect("/login");
-    }
-
-    const user = await userModel.getUserById(req.user.id);
-
-    if (user && user.roleId === roleId) {
-      return next();
-    }
-
-    console.log("Access denied, you are not authorized to visit that page.");
-    return res.redirect("/");
-  } catch (error) {
-    console.error("Error checking user role:", error);
-    return res.status(500).send("Internal Server Error");
-  }
-};
-
 exports.authorizeRoles = (allowedRoles) => async (req, res, next) => {
   try {
     if (!req.user || !req.user.id) {
@@ -54,7 +33,8 @@ exports.authorizeRoles = (allowedRoles) => async (req, res, next) => {
     }
 
     console.log("Access denied, you are not authorized to visit that page.");
-    return res.redirect("/?error=accessDenied");
+    // return res.redirect("/?error=accessDenied");
+    return res.redirect("/");
   } catch (error) {
     console.error("Error checking user role:", error);
     return res.status(500).send("Internal Server Error");

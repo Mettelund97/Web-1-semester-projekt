@@ -5,7 +5,7 @@ const webRoutes = require("./routes/web");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken"); // Add this line
-const userModel = require("./models/UserModel"); // Add this line
+const userModel = require("./models/userModel.js"); // Add this line
 
 // Init Express
 const app = express();
