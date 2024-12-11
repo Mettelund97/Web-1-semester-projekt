@@ -95,10 +95,14 @@ exports.createNewProject = async (req, res) => {
     });
 
     const websiteId = Math.random().toString(36).substring(7);
+    const randomVal1 = Math.random().toString(36).substring(7);
+    const randomVal2 = Math.random().toString(36).substring(7);
 
     const replacedService = selectedTemplate.service
       .replace(/CHANGEME/g, websiteId)
-      .replace(/SUBDOMAIN/g, subdomainname);
+      .replace(/SUBDOMAIN/g, subdomainname)
+      .replace(/CHANGEME02/g, randomVal1)
+      .replace(/SUBDOMAIN02/g, randomVal2);
 
     const portainerStack = await portainerService.createStack(
       projectname.toLowerCase(),

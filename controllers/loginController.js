@@ -26,15 +26,13 @@ exports.login = async (req, res) => {
       res.cookie("authToken", token);
 
       let portainerJWTToken = await configModel.getConfig("PORTAINERTOKEN");
-      // let portainerJWTToken = await getConfig("PORTAINERTOKEN");
 
       if (!portainerJWTToken) {
         portainerJWTToken = await portainerService.portainerAuthLogin();
         await configModel.setConfig("PORTAINERTOKEN", portainerJWTToken);
-        // await setConfig("PORTAINERTOKEN", portainerJWTToken);
       }
 
-      // console.log("Portainer JWT token:", portainerJWTToken);
+      console.log("Portainer JWT token:", portainerJWTToken);
 
       res.send({ message: "Login successful!" });
     } else {
