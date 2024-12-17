@@ -4,8 +4,6 @@ const bcrypt = require("bcryptjs");
 exports.getAllUsers = async () => {
   try {
     const [rows] = await dbConn.query(
-      //   `SELECT id, firstName, lastName, email, password, expiredAt, roleId FROM Users`
-      // );
       `SELECT Users.id, Users.firstName, Users.lastName, Users.email, Users.password, Users.expiredAt, Users.roleId,
     Roles.type AS roleName
     FROM Users

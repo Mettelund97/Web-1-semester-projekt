@@ -2,10 +2,9 @@ const dbConn = require("../config/db.js");
 
 exports.getAllTemplates = async () => {
   try {
-    const [rows, fields] = await dbConn.query(
+    const [rows] = await dbConn.query(
       `SELECT id, name, service FROM Templates`
     );
-    // const [rows, fields] = await dbConn.query(`SELECT * FROM Templates`);
     return rows;
   } catch (error) {
     console.error(error);

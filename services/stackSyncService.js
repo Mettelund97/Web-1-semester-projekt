@@ -35,15 +35,6 @@ class StackSyncService {
   async syncStack(portainerStack, dbStack) {
     try {
       const stackData = {
-        // title: portainerStack.Name,
-        // subdomain: `${portainerStack.Name}.kubelab.dk`,
-        // status: portainerStack.Status === 1,
-        // template: dbStack?.template || 'wordpress',
-        // portainerStackId: portainerStack.Id,
-        // lastSynced: new Date(),
-        // userId: dbStack?.userId,
-        // groupId: dbStack?.groupId
-
         title: portainerStack.Name,
         subdomain: `${dbStack?.subdomain}`,
         status: portainerStack.Status === 1,
