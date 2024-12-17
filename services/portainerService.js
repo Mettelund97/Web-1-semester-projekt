@@ -46,7 +46,6 @@ class PortainerService {
         },
       });
 
-      // console.log("Successfully fetched stacks:", response.data);
       return response.data;
     } catch (error) {
       console.error(
@@ -56,101 +55,16 @@ class PortainerService {
       return [];
     }
   }
-
-  // async createStack(projectName, subDomain, stackFileContent) {
-  //   try {
-  //     const token = await configModel.getConfig("PORTAINERTOKEN");
-  //     console.log("Sending stack configuration:", stackFileContent);
-
-  //     const requestBody = {
-  //       Name: projectName,
-  //       SwarmID: this.swarmId,
-  //       StackFileContent: stackFileContent, // Use the replaced service content
-  //     };
-
-  //     console.log(
-  //       "Sending request body:",
-  //       JSON.stringify(requestBody, null, 2)
-  //     );
-
-  //     const response = await axios.post(
-  //       `${this.baseUrl}/stacks/create/swarm/string?endpointId=${this.endpointId}`,
-  //       requestBody,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-
-  //     console.log("Stack created successfully:", response.data);
-  //     return response.data;
-  //   } catch (error) {
-  //     if (error.response) {
-  //       console.error("Response error data:", error.response.data);
-  //       console.error("Response error status:", error.response.status);
-  //       console.error("Response error headers:", error.response.headers);
-  //     }
-  //     throw error;
-  //   }
-  // }
-
   async createStack(projectName, file) {
     try {
       const token = await configModel.getConfig("PORTAINERTOKEN");
       const stackFileContent = file;
-      //       const stackFileContent = String.raw`
-      // version: '3.8'
-      // networks:
-      //   traefik-proxy:
-      //     external: true
-      //   wp-network:
-      //     driver: overlay
-      // services:
-      //   wordpress:
-      //     image: wordpress:latest
-      //     environment:
-      //       WORDPRESS_DB_HOST: db
-      //       WORDPRESS_DB_USER: wpuser
-      //       WORDPRESS_DB_PASSWORD: wppassword
-      //       WORDPRESS_DB_NAME: wpdatabase
-      //     networks:
-      //       - traefik-proxy
-      //       - wp-network
-      //     deploy:
-      //       labels:
-      //         - traefik.enable=true
-      //         - traefik.http.routers.${websiteId}.rule=Host(\`${subDomain}\`)
-      //         - traefik.http.routers.${websiteId}.entrypoints=web,websecure
-      //         - traefik.http.routers.${websiteId}.tls.certresolver=letsencrypt
-      //         - traefik.http.services.${websiteId}.loadbalancer.server.port=80
-      //   db:
-      //     image: mysql:8
-      //     environment:
-      //       MYSQL_ROOT_PASSWORD: rootpassword
-      //       MYSQL_DATABASE: wpdatabase
-      //       MYSQL_USER: wpuser
-      //       MYSQL_PASSWORD: wppassword
-      //     networks:
-      //       - wp-network
-      //     deploy:
-      //       placement:
-      //         constraints:
-      //           - node.role == worker`;
-
-      console.log("Sending stack configuration:", stackFileContent);
 
       const requestBody = {
         Name: projectName,
         SwarmID: this.swarmId,
         StackFileContent: stackFileContent,
       };
-
-      console.log(
-        "Sending request body:",
-        JSON.stringify(requestBody, null, 2)
-      );
 
       const response = await axios.post(
         `${this.baseUrl}/stacks/create/swarm/string?endpointId=${this.endpointId}`,
@@ -163,11 +77,9 @@ class PortainerService {
         }
       );
 
-      console.log("Stack created successfully:", response.data);
       return response.data;
     } catch (error) {
       if (error.response) {
-        // console.error("Response error data:", error.response.data);
         console.error("Response error status:", error.response.status);
         console.error("Response error headers:", error.response.headers);
       }
