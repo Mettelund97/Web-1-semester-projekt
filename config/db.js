@@ -1,18 +1,6 @@
 const mysql = require("mysql2");
 require("dotenv").config();
 
-// try {
-//   const pool = mysql.createPool({
-//     host: "localhost",
-//     user: "root",
-//     password: "root",
-//     database: "KubeLabDB",
-//   });
-//   module.exports = pool.promise();
-// } catch (error) {
-//   console.log(error);
-// }
-
 try {
   const pool = mysql.createPool({
     host: process.env.DB_HOST,

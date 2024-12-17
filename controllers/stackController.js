@@ -82,18 +82,6 @@ exports.createNewProject = async (req, res) => {
 
     const groupId = userGroups.length > 0 ? userGroups[0].groupId : null;
 
-    // console.log(
-    //   "User's group:",
-    //   userGroups.length > 0 ? userGroups[0] : "No group found"
-    // );
-
-    console.log("Creating new project:", {
-      projectname,
-      subdomainname,
-      selectedTemplate,
-      userGroups,
-    });
-
     const websiteId = Math.random().toString(36).substring(7);
     const randomVal1 = Math.random().toString(36).substring(7);
     const randomVal2 = Math.random().toString(36).substring(7);
@@ -108,17 +96,6 @@ exports.createNewProject = async (req, res) => {
       projectname.toLowerCase(),
       replacedService
     );
-
-    // const stackData = {
-    //   title: projectname,
-    //   subdomain: `${subdomainname}`,
-    //   status: true ? 1 : 0,
-    //   templateId: selectedTemplate.id,
-    //   userId: req.user.id,
-    //   groupId: groupId,
-    //   portainerStackId: portainerStack.Id,
-    //   createdAt: new Date(),
-    // };
 
     const stackData = {
       title: projectname.toLowerCase(),

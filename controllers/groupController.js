@@ -3,11 +3,9 @@ const groupModel = require("../models/groupModel");
 exports.createNewGroup = async (req, res) => {
   const { name } = req.body;
 
-  console.log("Received data:", req.body);
-
   try {
     const result = await groupModel.createNewGroup({
-      name: name
+      name: name,
     });
 
     if (result.success) {
@@ -17,12 +15,11 @@ exports.createNewGroup = async (req, res) => {
       console.log("Group creation failed:", result.error);
       return res.status(400).json({ error: "Failed to create group" });
     }
-   
   } catch (error) {
     console.error("Error creating group:", error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       error: "Internal server error",
-      details: error.message 
+      details: error.message,
     });
   }
 };
@@ -33,23 +30,23 @@ exports.assignUserToGroup = async (req, res) => {
 
   try {
     const result = await groupModel.assignUserToGroup(userId, groupId);
-    
+
     if (result.success) {
-      return res.json({ 
-        success: true, 
-        message: "User assigned to group successfully" 
+      return res.json({
+        success: true,
+        message: "User assigned to group successfully",
       });
     } else {
-      return res.status(400).json({ 
-        success: false, 
-        message: result.message 
+      return res.status(400).json({
+        success: false,
+        message: result.message,
       });
     }
   } catch (error) {
     console.error("Error assigning user to group:", error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       error: "Internal server error",
-      details: error.message 
+      details: error.message,
     });
   }
 };
@@ -57,7 +54,7 @@ exports.assignUserToGroup = async (req, res) => {
 exports.getAllGroups = async (req, res, next) => {
   try {
     const groups = await groupModel.getAllGroups();
-    console.log('Groups data in controller:', JSON.stringify(groups, null, 2));
+    console.log("Groups data in controller:", JSON.stringify(groups, null, 2));
     res.locals.groups = groups || [];
     next();
   } catch (error) {

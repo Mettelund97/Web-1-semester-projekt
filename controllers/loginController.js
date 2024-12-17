@@ -36,7 +36,6 @@ exports.login = async (req, res) => {
 
       res.send({ message: "Login successful!" });
     } else {
-      console.log("Invalid email or password.");
       res.status(401).send("Invalid email or password.");
     }
   } catch (error) {

@@ -3,7 +3,6 @@ const userModel = require("../models/userModel");
 
 exports.protectedRoutes = (req, res, next) => {
   const token = req.cookies.authToken;
-  // console.log("current logged in user auth-token:", token);
 
   if (!token) {
     return res.redirect("/login");
@@ -12,7 +11,6 @@ exports.protectedRoutes = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
-    // console.log("current logged in user roleId:", req.user.roleId);
     next();
   } catch (error) {
     return res.redirect("/login");
@@ -33,7 +31,6 @@ exports.authorizeRoles = (allowedRoles) => async (req, res, next) => {
     }
 
     console.log("Access denied, you are not authorized to visit that page.");
-    // return res.redirect("/?error=accessDenied");
     return res.redirect("/");
   } catch (error) {
     console.error("Error checking user role:", error);

@@ -38,11 +38,6 @@ exports.createNewUser = async (req, res) => {
     console.log("Invalid role:", roleId);
     return res.status(400).send("Invalid role.");
   }
-  // checking if its a valid ucl mail! - find ud af hvilken metode er bedst includes eller endsWith
-  //   if (!email.includes("@edu.ucl.dk") || !email.includes("@ucl.dk")) {
-  //     console.log("The entered email is not a verified UCL email.");
-  //     return res.status(400).send("Invalid email: must be a UCL email.");
-  //   }
 
   if (!email.endsWith("@ucl.dk") && !email.endsWith("@edu.ucl.dk")) {
     console.log("The entered email is not a verified UCL email.");
