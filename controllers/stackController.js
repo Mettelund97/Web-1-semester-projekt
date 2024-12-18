@@ -87,8 +87,8 @@ exports.createNewProject = async (req, res) => {
     const randomVal2 = Math.random().toString(36).substring(7);
 
     const replacedService = selectedTemplate.service
-      .replace(/CHANGEME/g, websiteId)
-      .replace(/SUBDOMAIN/g, subdomainname)
+      .replace(/CHANGEME01/g, websiteId)
+      .replace(/SUBDOMAIN01/g, subdomainname)
       .replace(/CHANGEME02/g, randomVal1)
       .replace(/SUBDOMAIN02/g, randomVal2);
 
