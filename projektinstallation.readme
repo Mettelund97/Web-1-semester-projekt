@@ -1,0 +1,19 @@
+Steps til installation af projekt: 
+1. Step
+Kører docker op og starte docker-compose filen i terminalen. 
+2. Step
+Hente zip-filen som indeholder databasen fra ekstramateriale på wiseflow
+Her kan man også se hvad databasen skal hedde når man laver den i SQL - men for at nævne det igen skal den hedde KubeLabDB, med de samme store og små bogstaver. 
+3. Step
+Efter man har oprettet en database med det navn, importeres SQL filen i denne database.
+4. Step 
+Efterfølgende hentes projektet via github linket i rapporten, og man kan derved clone projektet. 
+5. Step
+Når det er clonet ned og åbnet i ens foretrækkende code-editor, laver man en npm install på projektet, for at få alle dependencies og projektet op og køre korrekt. 
+6. Step
+Når du har udført dette, skriver man node app.js for at starte projektet og den viser i consolen at projektet kan åbnes på port 3000.
+7. Step
+Der kan efterfølgende logges ind med 2 forskellige brugere - 
+Email: Superadmin@ucl.dk Password: 1234 
+Email: Student@ucl.dk Password: 1234
+De har forskellige rettigheder og kan se forskellige ting inde i systemet. 
